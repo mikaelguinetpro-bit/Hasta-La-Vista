@@ -2,6 +2,17 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-02 — Claude — claude/idiomas-y-fuentes
+- **Trois langues** : `index.html` (espagnol, textes inchangés), `fr.html` (français) et `en.html` (anglais). Un sélecteur ES · FR · EN apparaît en haut de chaque page.
+- Choix de traduction :
+  - en français, on tutoie, comme en espagnol ;
+  - le titre « Hagamos algo bello » devient « Créons du beau. » en français et « Let’s make it beautiful. » en anglais ;
+  - la citation sur la folie reprend la formule française consacrée, « Il n’y a pas de génie sans un grain de folie ».
+- **Polices hébergées sur le site** (`fuentes/`, 196 Ko) : le site ne dépend plus de Google Fonts. Il est plus rapide, n’envoie plus de données à Google et s’affiche correctement même hors ligne.
+- **Organisation** : le CSS va dans `estilos.css` et le JavaScript dans `app.js`, communs aux trois langues, pour ne pas recopier le style trois fois. `AGENTS.md` est mis à jour en conséquence, avec une nouvelle règle : chaque changement de texte se fait dans les trois langues.
+- Vérifié : les trois pages s’affichent sans erreur, sur ordinateur et sur mobile.
+- À relire par Ritukah : les traductions, surtout ton histoire dans « La graine de Hasta La Vista ».
+
 ## 2026-11-02 — Claude — claude/nueva-maquetacion
 - **Couleurs** : la palette reprend celles de l'arbre (bleu marine `#052a58`, rouge `#d90211`, or `#ebaf12`). L'arbre devient aussi l'icône de l'onglet (`icono.png`, nouveau fichier de 9 Ko) et le logo de l'en-tête.
 - **Accessibilité** :

@@ -6,8 +6,14 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 ## Le projet
 
 - **Hasta La Vista** est une plateforme qui veut rendre le monde plus beau grâce aux idées, au travail partagé, à l'intelligence humaine et aux agents IA.
-- Le site actuel se trouve dans `hasta-la-vista/` : `index.html` (une seule page, avec le HTML, le CSS et le JavaScript intégrés) et `emblema-arbol.png` (l'arbre, emblème du projet).
-- Le texte du site est **en espagnol**. Les échanges avec Ritukah, les messages de commit et le journal sont **en français**.
+- Le site se trouve dans `hasta-la-vista/` :
+  - `index.html` (espagnol, langue principale), `fr.html` (français), `en.html` (anglais) : les trois versions de la page, avec la même structure ;
+  - `estilos.css` : le style commun aux trois versions ;
+  - `app.js` : le comportement commun (menu, fenêtre, animations), avec en tête les quelques textes du script dans les trois langues ;
+  - `fuentes/` : les polices, hébergées sur le site (licence SIL OFL, ne pas supprimer les fichiers `OFL-*.txt`) ;
+  - `emblema-arbol.png` (l'arbre, emblème du projet) et `icono.png` (l'icône d'onglet).
+- **Toute modification du texte ou de la structure d'une page doit être faite dans les trois langues** (`index.html`, `fr.html`, `en.html`) dans la même branche. Le français et l'anglais suivent toujours l'espagnol.
+- Les échanges avec Ritukah, les messages de commit et le journal sont **en français**.
 - Trois valeurs guident chaque décision : **beau, ambitieux, accessible**.
 
 ## Qui décide
