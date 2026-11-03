@@ -1,4 +1,4 @@
-// Hasta La Vista — comportamiento común a las tres versiones (es, fr, en).
+// Hasta La Vista — comportamiento común a las dos versiones (es, en).
 // Los textos que crea el script están aquí, por idioma. El resto del texto está en cada archivo HTML.
 const T = {
   es: {
@@ -6,12 +6,6 @@ const T = {
     moments: { como: '¡Manos a la obra!', ejemplo: '¡Juntos podemos!', vision: '¡A lo grande!' },
     thanks: '¡Qué maravilla!',
     success: '¡Gracias! En esta maqueta no se guarda ni se envía nada. La primera comunidad empieza con una conversación.'
-  },
-  fr: {
-    menu: 'Menu', close: 'Fermer', pause: '❚❚ Pause', play: '▶ Reprendre',
-    moments: { como: 'Au travail !', ejemplo: 'Ensemble, on peut !', vision: 'En grand !' },
-    thanks: 'Quelle merveille !',
-    success: 'Merci ! Dans cette maquette, rien n’est enregistré ni envoyé. La première communauté commence par une conversation.'
   },
   en: {
     menu: 'Menu', close: 'Close', pause: '❚❚ Pause', play: '▶ Play',
