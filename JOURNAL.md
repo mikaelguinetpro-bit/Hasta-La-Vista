@@ -2,6 +2,11 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-03 — Claude — claude/cuatro-pilares
+- Ajout dans `AGENTS.md` des **quatre piliers de la vision** définis par Ritukah : visibilité, bienveillance, optimisation, disponibilité. S'y ajoute l'idée qui les relie : tout le monde est créateur.
+- Pourquoi : que ChatGPT, Claude et toute autre IA les connaissent et les respectent à chaque intervention.
+- Le site n'est pas modifié.
+
 ## 2026-11-03 — Claude — claude/idiomas-y-fuentes
 - **Version française retirée** à la demande de Ritukah : `fr.html` est supprimé, et le bouton FR, le lien `hreflang="fr"` et les textes français de `app.js` sont retirés.
 - Le site existe donc en **deux langues** : espagnol (`index.html`) et anglais (`en.html`).

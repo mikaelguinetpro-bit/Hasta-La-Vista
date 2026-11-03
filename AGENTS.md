@@ -3,6 +3,17 @@
 Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, ChatGPT / Codex, et toute autre).
 **À lire en entier avant chaque intervention.**
 
+## La vision : les quatre piliers
+
+Ces quatre piliers, définis par Ritukah, guident **chaque décision**, sur le site comme dans la future plateforme. Avant de proposer une modification, vérifie qu'elle respecte les quatre.
+
+1. **Visibilité.** Tout se voit. L'IA travaille « derrière une vitrine » : ses actions, ses raisons et ses règles sont visibles par tous, tout le temps. Elle montre elle-même ce qu'elle fait, avec des messages beaux, doux mais percutants. Chaque personne est créditée clairement pour ce qu'elle apporte. Rien ne se décide dans l'ombre.
+2. **Bienveillance.** L'endroit est doux. Chacun peut y oser une idée fragile sans peur d'être jugé ou moqué. La modération protège cette douceur : l'IA signale, les humains décident, et toute décision peut être contestée.
+3. **Optimisation.** Chaque ressource va à sa juste place, comme une cale bien posée. L'IA aide à réduire les coûts là où il faut, sans gaspillage, pour que de petits moyens fassent de grandes choses.
+4. **Disponibilité.** Ouvert à tous, autant que possible : sans barrière d'argent, de langue, de handicap ou de connaissances techniques. Le site doit rester accessible et utilisable par chacun.
+
+**Au-dessus des quatre piliers : tout le monde est créateur.** Sur Hasta La Vista, on ne parle pas d'« utilisateurs » ni de « clients », mais de **créateurs**.
+
 ## Le projet
 
 - **Hasta La Vista** est une plateforme qui veut rendre le monde plus beau grâce aux idées, au travail partagé, à l'intelligence humaine et aux agents IA.
@@ -15,7 +26,7 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 - **Toute modification du texte ou de la structure d'une page doit être faite dans les deux langues** (`index.html` et `en.html`) dans la même branche. L'anglais suit toujours l'espagnol.
 - **Le site n'a pas de version française, par décision de Ritukah. N'en ajoute jamais**, ni page, ni traduction, ni bouton de langue.
 - Les échanges avec Ritukah, les messages de commit et le journal sont **en français**.
-- Trois valeurs guident chaque décision : **beau, ambitieux, accessible**.
+- Le site doit rester **beau, ambitieux et accessible**, au service des quatre piliers ci-dessus.
 
 ## Qui décide
 
