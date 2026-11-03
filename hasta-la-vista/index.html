@@ -5,61 +5,256 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4efe5">
   <meta name="description" content="Hasta La Vista: ideas valientes, inteligencia humana y agentes IA para crear proyectos que hagan el mundo más bello.">
+  <meta property="og:title" content="Hasta La Vista — Hagamos que algo bello ocurra">
+  <meta property="og:description" content="Ideas valientes, inteligencia humana y agentes IA para crear proyectos que hagan el mundo más bello.">
+  <meta property="og:type" content="website">
   <title>Hasta La Vista — Hagamos que algo bello ocurra</title>
+  <link rel="icon" type="image/png" href="icono.png">
+  <link rel="apple-touch-icon" href="icono.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap');
-    :root{--paper:#f4efe5;--ink:#171917;--muted:#6c6e66;--red:#ef5237;--blue:#344bdb;--line:#d8d2c6;--lime:#f2c94c;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',Arial,sans-serif;--mono:'DM Mono',monospace}
-    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased} a{color:inherit;text-decoration:none} button{font:inherit}
-    .topline{height:7px;background:linear-gradient(90deg,var(--red) 0 34%,var(--blue) 34% 68%,var(--lime) 68%)}
-    header{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;border-bottom:1px solid var(--line)}
-    .brand{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:700;letter-spacing:-.04em}.brand-mark{width:27px;height:27px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:17px}
-    nav{display:flex;gap:30px;align-items:center;font-size:12px;font-weight:600}.nav-join{padding:11px 16px;border:1px solid var(--ink);border-radius:99px;transition:.2s}.nav-join:hover{background:var(--ink);color:var(--paper)}
-    .hero{min-height:610px;padding:86px 8vw 68px;display:grid;grid-template-columns:1.05fr .95fr;gap:7vw;align-items:center;position:relative;overflow:hidden}
-    .eyebrow,.section-label{font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.eyebrow:before{content:'✳';color:var(--red);font-size:17px;margin-right:9px;vertical-align:-2px}
-    h1{font:600 clamp(58px,8.2vw,116px)/.91 var(--serif);letter-spacing:-.075em;margin:27px 0 24px;max-width:680px}h1 em{color:var(--red);font-weight:600}
-    .hero-copy{font-size:16px;line-height:1.65;max-width:460px;color:#4b4d47}.hero-gift{font:italic 16px var(--serif);color:var(--red);margin:17px 0 0}.hero-actions{display:flex;align-items:center;gap:22px;margin-top:30px}.button{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:#fff;padding:15px 19px;border-radius:99px;font-size:12px;font-weight:600;transition:.2s}.button:hover{transform:translateY(-2px);background:var(--blue)}.arrow{font-size:18px;line-height:10px}.text-link{font-size:12px;font-weight:600;border-bottom:1px solid var(--ink);padding:5px 0}
-    .art{height:430px;position:relative;display:flex;flex-direction:column;align-items:center;overflow:hidden}.art-image{height:360px;width:100%;display:flex;justify-content:center;overflow:hidden}.hero-logo{display:block;width:min(100%,400px);height:auto;object-fit:contain;object-position:top center}.seed-caption{text-align:center;padding:8px;font:italic 14px/1.35 var(--serif);color:var(--blue)}.seed-caption small{display:block;margin-top:5px;font:9px/1.4 var(--mono);color:var(--muted)}
-    main{position:relative;overflow:hidden}.hero,.intro,.manifesto,.first-step{position:relative;z-index:1}.hero{isolation:isolate}.hero:after{content:'';position:absolute;z-index:-1;right:2%;top:9%;width:42%;height:74%;border:1px solid #17191744;border-radius:49% 51% 47% 53%/41% 48% 52% 59%;transform:rotate(-24deg);pointer-events:none}.art{height:430px;position:relative;display:flex;flex-direction:column;align-items:center;overflow:hidden}.art-image{height:360px;width:100%;display:flex;justify-content:center;overflow:hidden}.hero-logo{display:block;width:min(100%,400px);height:auto;object-fit:contain;object-position:top center}.seed-caption{text-align:center;padding:8px;font:italic 14px/1.35 var(--serif);color:var(--blue)}.seed-caption small{display:block;margin-top:5px;font:9px/1.4 var(--mono);color:var(--muted)}
-    .motto{position:relative;z-index:1;background:var(--lime);border-block:1px solid var(--ink);padding:43px 8vw 39px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center}.motto blockquote{font:700 clamp(31px,5.1vw,70px)/.98 var(--serif);letter-spacing:-.065em;margin:0;max-width:1000px}.motto blockquote em{color:var(--red);font-style:italic}.motto small{display:block;font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-top:16px;color:#4b4d47}.motto-star{font:clamp(45px,8vw,100px)/1 var(--serif);color:var(--red);transform:rotate(12deg)}
-    .dream-line{position:relative;z-index:1;padding:36px 8vw 40px;text-align:center;border-bottom:1px solid var(--line)}.dream-line blockquote{margin:0 auto;font:italic 600 clamp(23px,3.2vw,39px)/1.18 var(--serif);max-width:940px;color:var(--blue)}.dream-line small{display:block;margin-top:13px;font:10px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-    .origin-story{position:relative;z-index:1;margin:56px auto 74px;width:min(84%,1080px);padding:40px clamp(24px,6vw,76px);background:var(--blue);color:#fff;overflow:hidden}.origin-story:after{content:'✳';position:absolute;right:5%;top:-32px;font:190px/1 var(--serif);color:var(--lime);opacity:.9;transform:rotate(12deg)}.origin-story .section-label{position:relative;z-index:1;color:#dce0ff}.origin-story h2{position:relative;z-index:1;font:600 clamp(30px,4vw,52px)/1.03 var(--serif);letter-spacing:-.05em;max-width:780px;margin:18px 0}.origin-story p{position:relative;z-index:1;max-width:700px;margin:0;font-size:14px;line-height:1.8;color:#f0f0ff}.origin-story strong{color:var(--lime)}
-    .pop-phrase{position:absolute;z-index:2;left:50%;top:50%;opacity:0;pointer-events:none;color:var(--blue);font:italic 700 clamp(18px,2.7vw,31px)/1 var(--serif);white-space:nowrap;text-shadow:0 2px 0 var(--paper),2px 0 0 var(--paper),-2px 0 0 var(--paper)}.pop-phrase.show{animation:pop-in 1.7s ease-out both}@keyframes pop-in{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}35%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-75%) scale(.85)}}
-    .ticker{background:var(--lime);border-block:1px solid var(--ink);padding:17px 0;overflow:hidden;white-space:nowrap}.ticker-track{display:inline-flex;gap:26px;align-items:center;animation:move 35s linear infinite;font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase}.ticker b{font-size:18px;color:var(--red)}@keyframes move{to{transform:translateX(-50%)}}
-    section{padding:100px 9vw}.intro{display:grid;grid-template-columns:.6fr 1.4fr;gap:8vw;border-bottom:1px solid var(--line)}.intro h2{font:600 clamp(33px,4.5vw,59px)/1.05 var(--serif);letter-spacing:-.05em;max-width:760px;margin:0}.intro h2 em{color:var(--blue)}.intro p{max-width:510px;color:var(--muted);font-size:14px;line-height:1.8;margin:26px 0 0}.manifesto{padding-top:0}
-    .manifesto-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:38px}.manifesto-head h2{font:600 44px var(--serif);letter-spacing:-.05em;margin:13px 0 0}.manifesto-head p{font:11px var(--mono);color:var(--muted);max-width:190px;line-height:1.6}.pillars{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}.pillar{padding:24px 20px 28px 0;border-right:1px solid var(--line);min-height:176px}.pillar:not(:first-child){padding-left:20px}.pillar:last-child{border:0}.num{font:11px var(--mono);color:var(--red)}.pillar h3{font:600 20px var(--serif);margin:29px 0 8px}.pillar p{font-size:12px;line-height:1.6;color:var(--muted);margin:0;max-width:220px}
-    .callout{background:var(--blue);color:#fff;padding:80px 9vw;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}.callout .section-label{color:#d4d9ff}.callout h2{font:600 clamp(34px,5.2vw,65px)/1.02 var(--serif);letter-spacing:-.05em;max-width:720px;margin:20px 0 0}.callout .button{background:var(--lime);color:var(--ink);white-space:nowrap}.callout .button:hover{background:#fff}
-    .first-step{display:grid;grid-template-columns:1fr 1fr;gap:9vw;align-items:center}.first-step h2{font:600 clamp(39px,5vw,65px)/1 var(--serif);letter-spacing:-.06em;margin:18px 0}.first-step p{font-size:14px;line-height:1.8;color:var(--muted);max-width:470px}.note{border-left:2px solid var(--red);padding:3px 0 3px 22px;font:italic 19px/1.5 var(--serif);max-width:400px}.note small{display:block;font:10px var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:14px}
-    footer{position:relative;z-index:1;padding:28px 6vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:center;font:10px var(--mono);color:var(--muted)}footer strong{color:var(--ink);font:700 13px var(--sans);letter-spacing:-.03em}
-    .modal{position:fixed;inset:0;background:#171917b8;display:none;place-items:center;padding:20px;z-index:5}.modal.open{display:grid}.dialog{background:var(--paper);max-width:470px;width:100%;padding:36px;position:relative}.dialog h2{font:600 37px/1 var(--serif);letter-spacing:-.05em;margin:0 0 12px}.dialog p{font-size:13px;line-height:1.65;color:var(--muted)}.close{position:absolute;right:14px;top:12px;border:0;background:none;font-size:24px;cursor:pointer}.dialog label{display:block;font:10px var(--mono);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 7px}.dialog input,.dialog select{width:100%;padding:13px;background:transparent;border:1px solid var(--line);font:13px var(--sans);color:var(--ink)}.dialog .button{border:0;margin-top:18px;cursor:pointer}.success{display:none;background:var(--lime);padding:14px;font-size:13px;line-height:1.5;margin-top:15px}.success.show{display:block}
-    @media(max-width:760px){header{padding:0 6vw;height:67px}nav{gap:15px}nav a:not(.nav-join){display:none}.hero{grid-template-columns:1fr;padding:65px 7vw 50px;gap:0}.hero-copy{font-size:15px}.art{height:330px;margin-top:15px}.art-image{height:260px}.hero-logo{width:min(100%,280px)}.seed-caption{font-size:12px}.artwork{width:105%;height:105%}.motto{grid-template-columns:1fr auto;padding:32px 7vw;gap:8px}.motto blockquote{font-size:clamp(30px,8vw,48px)}.motto-star{font-size:49px}.intro{grid-template-columns:1fr;gap:30px;padding:75px 7vw}.manifesto{padding:75px 7vw}.pillars{grid-template-columns:1fr 1fr}.pillar{padding:20px 12px 22px 0;min-height:160px}.pillar:not(:first-child){padding-left:12px}.pillar:nth-child(2){border-right:0}.pillar:nth-child(-n+2){border-bottom:1px solid var(--line)}.pillar:nth-child(3){padding-left:0}.manifesto-head{align-items:start;gap:20px}.manifesto-head p{display:none}.callout{grid-template-columns:1fr;padding:65px 7vw;gap:27px}.callout .button{width:max-content}.first-step{grid-template-columns:1fr;padding:75px 7vw;gap:34px}.note{font-size:17px}footer{padding:24px 6vw;align-items:flex-start;flex-direction:column;gap:10px}}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
-    .phrase-pop{position:fixed;z-index:8;left:50%;top:50%;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.55) rotate(var(--tilt,0deg));font:italic 700 clamp(18px,2.7vw,31px)/1 var(--serif);white-space:nowrap;text-shadow:0 2px 0 var(--paper),2px 0 0 var(--paper),-2px 0 0 var(--paper)}.phrase-pop.show{animation:phrase-pop 1.65s ease-out both}@keyframes phrase-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.45) rotate(var(--tilt,0deg))}14%{opacity:1;transform:translate(-50%,-50%) scale(1.08) rotate(var(--tilt,0deg))}30%{transform:translate(-50%,-50%) scale(1) rotate(var(--tilt,0deg))}78%{opacity:1}100%{opacity:0;transform:translate(-50%,-75%) scale(.84) rotate(var(--tilt,0deg))}}
+    /* ── Paleta tomada del emblema del árbol ── */
+    :root{
+      --paper:#f4efe5;--paper-2:#ece5d7;--ink:#171917;--muted:#55574f;--line:#d5cdbd;
+      --navy:#052a58;--red:#d90211;--gold:#ebaf12;
+      --serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',Arial,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:20px}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;-webkit-font-smoothing:antialiased}
+    body.modal-open{overflow:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit}
+    :focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:4px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .skip{position:absolute;left:12px;top:-60px;z-index:20;background:var(--navy);color:#fff;padding:12px 16px;border-radius:99px;font-size:14px;font-weight:600}
+    .skip:focus{top:12px}
+
+    /* ── Cabecera ── */
+    .topline{height:7px;background:linear-gradient(90deg,var(--red) 0 34%,var(--navy) 34% 68%,var(--gold) 68%)}
+    header{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;border-bottom:1px solid var(--line);position:relative;z-index:4}
+    .brand{white-space:nowrap;display:flex;align-items:center;gap:11px;font-size:15px;font-weight:700;letter-spacing:-.03em}
+    .brand img{width:34px;height:34px;display:block}
+    .nav{display:flex;gap:28px;align-items:center;font-size:14px;font-weight:600}
+    .nav-links{display:flex;gap:28px;margin:0;padding:0;list-style:none}
+    .nav-links a{padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s}
+    .nav-links a:hover{border-color:var(--ink)}
+    .nav-join{white-space:nowrap;padding:11px 16px;border:1px solid var(--ink);border-radius:99px;transition:.2s}
+    .nav-join:hover{background:var(--ink);color:var(--paper)}
+    .menu-toggle{display:none;background:none;border:1px solid var(--ink);border-radius:99px;padding:10px 15px;font-size:14px;font-weight:600;cursor:pointer}
+
+    /* ── Portada ── */
+    .hero{min-height:610px;padding:86px 8vw 68px;display:grid;grid-template-columns:1.05fr .95fr;gap:6vw;align-items:center;position:relative;overflow:hidden;isolation:isolate}
+    .hero:after{content:'';position:absolute;z-index:-1;right:2%;top:9%;width:42%;height:74%;border:1px solid #052a5833;border-radius:49% 51% 47% 53%/41% 48% 52% 59%;transform:rotate(-24deg);pointer-events:none}
+    .eyebrow,.section-label{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .eyebrow:before{content:'✳';color:var(--red);font-size:17px;margin-right:9px;vertical-align:-2px}
+    h1{font:600 clamp(56px,8.2vw,116px)/.92 var(--serif);letter-spacing:-.06em;margin:27px 0 24px;max-width:680px}
+    h1 em{color:var(--red)}
+    .hero-copy{font-size:17px;line-height:1.65;max-width:470px;color:#3f413c;margin:0}
+    .hero-gift{font:italic 18px var(--serif);color:var(--red);margin:18px 0 0}
+    .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-top:32px}
+    .button{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:#fff;padding:15px 20px;border-radius:99px;font-size:14px;font-weight:600;border:0;cursor:pointer;transition:transform .2s,background .2s}
+    .button:hover{transform:translateY(-2px);background:var(--navy)}
+    .arrow{font-size:18px;line-height:10px}
+    .text-link{font-size:14px;font-weight:600;border-bottom:1px solid var(--ink);padding:5px 0}
+    .art{display:flex;flex-direction:column;align-items:center}
+    .hero-logo{display:block;width:min(100%,420px);height:auto}
+    .seed-caption{text-align:center;padding:14px 8px 0;margin:0;font:italic 17px/1.4 var(--serif);color:var(--navy);max-width:420px}
+    .seed-caption small{display:block;margin-top:8px;font:12px/1.5 var(--mono);font-style:normal;color:var(--muted)}
+
+    /* ── Citas ── */
+    .motto{background:var(--gold);border-block:1px solid var(--ink);padding:43px 8vw 39px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center}
+    .motto blockquote{font:700 clamp(31px,5.1vw,70px)/.98 var(--serif);letter-spacing:-.05em;margin:0;max-width:1000px}
+    .motto blockquote em{color:var(--navy)}
+    .motto small{display:block;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-top:16px;color:var(--ink)}
+    .motto-star{font:clamp(45px,8vw,100px)/1 var(--serif);color:var(--red);transform:rotate(12deg)}
+    .dream-line{padding:40px 8vw 44px;text-align:center;border-bottom:1px solid var(--line)}
+    .dream-line blockquote{margin:0 auto;font:italic 600 clamp(24px,3.2vw,39px)/1.2 var(--serif);max-width:940px;color:var(--navy)}
+    .dream-line small{display:block;margin-top:14px;font:12px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+
+    /* ── Cinta de principios ── */
+    .ticker{position:relative;background:var(--navy);color:#fff;padding:17px 0;overflow:hidden;white-space:nowrap}
+    .ticker-track{display:inline-flex;gap:26px;align-items:center;animation:move 35s linear infinite;font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+    .ticker b{font-size:18px;color:var(--gold)}
+    .ticker.paused .ticker-track{animation-play-state:paused}
+    .ticker-pause{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--navy);color:#fff;border:1px solid #ffffff99;border-radius:99px;padding:6px 12px;font:500 12px var(--mono);cursor:pointer;box-shadow:-18px 0 16px var(--navy)}
+    .ticker-pause:focus-visible{outline-color:var(--gold)}
+    @keyframes move{to{transform:translateX(-50%)}}
+
+    /* ── Secciones ── */
+    section{padding:100px 9vw}
+    .intro{display:grid;grid-template-columns:.6fr 1.4fr;gap:8vw;border-bottom:1px solid var(--line)}
+    .intro h2{font:600 clamp(33px,4.5vw,59px)/1.05 var(--serif);letter-spacing:-.04em;max-width:760px;margin:0}
+    .intro h2 em{color:var(--navy)}
+    .intro p{max-width:540px;color:var(--muted);font-size:16px;line-height:1.75;margin:26px 0 0}
+
+    .manifesto{padding-top:80px}
+    .manifesto-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:38px}
+    .manifesto-head h2{font:600 clamp(34px,4vw,46px) var(--serif);letter-spacing:-.04em;margin:13px 0 0}
+    .manifesto-head p{font:12px/1.6 var(--mono);color:var(--muted);max-width:210px;margin:0}
+    .pillars{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+    .pillar{padding:24px 20px 28px;border-right:1px solid var(--line);min-height:180px}
+    .pillar:first-child{padding-left:0}
+    .pillar:last-child{border:0}
+    .num{font:500 12px var(--mono);color:var(--red)}
+    .pillar h3{font:600 22px var(--serif);margin:26px 0 8px}
+    .pillar p{font-size:15px;line-height:1.6;color:var(--muted);margin:0;max-width:240px}
+
+    /* ── Ejemplo: proyecto semilla ── */
+    .example{background:var(--paper-2);border-block:1px solid var(--line);display:grid;grid-template-columns:.85fr 1.15fr;gap:7vw;align-items:center}
+    .example h2{font:600 clamp(36px,4.6vw,60px)/1.02 var(--serif);letter-spacing:-.05em;margin:18px 0}
+    .example h2 em{color:var(--red)}
+    .example-copy p{font-size:16px;line-height:1.75;color:var(--muted);max-width:440px}
+    .example-copy .fine{font:12px/1.6 var(--mono);color:var(--muted)}
+    .project{background:var(--paper);border:1px solid var(--ink);padding:clamp(24px,4vw,40px);box-shadow:10px 10px 0 var(--navy)}
+    .tag{display:inline-block;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--ink);border-radius:99px;padding:5px 11px}
+    .project h3{font:600 clamp(25px,2.6vw,33px)/1.1 var(--serif);letter-spacing:-.03em;margin:20px 0 10px}
+    .project > p{font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 24px}
+    .bars{list-style:none;margin:0;padding:0;display:grid;gap:17px}
+    .bar-head{display:flex;justify-content:space-between;gap:12px;font-size:15px;font-weight:600;margin-bottom:7px}
+    .bar-head > span{font:500 13px var(--mono);color:var(--muted);white-space:nowrap}
+    .bar{height:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+    .bar i{display:block;height:100%;width:var(--v);background:var(--c,var(--navy));border-radius:99px;transform-origin:left;animation:grow 1.2s ease-out both}
+    @keyframes grow{from{transform:scaleX(0)}}
+    .bar-note{display:block;font-size:13px;color:var(--muted);margin-top:5px;font-weight:400}
+    .project-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}
+    .project-foot p{margin:0;font:italic 17px/1.4 var(--serif);color:var(--navy);max-width:280px}
+
+    .callout{background:var(--navy);color:#fff;padding:80px 9vw;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+    .callout .section-label{color:#c9d2ea}
+    .callout h2{font:600 clamp(34px,5.2vw,65px)/1.02 var(--serif);letter-spacing:-.04em;max-width:720px;margin:20px 0 0}
+    .callout .button{background:var(--gold);color:var(--ink);white-space:nowrap}
+    .callout .button:hover{background:#fff}
+    .callout .button:focus-visible{outline-color:var(--gold)}
+
+    .first-step{display:grid;grid-template-columns:1fr 1fr;gap:9vw;align-items:center}
+    .first-step h2{font:600 clamp(39px,5vw,65px)/1 var(--serif);letter-spacing:-.05em;margin:18px 0}
+    .first-step p{font-size:16px;line-height:1.75;color:var(--muted);max-width:480px}
+    .note{border-left:3px solid var(--red);padding:3px 0 3px 22px;margin:0;font:italic 22px/1.45 var(--serif);max-width:400px}
+    .note small{display:block;font:12px var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:14px}
+
+    .origin-story{position:relative;margin:20px auto 90px;width:min(84%,1080px);padding:44px clamp(24px,6vw,76px);background:var(--navy);color:#fff;overflow:hidden}
+    .origin-story:after{content:'✳';position:absolute;right:5%;top:-32px;font:190px/1 var(--serif);color:var(--gold);opacity:.9;transform:rotate(12deg);pointer-events:none}
+    .origin-story .section-label{position:relative;z-index:1;color:#c9d2ea}
+    .origin-story h2{position:relative;z-index:1;font:600 clamp(30px,4vw,52px)/1.05 var(--serif);letter-spacing:-.04em;max-width:780px;margin:18px 0}
+    .origin-story p{position:relative;z-index:1;max-width:700px;margin:0;font-size:16px;line-height:1.8;color:#eef0fa}
+    .origin-story strong{color:var(--gold)}
+
+    footer{padding:28px 6vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:center;font:12px var(--mono);color:var(--muted)}
+    footer strong{color:var(--ink);font:700 14px var(--sans);letter-spacing:-.02em}
+
+    /* ── Ventana de participación ── */
+    .modal{position:fixed;inset:0;background:#171917b8;display:none;place-items:center;padding:20px;z-index:10}
+    .modal.open{display:grid}
+    .dialog{background:var(--paper);max-width:480px;width:100%;max-height:calc(100vh - 40px);overflow:auto;padding:38px;position:relative;border-top:7px solid var(--navy)}
+    .dialog h2{font:600 37px/1 var(--serif);letter-spacing:-.04em;margin:10px 0 12px}
+    .dialog p{font-size:15px;line-height:1.6;color:var(--muted)}
+    .close{position:absolute;right:10px;top:8px;width:44px;height:44px;border:0;background:none;font-size:28px;cursor:pointer;border-radius:50%}
+    .close:hover{background:var(--paper-2)}
+    .dialog label{display:block;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 7px}
+    .dialog input,.dialog select{width:100%;padding:13px;background:#fff;border:1px solid #9d9686;font:15px var(--sans);color:var(--ink)}
+    .dialog .button{margin-top:20px}
+    .success{display:none;background:var(--gold);padding:14px;font-size:15px;line-height:1.5;margin-top:16px}
+    .success.show{display:block}
+
+    /* ── Frases de celebración ── */
+    .phrase-pop{position:fixed;z-index:8;left:50%;top:50%;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.55) rotate(var(--tilt,0deg));font:italic 700 clamp(20px,2.7vw,32px)/1 var(--serif);white-space:nowrap;text-shadow:0 2px 0 var(--paper),2px 0 0 var(--paper),-2px 0 0 var(--paper),0 -2px 0 var(--paper)}
+    .phrase-pop.show{animation:phrase-pop 1.65s ease-out both}
+    @keyframes phrase-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.45) rotate(var(--tilt,0deg))}14%{opacity:1;transform:translate(-50%,-50%) scale(1.08) rotate(var(--tilt,0deg))}30%{transform:translate(-50%,-50%) scale(1) rotate(var(--tilt,0deg))}78%{opacity:1}100%{opacity:0;transform:translate(-50%,-75%) scale(.84) rotate(var(--tilt,0deg))}}
+
+    /* ── Móvil ── */
+    @media(max-width:760px){
+      header{height:67px}
+      .menu-toggle{display:inline-block}
+      .nav{gap:10px}
+      .nav-links{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:8px 6vw 16px}
+      .nav-links.open{display:flex}
+      .nav-links a{display:block;padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
+      .hero{grid-template-columns:1fr;padding:60px 7vw 50px;gap:30px}
+      .hero:after{display:none}
+      .brand{font-size:14px;gap:8px}
+      .nav-join,.menu-toggle{padding:9px 13px}
+      .hero-logo{width:min(100%,300px)}
+      .motto{padding:32px 7vw;gap:8px}
+      .motto-star{font-size:49px}
+      section{padding:70px 7vw}
+      .intro,.example,.first-step{grid-template-columns:1fr;gap:30px}
+      .pillars{grid-template-columns:1fr 1fr}
+      .pillar{padding:20px 12px 22px;min-height:0}
+      .pillar:nth-child(odd){padding-left:0}
+      .pillar:nth-child(2){border-right:0}
+      .pillar:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      .manifesto-head{align-items:start}
+      .manifesto-head p{display:none}
+      .project{box-shadow:6px 6px 0 var(--navy)}
+      .callout{grid-template-columns:1fr;padding:65px 7vw;gap:27px}
+      .callout .button{width:max-content}
+      .origin-story{width:auto;margin:10px 7vw 70px}
+      footer{align-items:flex-start;flex-direction:column;gap:10px}
+      .dialog{padding:30px 22px}
+    }
+    @media(max-width:420px){.pillars{grid-template-columns:1fr}.pillar,.pillar:nth-child(odd){padding:18px 0;border-right:0;border-bottom:1px solid var(--line)}.pillar:last-child{border-bottom:0}}
+
+    /* ── Respeto a «reducir movimiento» ── */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+      .ticker{white-space:normal;text-align:center}
+      .ticker-track{flex-wrap:wrap;justify-content:center;padding:0 6vw}
+      .ticker-track .dup,.ticker-pause{display:none}
+    }
   </style>
 </head>
 <body>
-  <div class="topline"></div>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <div class="topline" aria-hidden="true"></div>
   <header>
-    <a class="brand" href="#inicio" aria-label="Hasta La Vista, inicio"><span class="brand-mark">H</span> HASTA LA VISTA</a>
-    <nav aria-label="Navegación principal"><a href="#idea">La idea</a><a href="#como">Cómo funciona</a><a href="#vision">Visión</a><a class="nav-join" href="#participa" data-open>Participa ↗</a></nav>
+    <a class="brand" href="#inicio" aria-label="Hasta La Vista, inicio"><img src="icono.png" alt=""> HASTA LA VISTA</a>
+    <nav class="nav" aria-label="Navegación principal">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menú</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#idea">La idea</a></li>
+        <li><a href="#como">Cómo funciona</a></li>
+        <li><a href="#ejemplo">Un ejemplo</a></li>
+        <li><a href="#vision">Visión</a></li>
+      </ul>
+      <a class="nav-join" href="#participa" data-open>Participa ↗</a>
+    </nav>
   </header>
+
   <main id="inicio">
-    <section class="hero">
+    <section class="hero" id="contenido" tabindex="-1">
       <div>
         <div class="eyebrow">Una plataforma para hacer que ocurra</div>
         <h1>Hagamos<br>algo <em>bello.</em></h1>
         <p class="hero-copy">La belleza no debería ser un lujo. Ideas valientes, inteligencia humana, agentes de IA y trabajo compartido para crear cosas bellas que mejoren la vida de todos.</p>
         <p class="hero-gift">Hagamos España aún más bella de lo que ya es.</p>
-        <div class="hero-actions"><a class="button" href="#idea">Descubre la idea <span class="arrow">↘</span></a><a class="text-link" href="#participa" data-open>Quiero participar</a></div>
+        <div class="hero-actions"><a class="button" href="#idea">Descubre la idea <span class="arrow" aria-hidden="true">↘</span></a><a class="text-link" href="#participa" data-open>Quiero participar</a></div>
       </div>
-      <div class="art" aria-label="Logotipo de Hasta La Vista"><div class="art-image"><img class="hero-logo" src="emblema-arbol.png" alt="Árbol azul con raíces y círculos rojos y amarillos"></div><div class="seed-caption">De una semilla de coraje puede crecer algo inmenso.<small>Albert Einstein: «Todas las religiones, las artes y las ciencias son ramas del mismo árbol.»</small></div></div>
+      <figure class="art" style="margin:0">
+        <img class="hero-logo" src="emblema-arbol.png" alt="Emblema de Hasta La Vista: un árbol azul marino con raíces, dentro de un círculo rojo y otro dorado" width="1254" height="1080">
+        <figcaption class="seed-caption">De una semilla de coraje puede crecer algo inmenso.<small>Albert Einstein: «Todas las religiones, las artes y las ciencias son ramas del mismo árbol.»</small></figcaption>
+      </figure>
     </section>
+
     <div class="motto"><div><blockquote>« No hay genio<br>sin un poco de <em>locura.</em> »</blockquote><small>La audacia también es una forma de belleza</small></div><span class="motto-star" aria-hidden="true">✳</span></div>
     <div class="dream-line"><blockquote>« No hagas pequeño tu sueño por empezar con pocos medios. »</blockquote><small>Tu inteligencia y tu valor también son recursos</small></div>
-    <div class="ticker" aria-label="Principios del proyecto"><div class="ticker-track" aria-hidden="true">CREAR <b>✳</b> COOPERAR <b>✳</b> IMAGINAR <b>✳</b> HACER <b>✳</b> COMPARTIR <b>✳</b> CREAR <b>✳</b> COOPERAR <b>✳</b> IMAGINAR <b>✳</b> HACER <b>✳</b> COMPARTIR <b>✳</b></div></div>
+
+    <div class="ticker">
+      <p class="sr-only">Principios del proyecto: crear, cooperar, imaginar, hacer, compartir.</p>
+      <div class="ticker-track" aria-hidden="true">
+        <span>CREAR</span><b>✳</b><span>COOPERAR</span><b>✳</b><span>IMAGINAR</span><b>✳</b><span>HACER</span><b>✳</b><span>COMPARTIR</span><b>✳</b>
+        <span class="dup">CREAR</span><b class="dup">✳</b><span class="dup">COOPERAR</span><b class="dup">✳</b><span class="dup">IMAGINAR</span><b class="dup">✳</b><span class="dup">HACER</span><b class="dup">✳</b><span class="dup">COMPARTIR</span><b class="dup">✳</b>
+      </div>
+      <button class="ticker-pause" type="button" aria-pressed="false" aria-hidden="true" tabindex="-1">❚❚ Pausa</button>
+    </div>
+
     <section class="intro" id="idea">
       <div><div class="section-label">01 — La intuición</div></div>
       <div><h2>El crowdfunding puede ser mucho más que <em>dar dinero.</em></h2><p>Para nosotros, la belleza es el centro: belleza en lo que imaginamos, en cómo trabajamos juntos y en lo que dejamos en el mundo. ¿Y si también pudieras aportar una idea, una habilidad, unas horas de trabajo, una canción, una máquina o un agente de IA? Hasta La Vista quiere conectar esas formas de contribuir para llevar proyectos extraordinarios del deseo a la realidad.</p></div>
     </section>
+
     <section class="manifesto" id="como">
       <div class="manifesto-head"><div><div class="section-label">02 — La mezcla</div><h2>Muchas formas de hacer.</h2></div><p>UN PRIMER MAPA<br>ABIERTO A QUIEN QUIERA SUMAR</p></div>
       <div class="pillars">
@@ -69,19 +264,126 @@
         <article class="pillar"><span class="num">04 / COMPARTIR</span><h3>La abundancia</h3><p>El valor creado vuelve a quienes lo hicieron posible y al mundo que lo necesita.</p></article>
       </div>
     </section>
-    <section class="callout" id="participa"><div><div class="section-label">03 — La invitación</div><h2>No hace falta esperar a que alguien nos dé permiso para empezar.</h2></div><a class="button" href="#participa" data-open>Ven a imaginarlo <span class="arrow">↗</span></a></section>
+
+    <section class="example" id="ejemplo" aria-labelledby="ejemplo-title">
+      <div class="example-copy">
+        <div class="section-label">03 — Un ejemplo</div>
+        <h2 id="ejemplo-title">Un proyecto,<br><em>cinco</em> formas de sumar.</h2>
+        <p>Así podría verse un proyecto en Hasta La Vista. Cada persona aporta lo que tiene: una idea, unas horas, un oficio, una herramienta de IA o dinero. Todas las aportaciones cuentan y todas se ven.</p>
+        <p class="fine">Ejemplo ilustrativo: el proyecto y las cifras son inventados.</p>
+      </div>
+      <article class="project" aria-labelledby="project-title">
+        <span class="tag">Proyecto semilla · Ejemplo</span>
+        <h3 id="project-title">Devolver el color a la plaza de un pueblo</h3>
+        <p>Un mural colectivo diseñado con los vecinos y pintado entre todos, para que la plaza vuelva a ser un lugar de encuentro.</p>
+        <ul class="bars">
+          <li><div class="bar-head">Ideas y bocetos <span>12 de 15 propuestas</span></div><div class="bar" aria-hidden="true"><i style="--v:80%;--c:var(--gold)"></i></div></li>
+          <li><div class="bar-head">Horas de trabajo <span>140 de 200 h</span></div><div class="bar" aria-hidden="true"><i style="--v:70%;--c:var(--navy)"></i></div></li>
+          <li><div class="bar-head"><div>Oficios<span class="bar-note">Pintura, andamios, iluminación</span></div><span>3 de 5 personas</span></div><div class="bar" aria-hidden="true"><i style="--v:60%;--c:var(--red)"></i></div></li>
+          <li><div class="bar-head"><div>Herramientas IA<span class="bar-note">Bocetos y planificación</span></div><span>2 de 2 agentes</span></div><div class="bar" aria-hidden="true"><i style="--v:100%;--c:var(--navy)"></i></div></li>
+          <li><div class="bar-head"><div>Dinero<span class="bar-note">Pintura y material</span></div><span>1.800 de 4.000 €</span></div><div class="bar" aria-hidden="true"><i style="--v:45%;--c:var(--ink)"></i></div></li>
+        </ul>
+        <div class="project-foot"><p>El dinero es solo una de las cinco barras.</p><a class="button" href="#participa" data-open>Me gustaría sumar <span class="arrow" aria-hidden="true">↗</span></a></div>
+      </article>
+    </section>
+
+    <section class="callout" id="participa"><div><div class="section-label">04 — La invitación</div><h2>No hace falta esperar a que alguien nos dé permiso para empezar.</h2></div><a class="button" href="#participa" data-open>Ven a imaginarlo <span class="arrow" aria-hidden="true">↗</span></a></section>
+
     <section class="first-step" id="vision">
-      <div><div class="section-label">04 — La visión</div><h2>Rendir homenaje<br>a la belleza.</h2><p>Queremos que las ideas ambiciosas encuentren a su gente, sus medios y su momento. Empezamos con una pregunta: ¿qué podríamos crear juntos que haga España —y el mundo— un poco más bello?</p><p>Y la propia plataforma crecerá con esa misma energía: la comunidad podrá proponer mejoras, mientras un equipo cuidador las selecciona, las acredita y protege la belleza y la coherencia del proyecto.</p></div>
+      <div><div class="section-label">05 — La visión</div><h2>Rendir homenaje<br>a la belleza.</h2><p>Queremos que las ideas ambiciosas encuentren a su gente, sus medios y su momento. Empezamos con una pregunta: ¿qué podríamos crear juntos que haga España —y el mundo— un poco más bello?</p><p>Y la propia plataforma crecerá con esa misma energía: la comunidad podrá proponer mejoras, mientras un equipo cuidador las selecciona, las acredita y protege la belleza y la coherencia del proyecto.</p></div>
       <blockquote class="note">«No hay genio sin un poco de locura.»<small>Una invitación a atreverse</small></blockquote>
     </section>
+
     <section class="origin-story" aria-labelledby="origin-title"><div class="section-label">La semilla de Hasta La Vista</div><h2 id="origin-title">De un gran dolor puede nacer algo inmenso.</h2><p>Esta idea nació de mi propio sufrimiento y de un aburrimiento que pesaba. Con una idea, mi energía y <strong>10 euros de una suscripción a ChatGPT</strong>, empecé a construirla. Sueño con que Hasta La Vista alcance el mundo y se gane una hermosa reputación: por la belleza de lo que crea y por el reconocimiento que merecen las personas que lo hacen posible.</p></section>
-  <footer><strong>HASTA LA VISTA</strong><span>Hagamos que algo bello ocurra.</span><span>PROTOTIPO EN CONSTRUCCIÓN · 2026</span></footer>
   </main>
-  <div class="modal" id="join-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="dialog"><button class="close" aria-label="Cerrar">×</button><div class="section-label">La primera conversación</div><h2 id="modal-title">¿Qué te gustaría aportar?</h2><p>Estamos dando forma a la idea. Este prototipo todavía no envía datos: sirve para imaginar quién podría encontrarse aquí.</p><form id="interest-form"><label for="contribution">Me gustaría aportar</label><select id="contribution"><option>Una idea o visión</option><option>Una habilidad o trabajo</option><option>Arte, música o cultura</option><option>IA, tecnología o conocimiento</option><option>Financiación o contactos</option><option>Curiosidad: quiero saber más</option></select><label for="email">Correo (opcional, solo para visualizar el prototipo)</label><input id="email" type="email" placeholder="hola@ejemplo.es"><button class="button" type="submit">Apuntarme a la idea ↗</button><div class="success" id="success">¡Gracias! En esta maqueta no se guarda ni se envía nada. La primera comunidad empieza con una conversación.</div></form></div></div>
+
+  <footer><strong>HASTA LA VISTA</strong><span>Hagamos que algo bello ocurra.</span><span>PROTOTIPO EN CONSTRUCCIÓN · 2026</span></footer>
+
+  <div class="modal" id="join-modal">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="close" type="button" aria-label="Cerrar">×</button>
+      <div class="section-label">La primera conversación</div>
+      <h2 id="modal-title">¿Qué te gustaría aportar?</h2>
+      <p>Estamos dando forma a la idea. Este prototipo todavía no envía datos: sirve para imaginar quién podría encontrarse aquí.</p>
+      <form id="interest-form">
+        <label for="contribution">Me gustaría aportar</label>
+        <select id="contribution"><option>Una idea o visión</option><option>Una habilidad o trabajo</option><option>Arte, música o cultura</option><option>IA, tecnología o conocimiento</option><option>Financiación o contactos</option><option>Curiosidad: quiero saber más</option></select>
+        <label for="email">Correo (opcional, solo para visualizar el prototipo)</label>
+        <input id="email" type="email" autocomplete="email" placeholder="hola@ejemplo.es">
+        <button class="button" type="submit">Apuntarme a la idea <span class="arrow" aria-hidden="true">↗</span></button>
+        <div class="success" id="success" role="status"></div>
+      </form>
+    </div>
+  </div>
   <span class="phrase-pop" aria-hidden="true"></span>
+
   <script>
-    const modal=document.querySelector('.modal');const close=()=>modal.classList.remove('open');document.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();modal.classList.add('open');document.querySelector('.close').focus()}));document.querySelector('.close').addEventListener('click',close);modal.addEventListener('click',e=>{if(e.target===modal)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});document.querySelector('#interest-form').addEventListener('submit',e=>{e.preventDefault();document.querySelector('#success').classList.add('show')});
-    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){const pop=document.querySelector('.phrase-pop');const phrases=['¡Magnífico!','¡Qué maravilla!','¡Qué belleza!','¡A lo grande!','¡Juntos podemos!','¡Manos a la obra!','¡Qué idea tan brillante!'];const colors=['var(--blue)','var(--red)','var(--lime)'];let n=0;const next=()=>{pop.textContent=phrases[n++%phrases.length];pop.style.left=(10+Math.random()*80)+'vw';pop.style.top=(12+Math.random()*76)+'vh';pop.style.color=colors[Math.floor(Math.random()*colors.length)];pop.style.setProperty('--tilt',(Math.random()*12-6)+'deg');pop.classList.remove('show');void pop.offsetWidth;pop.classList.add('show');setTimeout(next,2400+Math.random()*2200)};setTimeout(next,800)}
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Menú en móvil
+    const toggle = document.querySelector('.menu-toggle');
+    const links = document.querySelector('#nav-links');
+    const setMenu = open => { links.classList.toggle('open', open); toggle.setAttribute('aria-expanded', open); toggle.textContent = open ? 'Cerrar' : 'Menú'; };
+    toggle.addEventListener('click', () => setMenu(!links.classList.contains('open')));
+    links.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+
+    // Cinta: botón de pausa
+    const ticker = document.querySelector('.ticker');
+    const pauseBtn = document.querySelector('.ticker-pause');
+    pauseBtn.removeAttribute('aria-hidden'); pauseBtn.removeAttribute('tabindex');
+    pauseBtn.addEventListener('click', () => {
+      const paused = ticker.classList.toggle('paused');
+      pauseBtn.setAttribute('aria-pressed', paused);
+      pauseBtn.textContent = paused ? '▶ Seguir' : '❚❚ Pausa';
+    });
+
+    // Frases de celebración: aparecen una sola vez, como recompensa
+    const pop = document.querySelector('.phrase-pop');
+    const colors = ['var(--navy)', 'var(--red)'];
+    const celebrate = (text, x, y) => {
+      if (calm) return;
+      pop.textContent = text;
+      pop.style.left = (x ?? 50) + 'vw';
+      pop.style.top = (y ?? 40) + 'vh';
+      pop.style.color = colors[Math.floor(Math.random() * colors.length)];
+      pop.style.setProperty('--tilt', (Math.random() * 10 - 5) + 'deg');
+      pop.classList.remove('show'); void pop.offsetWidth; pop.classList.add('show');
+    };
+    if (!calm && 'IntersectionObserver' in window) {
+      const moments = { como: '¡Manos a la obra!', ejemplo: '¡Juntos podemos!', vision: '¡A lo grande!' };
+      const seen = new IntersectionObserver(entries => entries.forEach(en => {
+        if (en.isIntersecting) { seen.unobserve(en.target); celebrate(moments[en.target.id], 20 + Math.random() * 60, 18 + Math.random() * 10); }
+      }), { threshold: .45 });
+      Object.keys(moments).forEach(id => seen.observe(document.getElementById(id)));
+    }
+
+    // Ventana de participación
+    const modal = document.querySelector('#join-modal');
+    const dialog = modal.querySelector('.dialog');
+    const closeBtn = modal.querySelector('.close');
+    let lastTrigger = null;
+    const focusables = () => [...dialog.querySelectorAll('button, select, input, a[href]')];
+    const openModal = trigger => { lastTrigger = trigger; modal.classList.add('open'); document.body.classList.add('modal-open'); document.querySelector('#contribution').focus(); };
+    const closeModal = () => { modal.classList.remove('open'); document.body.classList.remove('modal-open'); if (lastTrigger) lastTrigger.focus(); };
+    document.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); setMenu(false); openModal(el); }));
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => {
+      if (!modal.classList.contains('open')) { if (e.key === 'Escape') setMenu(false); return; }
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Tab') {
+        const f = focusables(), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    document.querySelector('#interest-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const ok = document.querySelector('#success');
+      ok.textContent = '¡Gracias! En esta maqueta no se guarda ni se envía nada. La primera comunidad empieza con una conversación.';
+      ok.classList.add('show');
+      celebrate('¡Qué maravilla!', 50, 18);
+    });
   </script>
 </body>
 </html>
