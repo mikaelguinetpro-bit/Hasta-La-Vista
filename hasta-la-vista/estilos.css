@@ -144,6 +144,7 @@ section{padding:100px 9vw}
 .origin-story h2{position:relative;z-index:1;font:600 clamp(30px,4vw,52px)/1.05 var(--serif);letter-spacing:-.04em;max-width:780px;margin:18px 0}
 .origin-story p{position:relative;z-index:1;max-width:700px;margin:0;font-size:16px;line-height:1.8;color:#eef0fa}
 .origin-story strong{color:var(--gold)}
+.origin-wish{margin:28px 0 0!important;padding-top:24px;border-top:1px solid #ffffff40;font:italic 600 clamp(19px,2vw,24px)/1.45 var(--serif)!important;color:var(--gold)!important;max-width:700px}
 
 footer{padding:28px 6vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:center;font:12px var(--mono);color:var(--muted)}
 footer strong{color:var(--ink);font:700 14px var(--sans);letter-spacing:-.02em}

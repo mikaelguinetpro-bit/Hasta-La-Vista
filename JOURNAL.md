@@ -7,6 +7,10 @@ Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 - Pourquoi : que ChatGPT, Claude et toute autre IA les connaissent et les respectent à chaque intervention.
 - Le site n'est pas modifié.
 
+## 2026-11-03 — Claude — claude/frase-final
+- À la demande de Ritukah, ajout de sa phrase à la fin de son histoire (« La semilla »), en anglais dans les deux versions du site : « I wish the World for the planet Earth. World means the fucking universe. And you can say fucking in my company. No problemos. »
+- Style : italique doré, séparé du texte par un filet fin.
+
 ## 2026-11-03 — Claude — claude/idiomas-y-fuentes
 - **Version française retirée** à la demande de Ritukah : `fr.html` est supprimé, et le bouton FR, le lien `hreflang="fr"` et les textes français de `app.js` sont retirés.
 - Le site existe donc en **deux langues** : espagnol (`index.html`) et anglais (`en.html`).
