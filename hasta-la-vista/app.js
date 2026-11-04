@@ -1,4 +1,4 @@
-// Hasta La Vista — comportamiento común a las cinco versiones (es, en, fr, zh, hi).
+// Hasta La Vista — comportamiento común a las ocho versiones (es, en, fr, pt, ru, ar, hi, zh).
 // Los textos que crea el script están aquí, por idioma. El resto del texto está en cada archivo HTML.
 const T = {
   es: {
@@ -30,6 +30,24 @@ const T = {
     moments: { como: 'चलो, काम शुरू करें!', ejemplo: 'साथ मिलकर हम कर सकते हैं!', vision: 'बड़ा सोचो!' },
     thanks: 'कितना सुंदर!',
     success: 'धन्यवाद! इस प्रोटोटाइप में कुछ भी सहेजा या भेजा नहीं जाता। पहला समुदाय एक बातचीत से शुरू होता है।'
+  },
+  pt: {
+    menu: 'Menu', close: 'Fechar', pause: '❚❚ Pausar', play: '▶ Continuar',
+    moments: { como: 'Mãos à obra!', ejemplo: 'Juntos, conseguimos!', vision: 'Pense grande!' },
+    thanks: 'Que maravilha!',
+    success: 'Obrigado! Nesta maquete nada é salvo nem enviado. A primeira comunidade começa com uma conversa.'
+  },
+  ru: {
+    menu: 'Меню', close: 'Закрыть', pause: '❚❚ Пауза', play: '▶ Продолжить',
+    moments: { como: 'За дело!', ejemplo: 'Вместе мы сможем!', vision: 'Мысли масштабно!' },
+    thanks: 'Как прекрасно!',
+    success: 'Спасибо! В этом прототипе ничего не сохраняется и не отправляется. Первое сообщество начинается с разговора.'
+  },
+  ar: {
+    menu: 'القائمة', close: 'إغلاق', pause: '❚❚ إيقاف مؤقت', play: '▶ متابعة',
+    moments: { como: 'إلى العمل!', ejemplo: 'معًا نستطيع!', vision: 'فكّر بشكل كبير!' },
+    thanks: 'يا للروعة!',
+    success: 'شكرًا! في هذا النموذج لا يُحفظ أي شيء ولا يُرسل. يبدأ المجتمع الأول بمحادثة.'
   }
 };
 const t = T[document.documentElement.lang.slice(0, 2)] || T.es;

@@ -2,6 +2,13 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/ocho-idiomas
+- À la demande de Ritukah, ajout du **portugais** (`pt.html`), du **russe** (`ru.html`) et de l'**arabe** (`ar.html`). Le site passe à **huit langues mondiales**.
+- Arabe : page entière **de droite à gauche** (`dir="rtl"`), avec la mise en page en miroir (piliers, citation, flèches, ombres…), les polices arabes de l'appareil, et la phrase dorée de Ritukah gardée de gauche à droite.
+- Sélecteur ES · EN · FR · PT · RU · عربي · हिन्दी · 中文 sur chaque page (il passe à la ligne sur petit écran). Liens `hreflang`, textes du script dans `app.js`. L'adresse principale ouvre la langue du visiteur parmi les huit.
+- Couverture : environ 60 % de l'humanité si l'on additionne les langues (CIA World Factbook, 2022), et environ la moitié une fois les personnes multilingues comptées une seule fois. Slogan proposé : « 8 idiomas. Medio mundo. Una sola chispa. »
+- `AGENTS.md` (règle des huit langues) et `VISION.md` mis à jour.
+
 ## 2026-11-04 — Claude — claude/hindi
 - À la demande de Ritukah, ajout du **hindi** (`hi.html`). Le site existe maintenant en **cinq langues mondiales** : espagnol, anglais, français, chinois, hindi.
 - Sélecteur ES · EN · FR · 中文 · हिन्दी sur chaque page, liens `hreflang`, textes du script dans `app.js`. L'adresse principale ouvre aussi le hindi pour les visiteurs dont l'appareil est en hindi.

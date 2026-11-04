@@ -82,7 +82,7 @@ Hasta La Vista est déjà un projet immense en lui-même. Son lien avec les autr
 
 - Claude, ChatGPT et toute autre IA travaillent sur les mêmes fichiers, selon `AGENTS.md`. **Ritukah décide.**
 - On construit **simple**, et on grandit **avec la communauté des créateurs**, au moment voulu.
-- Le site est en **cinq langues mondiales** : **espagnol** (langue principale), **anglais**, **français**, **chinois** et **hindi**. Ensemble, ce sont les langues de **plus de 4 milliards de locuteurs**. C'est un point fort de Hasta La Vista : une disponibilité immense, pour un coût presque nul.
+- Le site est en **huit langues mondiales** : **espagnol** (langue principale), **anglais**, **français**, **portugais**, **russe**, **arabe**, **hindi** et **chinois**. Additionnées, ce sont les langues d'environ **60 % de l'humanité** (CIA World Factbook, 2022). Une fois retirés les gens qui parlent plusieurs de ces langues, on touche environ **la moitié du monde**. C'est un point fort de Hasta La Vista : une disponibilité immense, pour un coût presque nul. Slogan : **« 8 idiomas. Medio mundo. Una sola chispa. »**
 - Les idées gardées pour plus tard :
   - des constellations de créateurs ;
   - « le ciel d'hier » ;
