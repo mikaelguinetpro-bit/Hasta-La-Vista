@@ -2,6 +2,15 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/explorar
+- Idée de Ritukah pour le pilier 3 « Hacerlo real » : trouver un projet qui nous appelle.
+- **Dans la vitrina (8 langues)**, un nouveau panneau **« ✳ Explorar »** propose :
+  - **🎲 Un proyecto al azar** : la vitrina vole jusqu'à un projet tiré au sort et ouvre sa fiche ;
+  - **six thèmes** (Naturaleza, Arte, Música, Reparar, Aprender, Comunidad) : les projets liés s'illuminent et se relient en **constellation** dorée, les autres s'atténuent ;
+  - **une idée écrite librement** : la vitrina trouve les projets proches, d'après des mots-clés par thème et dans chaque langue (simulé dans la maquette, en attendant la vraie IA). S'il n'y a rien, elle propose d'allumer cette étincelle soi-même, avec l'idée déjà écrite dans le formulaire.
+  - L'IA annonce chaque connexion dans son journal (visibilité).
+- **Sur le site (8 langues)**, sous le pilier 3 : « Encuentra un proyecto que te llame → ». Le lien ouvre la vitrina de la même langue, directement sur le panneau Explorar (`#explorar`).
+
 ## 2026-11-04 — Claude — claude/vitrina-ocho-idiomas
 - À la demande de Ritukah, la vitrina existe maintenant dans les **huit langues** du site : français (`vitrina-etoiles.html`), portugais (`vitrina-estrelas.html`), russe (`vitrina-zvezdy.html`), arabe (`vitrina-nujum.html`, de droite à gauche), hindi (`vitrina-tare.html`) et chinois (`vitrina-xingxing.html`), en plus de l'espagnol et de l'anglais.
 - Tout est traduit : le ciel, le journal de l'IA, les règles, la Tríada, les fiches, la recherche, les pages Projet, Créateur et Liste, les noms d'exemple, les étoiles filantes et leurs phrases. Les heures s'affichent au format de chaque langue.
