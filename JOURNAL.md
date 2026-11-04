@@ -2,6 +2,9 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/vitrina-retorno
+- Ajout d'un lien « ← Hasta La Vista » en haut de la vitrina, dans les deux langues, pour revenir au site : la vitrina n'est plus un cul-de-sac.
+
 ## 2026-11-04 — Claude — claude/maqueta-vitrina
 - Ajout de la maquette **« la vitrina »** dans `maqueta/`, en espagnol (`vitrina-estrellas.html`) et en anglais (`vitrina-stars.html`). Elle a été construite pas à pas avec Ritukah les 3 et 4 novembre.
 - Contenu :

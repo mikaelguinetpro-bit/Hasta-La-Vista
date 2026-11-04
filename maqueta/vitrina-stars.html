@@ -115,6 +115,8 @@
   .phrase{position:absolute;z-index:1;pointer-events:none;font:italic 600 clamp(17px,1.8vw,22px)/1.3 var(--serif);color:#f4efe5;text-shadow:0 0 18px #030d1f,0 0 6px #030d1f;max-width:min(360px,calc(100% - 40px));text-align:center;opacity:0;transform:translate(-50%,-50%);transition:opacity 1.2s}
   .phrase.show{opacity:.95}
   .page ul.list button.skybtn{margin-left:8px;background:none;border:1px solid #9d9686;border-radius:99px;padding:3px 10px;font:500 12px var(--mono);cursor:pointer;color:#052a58}
+  .home-link{pointer-events:auto;display:inline-block;margin-bottom:14px;font:600 13px var(--sans);color:var(--paper);border:1px solid #ffffff55;border-radius:99px;padding:7px 13px;background:#030d1f99}
+  .home-link:hover{background:#ffffff1a}
   /* Mensaje de la IA */
   .whisper{position:absolute;max-width:290px;padding:12px 15px;background:#052a58e6;border:1px solid #ebaf1288;border-radius:14px;font:italic 600 16px/1.35 var(--serif);color:var(--paper);pointer-events:none;opacity:0;transform:translate(-50%,-120%) scale(.9);transition:opacity .5s,transform .5s;z-index:2}
   .whisper.show{opacity:1;transform:translate(-50%,-135%) scale(1)}
@@ -202,6 +204,7 @@
   <main class="sky" id="sky">
     <canvas id="canvas" role="img" aria-label="A sky of stars: each star is a creator, a helping hand or an action by the AI. Everything that happens also appears, as text, in the AI Journal."></canvas>
     <div class="intro" id="intro">
+      <a class="home-link" href="../hasta-la-vista/en.html" aria-label="Back to the Hasta La Vista website">← Hasta La Vista</a>
       <div class="label">Mock-up · The window</div>
       <h1>Every creator<br>is a <em>star.</em></h1>
       <p>Tap a star to meet it. Come closer and you’ll see others being born around it. Move away and you’ll see other galaxies.</p>
