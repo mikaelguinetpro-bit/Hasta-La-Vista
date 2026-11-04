@@ -22,6 +22,20 @@
       <input id="q" type="search" autocomplete="off" placeholder="Buscar persona, idea, proyecto…" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
       <ul class="results" id="results" role="listbox" aria-label="Resultados"></ul>
     </div>
+    <button class="mesa-btn" type="button" id="mesa-btn" aria-controls="mesa">✳ La mesa común</button>
+    <section class="mesa" id="mesa" aria-labelledby="mesa-title">
+      <button class="x" type="button" aria-label="×">×</button>
+      <h3 id="mesa-title">La mesa común</h3>
+      <p class="intro-m">Aquí ofrecer y pedir valen lo mismo. Nadie esconde sus manos.</p>
+      <p class="fund" id="mesa-fund"></p>
+      <ul id="mesa-list" aria-live="polite"></ul>
+      <form id="mesa-form">
+        <input id="mesa-name" maxlength="30" placeholder="El que tú quieras" aria-label="Tu nombre">
+        <select id="mesa-type" aria-label="Ofrezco / Necesito"><option value="offer">Ofrezco</option><option value="need">Necesito</option></select>
+        <input id="mesa-text" maxlength="80" placeholder="Ej.: una escalera, dos horas el domingo…" aria-label="Ej.: una escalera, dos horas el domingo…">
+        <button type="submit">Poner en la mesa</button>
+      </form>
+    </section>
     <button class="explore-btn" type="button" id="explore-btn" aria-controls="explore">✳ Explorar</button>
     <section class="explore" id="explore" aria-labelledby="ex-title">
       <button class="x" type="button" aria-label="Cerrar">×</button>
@@ -246,6 +260,7 @@ function labelAt(x, y, text, sub, a){
 }
 
 // ───────── Universo en 3D: cada estrella tiene profundidad y el universo gira
+const gifts = [];
 const rot = {yaw: 0, pitch: 0, vy: 0, vp: 0}, D3 = 3; let autoRot = false, vframe = 0;
 function V(n){
   if (n._vf === vframe) return n._v;
@@ -292,7 +307,7 @@ function drawNode(n, t, a){
   const grow = n.born ? Math.max(0, Math.min(1, (t - n.born) / 1200)) : 1;
   if (grow <= 0) return;
   const pulse = 1 + .16 * Math.sin(t / 700 + n.wx * 40);
-  const vis = Math.max(pr, n.depth ? 1.2 : 2.2) * grow * pulse;
+  const vis = Math.max(pr, n.depth ? 1.2 : 2.2) * grow * pulse * (1 + .18 * Math.min(n.glow || 0, 5));
   glow(x, y, vis, COLORS[n.kind], a);
   if (pr > 2) hits.push({n, x, y, r: Math.max(vis * 2.2, 12)});
   if (pr > 9 && n.name) labelAt(x + vis * 1.6 + 6, y + 4, n.name, n.title || n.idea || '', a * Math.min(1, (pr - 9) / 8));
@@ -339,6 +354,12 @@ function draw(t){
       const pts = [...focusSet].filter(n => roots.includes(n)).sort((p, q) => V(p)[0] - V(q)[0]).map(n => toS(...V(n)));
       ctx.strokeStyle = 'rgba(235,175,18,.75)'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 6]); ctx.beginPath();
       pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); ctx.setLineDash([]);
+    }
+    for (const g of gifts){
+      const k = (performance.now() - g.t0) / 2400; if (k > 1 || !roots.includes(g.a) || !roots.includes(g.b)) continue;
+      const [x1, y1] = toS(...V(g.a)), [x2, y2] = toS(...V(g.b)), px = x1 + (x2 - x1) * k, py = y1 + (y2 - y1) * k;
+      const gg = ctx.createRadialGradient(px, py, 0, px, py, 16); gg.addColorStop(0, 'rgba(255,236,180,.95)'); gg.addColorStop(1, 'rgba(255,236,180,0)');
+      ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(px, py, 16, 0, 7); ctx.fill(); needDraw = true;
     }
     vframe++; for (const s of [...roots].sort((p, q) => V(p)[2] - V(q)[2])) drawNode(s, t, 1);
     drawMeteor(t);
@@ -809,11 +830,67 @@ $('ex-form').onsubmit = e => { e.preventDefault(); byText($('ex-q').value.trim()
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('explore').classList.contains('open')) closeExplore(); });
 const wantExplore = location.hash === '#explorar';
 
+
+// ───────── La mesa común: ofrecer y pedir valen lo mismo
+const MS = {"title": "La mesa común", "offer": "Ofrece", "need": "Necesita", "fund": "Fondo común: {m} € · {o} objetos esperando nueva vida", "offers": ["restos de pintura azul", "una escalera de 3 metros", "dos horas el sábado", "semillas de tomate", "clases de guitarra", "una furgoneta para un día"], "needs": ["pintura para un mural", "algo para llegar alto", "manos para plantar", "semillas para el huerto", "alguien que enseñe música", "transporte para el material"], "thanks": ["¡Gracias de corazón!", "Sin ti no habría sido posible.", "Me has alegrado la semana."], "logAdd": "{who} {verb} en la mesa común: «{t}».", "vOffer": "ofrece", "vNeed": "pide", "logMatch": "{ai} ha juntado a {a}, que ofrece «{o}», con {b}, que necesita «{n}».", "whyMatch": "lo que a uno le sobra, a otro le falta: la abundancia es que circule.", "logGift": "{a} ha dado «{t}» a {b}. Sus dos estrellas brillan un poco más.", "whyGift": "dar y recibir hacen brillar igual.", "logThanks": "{b} da las gracias a {a}: «{msg}»", "sayMatch": "Una ofrece, otra necesita: os presento.", "sayGift": "¡Un regalo ha cruzado el cielo!", "tag": "La mesa común", "rOffer": "Lo necesito", "rNeed": "Puedo ayudar", "empty": "La mesa está esperando tu primera palabra."};
+const mesa = []; let fundM = 495, fundO = 12;
+function mesaStar(name){ return roots.find(r => r.name === name && r.kind !== 'ai') || addStar('help', {name, title: MS.title}); }
+function mesaAdd(name, kind, text, cat, silent){
+  const it = {id: 'm' + mesa.length + '-' + Date.now(), name, kind, text, cat, done: false, star: mesaStar(name)};
+  mesa.unshift(it); if (mesa.length > 14) mesa.pop();
+  if (!silent) log(fmtX(MS.logAdd, {who: who(it.star), verb: kind === 'offer' ? MS.vOffer : MS.vNeed, t: esc(text)}));
+  renderMesa(); return it;
+}
+function giftLine(a, b){ gifts.push({a, b, t0: performance.now()}); if (!a.links.includes(b)) a.links.push(b); a.glow = (a.glow || 0) + 1; b.glow = (b.glow || 0) + 1; redraw(); }
+function mesaGift(giver, receiver, text){
+  const a = mesaStar(giver), b = mesaStar(receiver);
+  giftLine(a, b); say(b, MS.sayGift, MS.tag);
+  log(fmtX(MS.logGift, {a: who(a), b: who(b), t: esc(text)}), MS.whyGift);
+  setTimeout(() => log(fmtX(MS.logThanks, {a: who(a), b: who(b), msg: esc(pick(MS.thanks))})), 1400);
+}
+function mesaMatch(){
+  const offers = mesa.filter(i => i.kind === 'offer' && !i.done), needs = mesa.filter(i => i.kind === 'need' && !i.done);
+  for (const o of offers){ const n = needs.find(x => x.cat === o.cat && x.name !== o.name); if (!n) continue;
+    o.done = n.done = true; const ai = addStar('ai', {title: MS.sayMatch});
+    say(ai, MS.sayMatch, MS.tag);
+    log(fmtX(MS.logMatch, {ai: who(ai), a: who(o.star), b: who(n.star), o: esc(o.text), n: esc(n.text)}), MS.whyMatch);
+    setTimeout(() => { mesaGift(o.name, n.name, o.text); fundO++; renderMesa(); }, 2600);
+    renderMesa(); return true; }
+  return false;
+}
+function renderMesa(){
+  $('mesa-fund').textContent = fmtX(MS.fund, {m: fundM.toLocaleString(document.documentElement.lang), o: fundO});
+  const open = mesa.filter(i => !i.done);
+  $('mesa-list').innerHTML = open.length ? open.map(i => `<li><span class="k">${esc(i.kind === 'offer' ? MS.offer : MS.need)}</span><b>${esc(i.name)}</b> · <span class="t">${esc(i.text)}</span><button type="button" data-m="${i.id}">${esc(i.kind === 'offer' ? MS.rOffer : MS.rNeed)}</button></li>`).join('') : `<li>${esc(MS.empty)}</li>`;
+  $('mesa-list').querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
+    const it = mesa.find(x => x.id === b.dataset.m); const me = $('mesa-name').value.trim();
+    if (!me){ $('mesa-name').focus(); return; }
+    it.done = true; if (it.kind === 'offer') mesaGift(it.name, me, it.text); else mesaGift(me, it.name, it.text);
+    renderMesa();
+  });
+}
+function openMesa(){ closeExplore(); $('mesa').classList.add('open'); renderMesa(); $('mesa-name').focus(); }
+function closeMesa(){ $('mesa').classList.remove('open'); }
+$('mesa-btn').onclick = () => $('mesa').classList.contains('open') ? closeMesa() : openMesa();
+$('mesa').querySelector('.x').onclick = closeMesa;
+$('explore-btn').addEventListener('click', closeMesa);
+$('mesa-form').onsubmit = e => {
+  e.preventDefault(); const name = $('mesa-name').value.trim(), text = $('mesa-text').value.trim(); if (!name || !text) return;
+  const kind = $('mesa-type').value; const cat = (kind === 'offer' ? MS.offers : MS.needs).findIndex(x => normX(x) === normX(text));
+  mesaAdd(name, kind, text, cat); $('mesa-text').value = ''; setTimeout(mesaMatch, 1500);
+};
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('mesa').classList.contains('open')) closeMesa(); });
+const wantMesa = location.hash === '#mesa';
+// la mesa empieza con algunas ofertas y necesidades
+[[0, 'offer'], [2, 'need'], [1, 'offer'], [4, 'need'], [3, 'offer']].forEach(([c, k], i) => setTimeout(() => mesaAdd(pick(NAMES), k, (k === 'offer' ? MS.offers : MS.needs)[c], c, true), 50 * i));
+EVENTS.push(() => { const c = Math.floor(Math.random() * MS.offers.length), k = Math.random() < .5 ? 'offer' : 'need'; mesaAdd(pick(NAMES), k, (k === 'offer' ? MS.offers : MS.needs)[c], c); });
+EVENTS.push(() => { if (!mesaMatch()){ const c = Math.floor(Math.random() * MS.offers.length); mesaAdd(pick(NAMES), 'need', MS.needs[c], c); } });
+
 // Arranque
 addEventListener('resize', resize); resize();
 log(`<span class="who">IA</span> ha abierto el diario. Todo lo que haga aparecerá aquí.`, 'visibilidad: nada se decide en la sombra.');
 EVENTS[0](); EVENTS[0](); EVENTS[0](); piStep();
-requestAnimationFrame(draw); requestAnimationFrame(spinTick); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname); if (wantExplore) setTimeout(openExplore, 400);
+requestAnimationFrame(draw); requestAnimationFrame(spinTick); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname); if (wantExplore) setTimeout(openExplore, 400); if (wantMesa) setTimeout(openMesa, 400);
 </script>
 </body>
 </html>
