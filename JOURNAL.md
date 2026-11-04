@@ -2,6 +2,12 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/pilares-y-lema
+- Nouvelle section **« 06 — Los cuatro pilares »** dans les huit langues, juste avant « La semilla ». Elle s'ouvre sur le titre « Cuatro pilares sostienen el árbol. », suivi de quatre bandeaux légers (Visibilidad, Benevolencia, Optimización, Disponibilidad). Chacun a une couleur du logo et une seule phrase.
+- Juste après les piliers, le **slogan de Ritukah**, présenté comme l'exemple concret des piliers Optimización et Disponibilidad : « En unos minutos con la IA, Hasta La Vista habla el idioma de medio planeta. », signé « 8 idiomas · Un regalo de la IA. Un regalo de Ritukah. »
+- Le mot « touchée » a été remplacé par « parle la langue de » : c'est plus juste, puisque le site est accessible dans ces langues sans avoir encore été vu par tous.
+- Mise en miroir pour l'arabe. `VISION.md` mis à jour avec le slogan.
+
 ## 2026-11-04 — Claude — claude/ocho-idiomas
 - À la demande de Ritukah, ajout du **portugais** (`pt.html`), du **russe** (`ru.html`) et de l'**arabe** (`ar.html`). Le site passe à **huit langues mondiales**.
 - Arabe : page entière **de droite à gauche** (`dir="rtl"`), avec la mise en page en miroir (piliers, citation, flèches, ombres…), les polices arabes de l'appareil, et la phrase dorée de Ritukah gardée de gauche à droite.
