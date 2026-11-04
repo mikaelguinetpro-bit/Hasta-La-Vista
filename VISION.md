@@ -82,7 +82,7 @@ Hasta La Vista est déjà un projet immense en lui-même. Son lien avec les autr
 
 - Claude, ChatGPT et toute autre IA travaillent sur les mêmes fichiers, selon `AGENTS.md`. **Ritukah décide.**
 - On construit **simple**, et on grandit **avec la communauté des créateurs**, au moment voulu.
-- Le site est en **espagnol** et en **anglais**, jamais en français, par décision de Ritukah.
+- Le site est en **espagnol** (langue principale), en **anglais**, en **français** et en **chinois**.
 - Les idées gardées pour plus tard :
   - des constellations de créateurs ;
   - « le ciel d'hier » ;

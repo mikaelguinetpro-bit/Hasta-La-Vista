@@ -19,15 +19,15 @@ Ces quatre piliers, définis par Ritukah, guident **chaque décision**, sur le s
 
 - **Hasta La Vista** est une plateforme qui veut rendre le monde plus beau grâce aux idées, au travail partagé, à l'intelligence humaine et aux agents IA.
 - Le site se trouve dans `hasta-la-vista/` :
-  - `index.html` (espagnol, langue principale) et `en.html` (anglais) : les deux versions de la page, avec la même structure ;
-  - `estilos.css` : le style commun aux deux versions ;
-  - `app.js` : le comportement commun (menu, fenêtre, animations), avec en tête les quelques textes du script dans les deux langues ;
+  - `index.html` (espagnol, langue principale), `en.html` (anglais), `fr.html` (français) et `zh.html` (chinois simplifié) : les quatre versions de la page, avec la même structure ;
+  - `estilos.css` : le style commun aux quatre versions (le chinois utilise les polices chinoises de l'appareil, car celles du site n'ont pas de caractères chinois) ;
+  - `app.js` : le comportement commun (menu, fenêtre, animations), avec en tête les quelques textes du script dans les quatre langues ;
   - `fuentes/` : les polices, hébergées sur le site (licence SIL OFL, ne pas supprimer les fichiers `OFL-*.txt`) ;
   - `emblema-arbol.png` (l'arbre, emblème du projet) et `icono.png` (l'icône d'onglet).
 - La maquette de la future plateforme se trouve dans `maqueta/` : `vitrina-estrellas.html` (espagnol) et `vitrina-stars.html` (anglais). C'est **« la vitrina »** : un ciel d'étoiles où chaque créateur est une étoile, avec l'IA qui travaille à la vue de tous (journal public, Tríada de la Benevolencia, rythme de π, recettes, comptes visibles, pages Projet et Créateur). Chaque fichier est autonome : polices et code sont intégrés. Rien n'y est enregistré, et les créateurs comme les chiffres sont inventés.
-- La règle des deux langues s'applique aussi à la maquette : toute modification se fait dans les deux fichiers.
-- **Toute modification du texte ou de la structure d'une page doit être faite dans les deux langues** (`index.html` et `en.html`) dans la même branche. L'anglais suit toujours l'espagnol.
-- **Le site n'a pas de version française, par décision de Ritukah. N'en ajoute jamais**, ni page, ni traduction, ni bouton de langue.
+- La maquette existe pour l'instant en espagnol et en anglais. Toute modification se fait dans ses deux fichiers. Les pages française et chinoise du site mènent à la maquette anglaise.
+- **Toute modification du texte ou de la structure d'une page doit être faite dans les quatre langues** (`index.html`, `en.html`, `fr.html`, `zh.html`) dans la même branche. Les autres langues suivent toujours l'espagnol.
+- La phrase dorée de Ritukah, à la fin de son histoire, reste **en anglais dans toutes les langues** : c'est sa voix.
 - Les échanges avec Ritukah, les messages de commit et le journal sont **en français**.
 - Le site doit rester **beau, ambitieux et accessible**, au service des quatre piliers ci-dessus.
 

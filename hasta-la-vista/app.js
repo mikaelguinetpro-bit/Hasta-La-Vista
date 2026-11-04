@@ -1,4 +1,4 @@
-// Hasta La Vista — comportamiento común a las dos versiones (es, en).
+// Hasta La Vista — comportamiento común a las cuatro versiones (es, en, fr, zh).
 // Los textos que crea el script están aquí, por idioma. El resto del texto está en cada archivo HTML.
 const T = {
   es: {
@@ -12,9 +12,21 @@ const T = {
     moments: { como: 'Let’s get to work!', ejemplo: 'Together we can!', vision: 'Think big!' },
     thanks: 'How wonderful!',
     success: 'Thank you! Nothing is saved or sent in this mock-up. The first community begins with a conversation.'
+  },
+  fr: {
+    menu: 'Menu', close: 'Fermer', pause: '❚❚ Pause', play: '▶ Reprendre',
+    moments: { como: 'Au travail\u202f!', ejemplo: 'Ensemble, on peut\u202f!', vision: 'En grand\u202f!' },
+    thanks: 'Quelle merveille\u202f!',
+    success: 'Merci\u202f! Dans cette maquette, rien n’est enregistré ni envoyé. La première communauté commence par une conversation.'
+  },
+  zh: {
+    menu: '菜单', close: '关闭', pause: '❚❚ 暂停', play: '▶ 继续',
+    moments: { como: '动手吧！', ejemplo: '一起就能做到！', vision: '往大处想！' },
+    thanks: '太美好了！',
+    success: '谢谢！在这个原型里，不会保存或发送任何内容。第一个社区，从一次对话开始。'
   }
 };
-const t = T[document.documentElement.lang] || T.es;
+const t = T[document.documentElement.lang.slice(0, 2)] || T.es;
 const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Menú en móvil
