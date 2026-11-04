@@ -12,6 +12,11 @@ Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
   - on peut répondre soi-même à une offre (« Lo necesito ») ou à un besoin (« Puedo ayudar »).
 - **Sur le site (8 langues)**, sous le pilier 4 « La abundancia » : « Ofrece o pide, sin juicio → », qui ouvre la table commune (`#mesa`).
 - `VISION.md` : ajout de la table commune dans « Le chemin d'une idée ».
+- **Vérification complète, à la demande de Ritukah** (8 langues × 3 tailles d'écran, chaque geste testé). Trois défauts corrigés :
+  - l'IA ne rapproche plus deux textes libres sans rapport (« un piano » avec « une voiture ») ;
+  - on ne peut plus se faire un don à soi-même ;
+  - le lien `#mesa` ouvre aussi la table quand on est déjà dans la vitrina.
+  - Si on répond sans avoir écrit son nom, le champ du nom s'allume en doré pour le demander.
 
 ## 2026-11-04 — Claude — claude/cita-dar-recibir
 - Nouvelle citation de Ritukah sur le don et l'accueil, dans les huit langues, placée dans la section **« 06 — Los cuatro pilares »**, juste après la citation de Ritukah et Claudie :
