@@ -17,6 +17,10 @@ Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
   - l'animation se met en pause quand l'onglet est caché, pour économiser la batterie ;
   - des étoiles filantes portent des « frases que hacen bien ».
 - `AGENTS.md` décrit la maquette et y applique la règle des deux langues.
+- **Trois liens vers la vitrina sur le site**, choisis avec Ritukah, dans les deux langues :
+  - dans le menu du haut, un bouton doré « La vitrina ✳ » / « The window ✳ » ;
+  - sous le pilier n° 1, « La chispa » : « Mira las chispas encenderse → » ;
+  - juste après la phrase dorée de Ritukah, « World means the fucking universe » : « ✳ Entra en el universo » / « ✳ Step into the universe ».
 - Idées gardées pour plus tard, avec la communauté : des constellations, « le ciel d'hier », une visite guidée.
 
 ## 2026-11-03 — Claude — claude/cuatro-pilares

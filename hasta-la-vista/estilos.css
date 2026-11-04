@@ -45,6 +45,13 @@ header{height:72px;display:flex;align-items:center;justify-content:space-between
 .nav-links a{padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s}
 .nav-links a:hover{border-color:var(--ink)}
 .nav-join{white-space:nowrap;padding:11px 16px;border:1px solid var(--ink);border-radius:99px;transition:.2s}
+.nav-links a.nav-vitrina{background:var(--gold);color:var(--ink);border:1px solid var(--ink);border-radius:99px;padding:6px 12px}
+.nav-links a.nav-vitrina:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.pillar-link{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;color:var(--navy);border-bottom:1px solid var(--navy);padding-bottom:2px}
+.pillar-link:hover{color:var(--red);border-color:var(--red)}
+.origin-link{position:relative;z-index:1;display:inline-flex;margin-top:24px;background:var(--gold);color:var(--ink);padding:14px 22px;border-radius:99px;font-weight:600;font-size:15px;box-shadow:0 0 28px #ebaf1266;transition:transform .2s,box-shadow .2s}
+.origin-link:hover{transform:translateY(-2px);box-shadow:0 0 40px #ebaf12aa}
+.origin-link:focus-visible{outline-color:var(--gold)}
 .nav-join:hover{background:var(--ink);color:var(--paper)}
 .menu-toggle{display:none;background:none;border:1px solid var(--ink);border-radius:99px;padding:10px 15px;font-size:14px;font-weight:600;cursor:pointer}
 
@@ -176,6 +183,7 @@ footer strong{color:var(--ink);font:700 14px var(--sans);letter-spacing:-.02em}
   .nav-links{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:8px 6vw 16px}
   .nav-links.open{display:flex}
   .nav-links a{display:block;padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .nav-links a.nav-vitrina{margin-top:12px;text-align:center;padding:12px}
   .hero{grid-template-columns:1fr;padding:60px 7vw 50px;gap:30px}
   .hero:after{display:none}
   .brand{font-size:14px;gap:8px}
