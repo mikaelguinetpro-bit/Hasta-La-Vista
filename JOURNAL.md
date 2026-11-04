@@ -2,6 +2,11 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/cita-dar-recibir
+- Dans la section « 05 — La visión », la citation **« No hay genio sin un poco de locura »** (déjà présente dans le bandeau jaune, donc en double) est remplacée par une nouvelle citation sur le don et l'accueil, voulue par Ritukah, dans les huit langues :
+  > « Dar es hermoso. Recibir también. Aquí nadie esconde sus manos: ni las que ofrecen, ni las que se abren. » — *Dar y recibir, libremente y sin juicio*
+- Elle parle des piliers Bienveillance et Visibilité : ici, on ne cache ni le fait de donner, ni le fait de recevoir.
+
 ## 2026-11-04 — Claude — claude/vitrina-ligera
 - **Vitrina allégée** : chaque vitrina passe d'environ 320 Ko à **60-75 Ko** (quatre à cinq fois plus légère).
   - Les polices ne sont plus recopiées dans chaque fichier : elles viennent de `hasta-la-vista/fuentes/`, déjà utilisé par le site. Quand on passe du site à la vitrina, le navigateur réutilise les polices déjà téléchargées.
