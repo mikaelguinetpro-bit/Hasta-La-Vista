@@ -2,6 +2,7 @@
 
 Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, ChatGPT / Codex, et toute autre).
 **À lire en entier avant chaque intervention.**
+Lis aussi **`VISION.md`**, qui décrit la vision du projet.
 
 ## La vision : les quatre piliers
 

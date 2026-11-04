@@ -2,6 +2,11 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/vision
+- Ajout de `VISION.md` : la vision de Ritukah sur une page, relue et corrigée par lui. On y trouve l'origine, les créateurs, les quatre piliers, le chemin d'une idée, la reconnaissance, l'IA derrière la vitrine, la Tríada et la vitrina.
+- Nouvelle idée de Ritukah : **plus un créateur donne, plus il est mis en avant** (dans la vitrina, son étoile brille davantage), sans classement qui humilie.
+- `AGENTS.md` demande maintenant de lire aussi `VISION.md`.
+
 ## 2026-11-04 — Claude — claude/vitrina-retorno
 - Ajout d'un lien « ← Hasta La Vista » en haut de la vitrina, dans les deux langues, pour revenir au site : la vitrina n'est plus un cul-de-sac.
 
