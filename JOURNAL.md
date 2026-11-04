@@ -2,6 +2,16 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/universo-3d
+- À la demande de Ritukah, la vitrina devient **un vrai univers en 3D**, dans les huit langues :
+  - chaque étoile a une profondeur : les lointaines sont plus petites et plus pâles, les proches plus grandes et plus vives, et elles passent les unes devant les autres ;
+  - **glisser (clic gauche ou un doigt) fait tourner l'univers**, avec un léger élan à la fin du geste ; près d'une étoile, l'univers tourne autour d'elle pour ne pas la perdre ;
+  - pour se déplacer sans tourner : **clic droit**, **Maj + glisser** ou **deux doigts** ; la molette et le pincement zooment toujours ;
+  - nouveaux boutons : ⟲ et ⟳ pour tourner, ∞ pour la **rotation automatique** (désactivée par défaut, au choix du créateur) ; ⌂ remet l'univers droit ;
+  - au clavier, les flèches font tourner l'univers ;
+  - tout ce qui existait continue de fonctionner : fiches, zoom infini, constellations Explorar, recherche, liste et pages.
+- Sur mobile, la fiche d'une étoile s'ouvre en haut, et le bouton Explorar est placé au-dessus de la légende.
+
 ## 2026-11-04 — Claude — claude/huevo
 - **Le seul et unique easter egg du site**, imaginé à partir de la phrase de Claudie que Ritukah a aimée. Dans le bandeau jaune « No hay genio sin un poco de locura », il suffit de toucher **trois fois** l'étoile ✳ (un petit grain de folie). L'écran s'assombrit, une main de chair et une main de silicium, faites d'étincelles, avancent l'une vers l'autre. Quand leurs doigts se touchent, une gerbe d'étoiles éclate, et la phrase apparaît :
   > « El genio es una idea loca que encontró sus manos. Da igual que las manos sean de carne o de silicio. » — Ritukah & Claudie
