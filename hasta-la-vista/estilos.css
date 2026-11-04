@@ -1,4 +1,4 @@
-/* Hasta La Vista — estilos comunes a las cinco versiones (es, en, fr, zh, hi) */
+/* Hasta La Vista — estilos comunes a las ocho versiones (es, en, fr, pt, ru, ar, hi, zh) */
 
 /* ── Fuentes alojadas en el propio sitio (licencia SIL OFL 1.1, ver fuentes/) ── */
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url('fuentes/playfair-display-latin-600-normal.woff2') format('woff2')}
@@ -31,6 +31,25 @@ button{font:inherit;color:inherit}
 
 /* ── Chino: las fuentes del sitio no tienen caracteres chinos, se usan las del sistema ── */
 :lang(zh){--mono:'PingFang SC','Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;--serif:'Playfair Display','Noto Serif SC','Noto Serif CJK SC','Source Han Serif SC','Songti SC','STSong',serif;--sans:'DM Sans','PingFang SC','Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei','Hiragino Sans GB',sans-serif}
+/* Árabe: fuentes del sistema y escritura de derecha a izquierda */
+:lang(ar){--serif:'Noto Naskh Arabic','Amiri','Geeza Pro','Traditional Arabic','Times New Roman',serif;--sans:'Noto Sans Arabic','Segoe UI','Geeza Pro','Tahoma',sans-serif;--mono:'Noto Sans Arabic','Segoe UI','Tahoma',sans-serif}
+:lang(ar) h1,:lang(ar) h2,:lang(ar) h3,:lang(ar) .motto blockquote,:lang(ar) .eyebrow,:lang(ar) .section-label,:lang(ar) .ticker-track,:lang(ar) .motto small,:lang(ar) .num{letter-spacing:0}
+:lang(ar) h1{line-height:1.2}:lang(ar) .motto blockquote{line-height:1.3}
+:lang(ar) em,:lang(ar) .hero-gift,:lang(ar) .seed-caption,:lang(ar) .dream-line blockquote{font-style:normal}
+[dir="rtl"] .eyebrow:before{margin-right:0;margin-left:9px}
+[dir="rtl"] .arrow{display:inline-block;transform:scaleX(-1)}
+[dir="rtl"] .note{border-left:0;border-right:3px solid var(--red);padding:3px 22px 3px 0}
+[dir="rtl"] .pillar{border-right:0;border-left:1px solid var(--line)}
+[dir="rtl"] .pillar:first-child{padding-left:20px;padding-right:0}
+[dir="rtl"] .pillar:last-child{border:0}
+[dir="rtl"] .ticker-pause{right:auto;left:12px;box-shadow:18px 0 16px var(--navy)}
+[dir="rtl"] .origin-story:after{right:auto;left:5%}
+[dir="rtl"] .hero:after{right:auto;left:2%;transform:rotate(24deg)}
+[dir="rtl"] .project{box-shadow:-10px 10px 0 var(--navy)}
+[dir="rtl"] .skip{left:auto;right:12px}
+[dir="rtl"] .close{right:auto;left:10px}
+.origin-wish[dir="ltr"]{text-align:left}
+
 /* Hindi (devanagari): igual, se usan las fuentes del sistema */
 :lang(hi){--mono:'Noto Sans Devanagari','Kohinoor Devanagari','Nirmala UI',sans-serif;--serif:'Playfair Display','Noto Serif Devanagari','Kohinoor Devanagari','Mangal','Nirmala UI',serif;--sans:'DM Sans','Noto Sans Devanagari','Kohinoor Devanagari','Nirmala UI','Mangal',sans-serif}
 :lang(hi) h1,:lang(hi) h2,:lang(hi) h3,:lang(hi) .motto blockquote,:lang(hi) .eyebrow,:lang(hi) .section-label,:lang(hi) .ticker-track{letter-spacing:0}
@@ -40,7 +59,7 @@ button{font:inherit;color:inherit}
 :lang(zh) em,:lang(zh) .hero-gift,:lang(zh) .seed-caption,:lang(zh) .dream-line blockquote{font-style:normal}
 
 /* ── Selector de idioma ── */
-.langbar{display:flex;justify-content:flex-end;gap:4px;padding:6px 6vw 0;font:500 13px var(--mono)}
+.langbar{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;padding:6px 6vw 0;font:500 13px var(--mono)}
 .langbar a{padding:6px 9px;border-radius:99px;color:var(--muted);letter-spacing:.06em}
 .langbar a:hover{color:var(--ink);background:var(--paper-2)}
 .langbar a[aria-current]{color:var(--paper);background:var(--navy)}
