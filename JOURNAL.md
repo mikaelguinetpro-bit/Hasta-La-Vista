@@ -2,6 +2,13 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/ligero-y-en-linea
+- **Image de l'arbre allégée** : de 880 Ko à 70 Ko (840 px de large, 128 couleurs), sans différence visible. Le site se charge bien plus vite sur téléphone. L'original reste dans l'historique Git.
+- **Préparation de la mise en ligne (GitHub Pages)** :
+  - `index.html` à la racine du dépôt : il ouvre le site dans la langue du visiteur (espagnol par défaut), pour que l'adresse principale fonctionne directement ;
+  - `.nojekyll` : GitHub sert les fichiers tels quels.
+- Il reste à Ritukah d'activer GitHub Pages dans les réglages du dépôt.
+
 ## 2026-11-04 — Claude — claude/frances-chino
 - À la demande de Ritukah, le site existe maintenant en **quatre langues** : espagnol (`index.html`), anglais (`en.html`), **français** (`fr.html`, retour du français par décision de Ritukah) et **chinois simplifié** (`zh.html`).
 - Sélecteur ES · EN · FR · 中文 sur chaque page. Liens `hreflang` mis à jour. Textes du script ajoutés dans `app.js`.
