@@ -2,6 +2,14 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/frances-chino
+- À la demande de Ritukah, le site existe maintenant en **quatre langues** : espagnol (`index.html`), anglais (`en.html`), **français** (`fr.html`, retour du français par décision de Ritukah) et **chinois simplifié** (`zh.html`).
+- Sélecteur ES · EN · FR · 中文 sur chaque page. Liens `hreflang` mis à jour. Textes du script ajoutés dans `app.js`.
+- Chinois : les polices du site n'ont pas de caractères chinois, donc celles de l'appareil prennent le relais (Noto, PingFang, Microsoft YaHei…). Pas d'italique artificiel en chinois.
+- La phrase dorée de Ritukah reste en anglais dans toutes les langues.
+- La vitrina n'existe qu'en espagnol et en anglais : les pages française et chinoise mènent à la version anglaise.
+- `AGENTS.md` et `VISION.md` mis à jour : règle des quatre langues, et retrait de l'interdiction du français.
+
 ## 2026-11-04 — Claude — claude/enlace-aportar
 - Sous le pilier n° 2 « Lo que sabes » / « What you know », ajout d'un lien qui ouvre la fenêtre de participation « ¿Qué te gustaría aportar? » (une idée, un savoir-faire, de l'art, de la musique, de l'IA, du financement…) : « Cuéntanos qué quieres aportar → » / « Tell us what you’d like to bring → ». Même style que le lien du pilier n° 1. (Une première version menait par erreur à la vitrina ; corrigé à la demande de Ritukah.)
 
