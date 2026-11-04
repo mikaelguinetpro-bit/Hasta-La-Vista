@@ -195,6 +195,9 @@ section{padding:100px 9vw}
 .cita-duo{margin:56px auto 8px;max-width:760px;text-align:center}
 .cita-duo blockquote{margin:0;font:600 clamp(22px,2.6vw,32px)/1.4 var(--serif);letter-spacing:-.01em;color:var(--ink)}
 .cita-duo blockquote em{color:var(--navy)}
+.cita-dar{margin-top:40px}
+.cita-dar blockquote{font-size:clamp(20px,2.2vw,28px);color:var(--navy)}
+.cita-dar:before{color:var(--gold)}
 .cita-duo figcaption{margin-top:14px;font:500 13px var(--mono);letter-spacing:.08em;color:var(--muted)}
 .cita-duo:before{content:'✳';display:block;font:28px/1 var(--serif);color:var(--red);margin-bottom:14px}
 :lang(ar) .cita-duo blockquote em,:lang(hi) .cita-duo blockquote em,:lang(zh) .cita-duo blockquote em{font-style:normal}

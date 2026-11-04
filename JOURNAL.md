@@ -3,9 +3,10 @@
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
 ## 2026-11-04 — Claude — claude/cita-dar-recibir
-- Dans la section « 05 — La visión », la citation **« No hay genio sin un poco de locura »** (déjà présente dans le bandeau jaune, donc en double) est remplacée par une nouvelle citation sur le don et l'accueil, voulue par Ritukah, dans les huit langues :
+- Nouvelle citation de Ritukah sur le don et l'accueil, dans les huit langues, placée dans la section **« 06 — Los cuatro pilares »**, juste après la citation de Ritukah et Claudie :
   > « Dar es hermoso. Recibir también. Aquí nadie esconde sus manos: ni las que ofrecen, ni las que se abren. » — *Dar y recibir, libremente y sin juicio*
 - Elle parle des piliers Bienveillance et Visibilité : ici, on ne cache ni le fait de donner, ni le fait de recevoir.
+- **Règle de Ritukah** : la citation « No hay genio sin un poco de locura » reste **volontairement en double** (bandeau jaune et section Visión). Elle lui est chère. Ne la retire pas et ne la remplace pas.
 
 ## 2026-11-04 — Claude — claude/vitrina-ligera
 - **Vitrina allégée** : chaque vitrina passe d'environ 320 Ko à **60-75 Ko** (quatre à cinq fois plus légère).
