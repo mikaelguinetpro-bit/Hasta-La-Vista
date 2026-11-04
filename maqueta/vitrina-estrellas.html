@@ -251,7 +251,7 @@
 
   <aside aria-labelledby="log-title">
     <header>
-      <nav class="langs" aria-label="Idioma"><a href="vitrina-estrellas.html" lang="es" hreflang="es" aria-current="page">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a></nav>
+      <nav class="langs" aria-label="Idioma"><a href="vitrina-estrellas.html" lang="es" hreflang="es" aria-current="page">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
       <div class="label">Visibilidad</div>
       <h2 id="log-title">Diario de la IA</h2>
       <p>Todo lo que hace la IA aparece aquí, con su razón, en directo. Nada se decide en la sombra: la IA propone, las personas deciden.</p>
@@ -688,7 +688,7 @@ $('mydata').onclick = () => {
   const k = ideas.indexOf(mine); if (k > -1) ideas.splice(k, 1);
   if (cardNode === mine) closeCard();
   byId.delete(mine.id);
-  logEl.querySelectorAll('li').forEach(li => { if (!li.classList.contains('mine') && !li.querySelector(`[data-ref="${mine.id}"], a[href="#proyecto-${mine.id}"]`)) return; li.className = 'removed'; li.innerHTML = '<time>—</time>Una chispa fue retirada por su autor/a. Sus datos han sido borrados de verdad.'; });
+  logEl.querySelectorAll('li').forEach(li => { if (!li.classList.contains('mine') && !li.querySelector(`[data-ref="${mine.id}"], a[href="#proyecto-${mine.id}"], a[href="#creador-${CSS.escape(slug(mine.name))}"]`)) return; li.className = 'removed'; li.innerHTML = '<time>—</time>Una chispa fue retirada por su autor/a. Sus datos han sido borrados de verdad.'; });
   log(`<span class="who">IA</span> ha borrado al instante una estrella y sus datos, a petición de su autor/a.`, 'tus datos son tuyos: sin Tríada, sin espera, sin archivo.');
   mine = null; $('mydata').classList.remove('on'); $('open').focus(); redraw();
 };
@@ -714,10 +714,10 @@ $('form').onsubmit = e => {
   log(`${who(s)} ha encendido su chispa: ${idea(s)}.`, '', true);
   $('mydata').classList.add('on');
   setTimeout(() => say(s, `Tu estrella brilla, ${n}. ¡Qué belleza!`, 'Toca tu estrella para verla'), 1200);
-  setTimeout(() => { const a = addStar('ai', {title: `Ha acreditado a ${n}`});
+  setTimeout(() => { if (!roots.includes(s)) return; const a = addStar('ai', {title: `Ha acreditado a ${n}`});
     say(a, `He acreditado a ${n}: esta idea es tuya, para siempre.`, 'La IA, a la vista');
     log(`${who(a)} ha registrado a ${who(s)} como autor/a de ${idea(s)}.`, 'cada idea pertenece a quien la tuvo, con fecha y hora.');
-    if (need) setTimeout(() => log(`${who(a)} busca creadores que puedan aportar: ${esc(need)}.`, 'la mezcla empieza buscando a la gente adecuada.'), 1500);
+    if (need) setTimeout(() => roots.includes(s) && log(`${who(a)} busca creadores que puedan aportar: ${esc(need)}.`, 'la mezcla empieza buscando a la gente adecuada.'), 1500);
   }, 4200);
 };
 

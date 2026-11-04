@@ -2,6 +2,12 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/vitrina-ocho-idiomas
+- À la demande de Ritukah, la vitrina existe maintenant dans les **huit langues** du site : français (`vitrina-etoiles.html`), portugais (`vitrina-estrelas.html`), russe (`vitrina-zvezdy.html`), arabe (`vitrina-nujum.html`, de droite à gauche), hindi (`vitrina-tare.html`) et chinois (`vitrina-xingxing.html`), en plus de l'espagnol et de l'anglais.
+- Tout est traduit : le ciel, le journal de l'IA, les règles, la Tríada, les fiches, la recherche, les pages Projet, Créateur et Liste, les noms d'exemple, les étoiles filantes et leurs phrases. Les heures s'affichent au format de chaque langue.
+- Sélecteur de langue à huit langues dans chaque vitrina. Chaque page du site mène maintenant à la vitrina de sa langue, et le lien « ← Hasta La Vista » ramène au site dans la même langue.
+- Testé dans les huit langues, sur ordinateur et mobile : allumer son étoile, la rechercher, ouvrir sa fiche, la liste, une page projet, effacer ses données.
+
 ## 2026-11-04 — Claude — claude/pilares-y-lema
 - Nouvelle section **« 06 — Los cuatro pilares »** dans les huit langues, juste avant « La semilla ». Elle s'ouvre sur le titre « Cuatro pilares sostienen el árbol. », suivi de quatre bandeaux légers (Visibilidad, Benevolencia, Optimización, Disponibilidad). Chacun a une couleur du logo et une seule phrase.
 - Juste après les piliers, le **slogan de Ritukah**, présenté comme l'exemple concret des piliers Optimización et Disponibilidad : « En unos minutos con la IA, Hasta La Vista habla el idioma de medio planeta. », signé « 8 idiomas · Un regalo de la IA. Un regalo de Ritukah. »

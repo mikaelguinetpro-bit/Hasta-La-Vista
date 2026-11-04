@@ -251,7 +251,7 @@
 
   <aside aria-labelledby="log-title">
     <header>
-      <nav class="langs" aria-label="Language"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en" aria-current="page">EN</a></nav>
+      <nav class="langs" aria-label="Language"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en" aria-current="page">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
       <div class="label">Visibility</div>
       <h2 id="log-title">AI Journal</h2>
       <p>Everything the AI does appears here, live, with its reason. Nothing is decided in the shadows: the AI proposes, people decide.</p>
@@ -688,7 +688,7 @@ $('mydata').onclick = () => {
   const k = ideas.indexOf(mine); if (k > -1) ideas.splice(k, 1);
   if (cardNode === mine) closeCard();
   byId.delete(mine.id);
-  logEl.querySelectorAll('li').forEach(li => { if (!li.classList.contains('mine') && !li.querySelector(`[data-ref="${mine.id}"], a[href="#project-${mine.id}"]`)) return; li.className = 'removed'; li.innerHTML = '<time>—</time>A spark was withdrawn by its author. Its data has truly been deleted.'; });
+  logEl.querySelectorAll('li').forEach(li => { if (!li.classList.contains('mine') && !li.querySelector(`[data-ref="${mine.id}"], a[href="#project-${mine.id}"], a[href="#creator-${CSS.escape(slug(mine.name))}"]`)) return; li.className = 'removed'; li.innerHTML = '<time>—</time>A spark was withdrawn by its author. Its data has truly been deleted.'; });
   log(`<span class="who">AI</span> has instantly deleted a star and its data, at its author’s request.`, 'your data is yours: no Triad, no waiting, no archive.');
   mine = null; $('mydata').classList.remove('on'); $('open').focus(); redraw();
 };
@@ -714,10 +714,10 @@ $('form').onsubmit = e => {
   log(`${who(s)} has lit their spark: ${idea(s)}.`, '', true);
   $('mydata').classList.add('on');
   setTimeout(() => say(s, `Your star is shining, ${n}. How beautiful!`, 'Tap your star to see it'), 1200);
-  setTimeout(() => { const a = addStar('ai', {title: `Credited ${n}`});
+  setTimeout(() => { if (!roots.includes(s)) return; const a = addStar('ai', {title: `Credited ${n}`});
     say(a, `I’ve credited ${n}: this idea is yours, forever.`, 'The AI, in full view');
     log(`${who(a)} has recorded ${who(s)} as the author of ${idea(s)}.`, 'every idea belongs to whoever had it, with date and time.');
-    if (need) setTimeout(() => log(`${who(a)} is looking for creators who can contribute: ${esc(need)}.`, 'the mix begins by finding the right people.'), 1500);
+    if (need) setTimeout(() => roots.includes(s) && log(`${who(a)} is looking for creators who can contribute: ${esc(need)}.`, 'the mix begins by finding the right people.'), 1500);
   }, 4200);
 };
 
