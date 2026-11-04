@@ -1,4 +1,4 @@
-/* Hasta La Vista — estilos comunes a las cuatro versiones (es, en, fr, zh) */
+/* Hasta La Vista — estilos comunes a las cinco versiones (es, en, fr, zh, hi) */
 
 /* ── Fuentes alojadas en el propio sitio (licencia SIL OFL 1.1, ver fuentes/) ── */
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url('fuentes/playfair-display-latin-600-normal.woff2') format('woff2')}
@@ -30,7 +30,12 @@ button{font:inherit;color:inherit}
 .skip:focus{top:12px}
 
 /* ── Chino: las fuentes del sitio no tienen caracteres chinos, se usan las del sistema ── */
-:lang(zh){--serif:'Playfair Display','Noto Serif SC','Noto Serif CJK SC','Source Han Serif SC','Songti SC','STSong',serif;--sans:'DM Sans','PingFang SC','Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei','Hiragino Sans GB',sans-serif}
+:lang(zh){--mono:'PingFang SC','Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;--serif:'Playfair Display','Noto Serif SC','Noto Serif CJK SC','Source Han Serif SC','Songti SC','STSong',serif;--sans:'DM Sans','PingFang SC','Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei','Hiragino Sans GB',sans-serif}
+/* Hindi (devanagari): igual, se usan las fuentes del sistema */
+:lang(hi){--mono:'Noto Sans Devanagari','Kohinoor Devanagari','Nirmala UI',sans-serif;--serif:'Playfair Display','Noto Serif Devanagari','Kohinoor Devanagari','Mangal','Nirmala UI',serif;--sans:'DM Sans','Noto Sans Devanagari','Kohinoor Devanagari','Nirmala UI','Mangal',sans-serif}
+:lang(hi) h1,:lang(hi) h2,:lang(hi) h3,:lang(hi) .motto blockquote,:lang(hi) .eyebrow,:lang(hi) .section-label,:lang(hi) .ticker-track{letter-spacing:0}
+:lang(hi) h1{line-height:1.15}:lang(hi) .motto blockquote{line-height:1.25}
+:lang(hi) em,:lang(hi) .hero-gift,:lang(hi) .seed-caption,:lang(hi) .dream-line blockquote{font-style:normal}
 :lang(zh) h1,:lang(zh) h2,:lang(zh) .motto blockquote{letter-spacing:0}
 :lang(zh) em,:lang(zh) .hero-gift,:lang(zh) .seed-caption,:lang(zh) .dream-line blockquote{font-style:normal}
 

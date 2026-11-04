@@ -1,4 +1,4 @@
-// Hasta La Vista — comportamiento común a las cuatro versiones (es, en, fr, zh).
+// Hasta La Vista — comportamiento común a las cinco versiones (es, en, fr, zh, hi).
 // Los textos que crea el script están aquí, por idioma. El resto del texto está en cada archivo HTML.
 const T = {
   es: {
@@ -24,6 +24,12 @@ const T = {
     moments: { como: '动手吧！', ejemplo: '一起就能做到！', vision: '往大处想！' },
     thanks: '太美好了！',
     success: '谢谢！在这个原型里，不会保存或发送任何内容。第一个社区，从一次对话开始。'
+  },
+  hi: {
+    menu: 'मेनू', close: 'बंद करें', pause: '❚❚ रोकें', play: '▶ चलाएँ',
+    moments: { como: 'चलो, काम शुरू करें!', ejemplo: 'साथ मिलकर हम कर सकते हैं!', vision: 'बड़ा सोचो!' },
+    thanks: 'कितना सुंदर!',
+    success: 'धन्यवाद! इस प्रोटोटाइप में कुछ भी सहेजा या भेजा नहीं जाता। पहला समुदाय एक बातचीत से शुरू होता है।'
   }
 };
 const t = T[document.documentElement.lang.slice(0, 2)] || T.es;
