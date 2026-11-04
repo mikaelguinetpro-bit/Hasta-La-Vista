@@ -2,6 +2,9 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/enlace-aportar
+- Ajout d'un 4e lien vers la vitrina, sous le pilier n° 2 « Lo que sabes » / « What you know » : « Súmate a un proyecto → » / « Join in on a project → ». Même style que le lien du pilier n° 1.
+
 ## 2026-11-04 — Claude — claude/vision
 - Ajout de `VISION.md` : la vision de Ritukah sur une page, relue et corrigée par lui. On y trouve l'origine, les créateurs, les quatre piliers, le chemin d'une idée, la reconnaissance, l'IA derrière la vitrine, la Tríada et la vitrina.
 - Nouvelle idée de Ritukah : **plus un créateur donne, plus il est mis en avant** (dans la vitrina, son étoile brille davantage), sans classement qui humilie.
