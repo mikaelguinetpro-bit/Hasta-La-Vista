@@ -2,6 +2,27 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/maqueta-vitrina
+- Ajout de la maquette **« la vitrina »** dans `maqueta/`, en espagnol (`vitrina-estrellas.html`) et en anglais (`vitrina-stars.html`). Elle a été construite pas à pas avec Ritukah les 3 et 4 novembre.
+- Contenu :
+  - le ciel d'étoiles avec un zoom infini (aportaciones et ecos vers l'intérieur, galaxies et universos vers l'extérieur) ;
+  - les fiches cliquables, la recherche, et les pages Projet, Créateur et Liste ;
+  - le journal public de l'IA, avec noms et idées cliquables ;
+  - la Tríada de la Benevolencia ;
+  - le droit d'effacer ses données pour de bon ;
+  - la revisite au rythme de π, les recettes et les comptes visibles.
+- Dernières améliorations :
+  - une légende des couleurs ;
+  - une vue en liste, accessible au clavier et aux lecteurs d'écran ;
+  - l'animation se met en pause quand l'onglet est caché, pour économiser la batterie ;
+  - des étoiles filantes portent des « frases que hacen bien ».
+- `AGENTS.md` décrit la maquette et y applique la règle des deux langues.
+- **Trois liens vers la vitrina sur le site**, choisis avec Ritukah, dans les deux langues :
+  - dans le menu du haut, un bouton doré « La vitrina ✳ » / « The window ✳ » ;
+  - sous le pilier n° 1, « La chispa » : « Mira las chispas encenderse → » ;
+  - juste après la phrase dorée de Ritukah, « World means the fucking universe » : « ✳ Entra en el universo » / « ✳ Step into the universe ».
+- Idées gardées pour plus tard, avec la communauté : des constellations, « le ciel d'hier », une visite guidée.
+
 ## 2026-11-03 — Claude — claude/cuatro-pilares
 - Ajout dans `AGENTS.md` des **quatre piliers de la vision** définis par Ritukah : visibilité, bienveillance, optimisation, disponibilité. S'y ajoute l'idée qui les relie : tout le monde est créateur.
 - Pourquoi : que ChatGPT, Claude et toute autre IA les connaissent et les respectent à chaque intervention.
