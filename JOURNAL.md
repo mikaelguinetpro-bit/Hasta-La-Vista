@@ -3,7 +3,7 @@
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
 ## 2026-11-04 — Claude — claude/enlace-aportar
-- Ajout d'un 4e lien vers la vitrina, sous le pilier n° 2 « Lo que sabes » / « What you know » : « Súmate a un proyecto → » / « Join in on a project → ». Même style que le lien du pilier n° 1.
+- Sous le pilier n° 2 « Lo que sabes » / « What you know », ajout d'un lien qui ouvre la fenêtre de participation « ¿Qué te gustaría aportar? » (une idée, un savoir-faire, de l'art, de la musique, de l'IA, du financement…) : « Cuéntanos qué quieres aportar → » / « Tell us what you’d like to bring → ». Même style que le lien du pilier n° 1. (Une première version menait par erreur à la vitrina ; corrigé à la demande de Ritukah.)
 
 ## 2026-11-04 — Claude — claude/vision
 - Ajout de `VISION.md` : la vision de Ritukah sur une page, relue et corrigée par lui. On y trouve l'origine, les créateurs, les quatre piliers, le chemin d'une idée, la reconnaissance, l'IA derrière la vitrine, la Tríada et la vitrina.
