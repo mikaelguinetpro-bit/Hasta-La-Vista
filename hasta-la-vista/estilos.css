@@ -224,6 +224,23 @@ footer strong{color:var(--ink);font:700 14px var(--sans);letter-spacing:-.02em}
 .success{display:none;background:var(--gold);padding:14px;font-size:15px;line-height:1.5;margin-top:16px}
 .success.show{display:block}
 
+/* ── El único huevo de Pascua: «un poco de locura» ── */
+.motto-star{background:none;border:0;padding:0;cursor:pointer;line-height:1;transition:transform .4s}
+.motto-star:hover{transform:rotate(40deg) scale(1.08)}
+.motto-star.spin{transform:rotate(372deg) scale(1.15)}
+.egg{position:fixed;inset:0;z-index:30;background:radial-gradient(ellipse at center,#0b2a5b 0%,#030d1f 70%);display:grid;place-items:center;color:#f4efe5}
+.egg[hidden]{display:none}
+.egg canvas{position:absolute;inset:0;width:100%;height:100%}
+.egg-text{position:relative;text-align:center;max-width:760px;padding:0 6vw;opacity:0;transition:opacity 1.6s}
+.egg.reveal .egg-text{opacity:1}
+.egg-l1{font:600 clamp(28px,4.4vw,56px)/1.15 var(--serif);letter-spacing:-.02em;margin:0 0 18px}
+.egg-l2{font:italic 600 clamp(18px,2.2vw,26px)/1.4 var(--serif);color:var(--gold);margin:0}
+.egg-sign{font:500 13px var(--mono);letter-spacing:.1em;color:#c9d2ea;margin:22px 0 26px}
+.egg-back{background:none;border:1px solid #ffffff66;color:#f4efe5;border-radius:99px;padding:10px 20px;font:600 14px var(--sans);cursor:pointer}
+.egg-back:focus-visible{outline-color:var(--gold)}
+:lang(ar) .egg-l1,:lang(hi) .egg-l1,:lang(zh) .egg-l1{letter-spacing:0}
+:lang(ar) .egg-l2,:lang(hi) .egg-l2,:lang(zh) .egg-l2{font-style:normal}
+
 /* ── Frases de celebración ── */
 .phrase-pop{position:fixed;z-index:8;left:50%;top:50%;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.55) rotate(var(--tilt,0deg));font:italic 700 clamp(20px,2.7vw,32px)/1 var(--serif);white-space:nowrap;text-shadow:0 2px 0 var(--paper),2px 0 0 var(--paper),-2px 0 0 var(--paper),0 -2px 0 var(--paper)}
 .phrase-pop.show{animation:phrase-pop 1.65s ease-out both}
