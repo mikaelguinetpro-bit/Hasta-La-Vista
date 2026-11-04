@@ -764,6 +764,7 @@ function route(){
   else { page.classList.remove('open'); page.innerHTML = ''; }
 }
 addEventListener('hashchange', route);
+addEventListener('hashchange', () => { if (location.hash === '#mesa'){ history.replaceState(null, '', location.pathname); openMesa(); } });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && page.classList.contains('open')) location.hash = 'cielo'; });
 
 
@@ -850,7 +851,7 @@ function mesaGift(giver, receiver, text){
 }
 function mesaMatch(){
   const offers = mesa.filter(i => i.kind === 'offer' && !i.done), needs = mesa.filter(i => i.kind === 'need' && !i.done);
-  for (const o of offers){ const n = needs.find(x => x.cat === o.cat && x.name !== o.name); if (!n) continue;
+  for (const o of offers){ if (o.cat < 0) continue; const n = needs.find(x => x.cat === o.cat && x.name !== o.name); if (!n) continue;
     o.done = n.done = true; const ai = addStar('ai', {title: MS.sayMatch});
     say(ai, MS.sayMatch, MS.tag);
     log(fmtX(MS.logMatch, {ai: who(ai), a: who(o.star), b: who(n.star), o: esc(o.text), n: esc(n.text)}), MS.whyMatch);
@@ -864,11 +865,13 @@ function renderMesa(){
   $('mesa-list').innerHTML = open.length ? open.map(i => `<li><span class="k">${esc(i.kind === 'offer' ? MS.offer : MS.need)}</span><b>${esc(i.name)}</b> · <span class="t">${esc(i.text)}</span><button type="button" data-m="${i.id}">${esc(i.kind === 'offer' ? MS.rOffer : MS.rNeed)}</button></li>`).join('') : `<li>${esc(MS.empty)}</li>`;
   $('mesa-list').querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
     const it = mesa.find(x => x.id === b.dataset.m); const me = $('mesa-name').value.trim();
-    if (!me){ $('mesa-name').focus(); return; }
+    if (!me){ askName(); return; }
+    if (me === it.name) return;
     it.done = true; if (it.kind === 'offer') mesaGift(it.name, me, it.text); else mesaGift(me, it.name, it.text);
     renderMesa();
   });
 }
+function askName(){ const n = $('mesa-name'); n.classList.add('need-name'); n.focus(); setTimeout(() => n.classList.remove('need-name'), 1600); }
 function openMesa(){ closeExplore(); $('mesa').classList.add('open'); renderMesa(); $('mesa-name').focus(); }
 function closeMesa(){ $('mesa').classList.remove('open'); }
 $('mesa-btn').onclick = () => $('mesa').classList.contains('open') ? closeMesa() : openMesa();
