@@ -2,6 +2,13 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/vitrina-ligera
+- **Vitrina allégée** : chaque vitrina passe d'environ 320 Ko à **60-75 Ko** (quatre à cinq fois plus légère).
+  - Les polices ne sont plus recopiées dans chaque fichier : elles viennent de `hasta-la-vista/fuentes/`, déjà utilisé par le site. Quand on passe du site à la vitrina, le navigateur réutilise les polices déjà téléchargées.
+  - Le style commun aux huit langues est maintenant dans un seul fichier, `maqueta/vitrina.css` (22 Ko, lui aussi gardé en mémoire par le navigateur d'une page à l'autre). Les règles propres à l'arabe, au hindi et au chinois y sont incluses.
+- Le code et les textes restent dans chaque fichier de langue. Les mettre en commun demanderait de réorganiser la façon dont les textes sont rangés (certaines traductions changent l'ordre des phrases). Ce sera à faire au moment de construire la vraie plateforme.
+- Testé dans les huit langues, sur ordinateur et mobile : rotation 3D, déplacement, fiches, Explorar, recherche, liste, pages, effacement, et chargement des polices.
+
 ## 2026-11-04 — Claude — claude/universo-3d
 - À la demande de Ritukah, la vitrina devient **un vrai univers en 3D**, dans les huit langues :
   - chaque étoile a une profondeur : les lointaines sont plus petites et plus pâles, les proches plus grandes et plus vives, et elles passent les unes devant les autres ;
