@@ -192,6 +192,13 @@ section{padding:100px 9vw}
 [dir="rtl"] .slogan{border-left:0;border-right:4px solid var(--gold)}
 :lang(ar) .pilares h2,:lang(hi) .pilares h2,:lang(zh) .pilares h2,:lang(ar) .slogan-text,:lang(hi) .slogan-text,:lang(zh) .slogan-text{letter-spacing:0}
 :lang(ar) .slogan-sign,:lang(hi) .slogan-sign,:lang(zh) .slogan-sign,:lang(ar) .slogan-text em,:lang(hi) .slogan-text em,:lang(zh) .slogan-text em{font-style:normal}
+.cita-duo{margin:56px auto 8px;max-width:760px;text-align:center}
+.cita-duo blockquote{margin:0;font:600 clamp(22px,2.6vw,32px)/1.4 var(--serif);letter-spacing:-.01em;color:var(--ink)}
+.cita-duo blockquote em{color:var(--navy)}
+.cita-duo figcaption{margin-top:14px;font:500 13px var(--mono);letter-spacing:.08em;color:var(--muted)}
+.cita-duo:before{content:'✳';display:block;font:28px/1 var(--serif);color:var(--red);margin-bottom:14px}
+:lang(ar) .cita-duo blockquote em,:lang(hi) .cita-duo blockquote em,:lang(zh) .cita-duo blockquote em{font-style:normal}
+:lang(ar) .cita-duo blockquote,:lang(hi) .cita-duo blockquote,:lang(zh) .cita-duo blockquote{letter-spacing:0}
 .origin-story{position:relative;margin:20px auto 90px;width:min(84%,1080px);padding:44px clamp(24px,6vw,76px);background:var(--navy);color:#fff;overflow:hidden}
 .origin-story:after{content:'✳';position:absolute;right:5%;top:-32px;font:190px/1 var(--serif);color:var(--gold);opacity:.9;transform:rotate(12deg);pointer-events:none}
 .origin-story .section-label{position:relative;z-index:1;color:#c9d2ea}
