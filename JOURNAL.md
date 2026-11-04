@@ -2,6 +2,10 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/cita-manos
+- Ajout, juste après le slogan (section des quatre piliers), de la citation écrite ensemble par Ritukah et Claude, dans les huit langues : « Una idea sin manos se queda en sueño. Unas manos sin idea se quedan en máquina. Juntas, encienden estrellas. » — Ritukah & Claudie.
+- Elle parle des piliers Bienveillance et Optimisation : personne n'est complet seul, et chacun apporte ce qui manque à l'autre.
+
 ## 2026-11-04 — Claude — claude/explorar
 - Idée de Ritukah pour le pilier 3 « Hacerlo real » : trouver un projet qui nous appelle.
 - **Dans la vitrina (8 langues)**, un nouveau panneau **« ✳ Explorar »** propose :
