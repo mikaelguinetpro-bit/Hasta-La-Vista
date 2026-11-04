@@ -2,6 +2,13 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/hindi
+- À la demande de Ritukah, ajout du **hindi** (`hi.html`). Le site existe maintenant en **cinq langues mondiales** : espagnol, anglais, français, chinois, hindi.
+- Sélecteur ES · EN · FR · 中文 · हिन्दी sur chaque page, liens `hreflang`, textes du script dans `app.js`. L'adresse principale ouvre aussi le hindi pour les visiteurs dont l'appareil est en hindi.
+- Hindi et chinois : polices de l'appareil (aussi pour les petites étiquettes), pas d'italique artificiel, pas d'espacement entre les lettres (il casse l'écriture devanagari).
+- `VISION.md` : les cinq langues sont un point fort. Ce sont celles de plus de 4 milliards de locuteurs, d'après les chiffres d'Ethnologue et du CIA World Factbook. Attention : beaucoup de gens parlent deux de ces langues, donc le nombre de personnes différentes touchées est plus bas.
+- `AGENTS.md` : règle des cinq langues.
+
 ## 2026-11-04 — Claude — claude/ligero-y-en-linea
 - **Image de l'arbre allégée** : de 880 Ko à 70 Ko (840 px de large, 128 couleurs), sans différence visible. Le site se charge bien plus vite sur téléphone. L'original reste dans l'historique Git.
 - **Préparation de la mise en ligne (GitHub Pages)** :
