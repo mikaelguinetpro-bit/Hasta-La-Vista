@@ -40,10 +40,13 @@
   .zoom{position:absolute;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:2}
   .zoom button{width:44px;height:44px;border-radius:50%;border:1px solid #ffffff55;background:#052a58cc;font-size:20px;cursor:pointer}
   .zoom button:hover{background:#0b3a78}
+  .zoom button[aria-pressed="true"]{background:var(--gold);color:#171917;border-color:var(--gold)}
+  .zoom{gap:6px}
+  .zoom button{width:40px;height:40px}
   .scale{position:absolute;left:50%;top:18px;max-width:40%;transform:translateX(-50%);text-align:center;pointer-events:none;z-index:1}
   .scale b{display:block;font:italic 600 20px var(--serif);color:var(--paper)}
   .scale span{font:500 12px var(--mono);color:var(--soft);letter-spacing:.08em}
-  .hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font:500 12px var(--mono);color:var(--soft);pointer-events:none;white-space:nowrap}
+  .hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);font:500 11px/1.5 var(--mono);color:var(--soft);pointer-events:none;text-align:center;width:min(46%,560px)}
   /* Buscador */
   .search{position:absolute;right:20px;top:16px;width:min(300px,calc(100% - 40px));z-index:4}
   .search input{width:100%;padding:11px 14px 11px 38px;border-radius:99px;border:1px solid #ffffff55;background:#030d1fd9;color:var(--paper);font:15px var(--sans)}
@@ -141,7 +144,7 @@
   .ex-res .none{color:var(--soft)}
   .ex-res .lightit{margin-top:8px;background:var(--gold);color:#171917;border:0;border-radius:99px;padding:8px 14px;font:600 13px var(--sans);cursor:pointer}
   .ex-clear{margin-top:12px;background:none;border:0;color:var(--soft);font:500 12px var(--mono);text-decoration:underline;cursor:pointer;padding:0}
-  @media(max-width:860px){.explore-btn{bottom:auto;top:118px;left:20px}.explore{top:160px;max-height:60vh}}
+  @media(max-width:860px){.explore-btn{bottom:212px;top:auto;left:20px}.explore{top:160px;max-height:60vh}}
   /* Mensaje de la IA */
   .whisper{position:absolute;max-width:290px;padding:12px 15px;background:#052a58e6;border:1px solid #ebaf1288;border-radius:14px;font:italic 600 16px/1.35 var(--serif);color:var(--paper);pointer-events:none;opacity:0;transform:translate(-50%,-120%) scale(.9);transition:opacity .5s,transform .5s;z-index:2}
   .whisper.show{opacity:1;transform:translate(-50%,-135%) scale(1)}
@@ -209,7 +212,7 @@
     ol.log{max-height:50vh}
     .hint{display:none}
     .intro p{display:none}
-    .card{bottom:96px}
+    .card{bottom:auto;top:160px;max-height:calc(100% - 180px);overflow:auto}
     .search{left:20px;right:20px;width:auto}
     .scale{top:70px;max-width:none}
     .zoom{top:auto;bottom:150px;transform:none}
@@ -255,8 +258,11 @@
       <button type="button" id="z-in" aria-label="تكبير">+</button>
       <button type="button" id="z-out" aria-label="تصغير">−</button>
       <button type="button" id="z-home" aria-label="العودة إلى المجرّة" style="font-size:15px">⌂</button>
+      <button type="button" id="z-left" aria-label="تدوير إلى اليسار" title="تدوير إلى اليسار">⟲</button>
+      <button type="button" id="z-right" aria-label="تدوير إلى اليمين" title="تدوير إلى اليمين">⟳</button>
+      <button type="button" id="z-auto" aria-pressed="false" aria-label="دوران تلقائي" title="دوران تلقائي" style="font-size:14px">∞</button>
     </div>
-    <div class="hint">العجلة أو القرص للتكبير · اسحب للتحرك · المس نجمة</div>
+    <div class="hint">اسحب لتدوير الكون · العجلة أو القرص للتكبير · الزر الأيمن أو إصبعان للتحرّك</div>
     <button class="light-btn" type="button" id="open">✳ أشعل شرارتك</button>
     <button class="mydata" type="button" id="mydata">احذف نجمتي وبياناتي</button>
     <div class="legend" role="group" aria-labelledby="legend-title">
@@ -384,7 +390,7 @@ const KIND_NAME = {spark:'شرارة', help:'مساعدة', ai:'فعل الذك�
 const roots = [], ideas = [], byId = new Map();
 let uid = 0;
 function addStar(kind, info){
-  const s = Object.assign({id: 'r' + (uid++), kind, wx: -0.95 + Math.random() * 1.9, wy: -0.55 + Math.random() * 1.3,
+  const s = Object.assign({id: 'r' + (uid++), kind, wx: -0.95 + Math.random() * 1.9, wy: -0.55 + Math.random() * 1.3, wz: -0.9 + Math.random() * 1.8,
     wr: kind === 'ai' ? 0.009 : kind === 'mine' ? 0.016 : 0.012, born: performance.now(), links: [], when: new Date()}, info || {});
   roots.push(s); byId.set(s.id, s); if (s.idea) s.themes = themesFor(s.idea);
   if (kind !== 'ai'){ lit++; countEl.textContent = lit; }
@@ -397,7 +403,7 @@ const who = s => s.kind === 'ai' ? `<button type="button" class="ref" data-ref="
 const idea = s => `<a class="ref idea" href="#project-${s.id}">“${esc(s.idea)}”</a>`;
 function focusStar(n){
   if (!n || !roots.includes(n)) return false;
-  fly(n.wx, n.wy, Math.max(cam.z, 30 / n.wr)); setTimeout(() => showCard(n), calm ? 0 : 600); return true;
+  const fv = V(n); fly(fv[0], fv[1], Math.max(cam.z, 30 / (n.wr * fv[2]))); setTimeout(() => showCard(n), calm ? 0 : 600); return true;
 }
 logEl.addEventListener('click', e => {
   const b = e.target.closest('[data-ref]'); if (!b) return;
@@ -459,11 +465,49 @@ function labelAt(x, y, text, sub, a){
   ctx.fillText(text, x, y); if (sub){ ctx.font = "500 11px 'DM Mono', monospace"; ctx.fillStyle = '#c9d2ea'; ctx.fillText(sub, x, y + 15); }
   ctx.globalAlpha = 1;
 }
+
+// ───────── Universo en 3D: cada estrella tiene profundidad y el universo gira
+const rot = {yaw: 0, pitch: 0, vy: 0, vp: 0}, D3 = 3; let autoRot = false, vframe = 0;
+function V(n){
+  if (n._vf === vframe) return n._v;
+  let v;
+  if (n.parent){ const pv = V(n.parent); v = [pv[0] + (n.wx - n.parent.wx) * pv[2], pv[1] + (n.wy - n.parent.wy) * pv[2], pv[2], pv[3]]; }
+  else if (n.wz === undefined){ v = [n.wx, n.wy, 1, 0]; }
+  else {
+    const cy = Math.cos(rot.yaw), sy = Math.sin(rot.yaw), cp = Math.cos(rot.pitch), sp = Math.sin(rot.pitch);
+    const x1 = n.wx * cy + n.wz * sy, z1 = -n.wx * sy + n.wz * cy, y2 = n.wy * cp - z1 * sp, z2 = n.wy * sp + z1 * cp, p = D3 / (D3 - z2);
+    v = [x1 * p, y2 * p, p, z2];
+  }
+  n._vf = vframe; n._v = v; return v;
+}
+function rotateBy(dy, dp){
+  // al estar cerca de una estrella, el universo gira a su alrededor para no perderla
+  const rel = cam.z / z0; let anchor = null, off = null;
+  if (rel > 1.5 && roots.length){ let bd = 1e9; for (const s of roots){ const v = V(s), d = Math.hypot(v[0] - cam.x, v[1] - cam.y); if (d < bd){ bd = d; anchor = s; } } const v = V(anchor); off = [cam.x - v[0], cam.y - v[1]]; }
+  rot.yaw += dy; rot.pitch = Math.max(-1.35, Math.min(1.35, rot.pitch + dp)); vframe++;
+  if (anchor){ const v = V(anchor); cam.x = v[0] + off[0]; cam.y = v[1] + off[1]; }
+  redraw();
+}
+function resetRot(){
+  if (calm){ rot.yaw = 0; rot.pitch = 0; vframe++; redraw(); return; }
+  const y0 = rot.yaw, p0 = rot.pitch, t0 = performance.now(); rot.vy = rot.vp = 0;
+  const step = t => { const k = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - k, 3); rot.yaw = y0 * (1 - e); rot.pitch = p0 * (1 - e); vframe++; redraw(); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function spinTick(){
+  let moving = false;
+  if (!dragging3d && (Math.abs(rot.vy) > 1e-5 || Math.abs(rot.vp) > 1e-5)){ rotateBy(rot.vy, rot.vp); rot.vy *= .9; rot.vp *= .9; moving = true; }
+  if (autoRot && !dragging3d && !document.hidden) { rotateBy(.0015, 0); moving = true; }
+  if (moving) redraw();
+  requestAnimationFrame(spinTick);
+}
+let dragging3d = false;
 let drawn = 0;
 function drawNode(n, t, a){
   if (focusSet && !n.depth && !focusSet.has(n) && n.kind !== 'ai') a *= .2;
   if (drawn > 4000) return;
-  const [x, y] = toS(n.wx, n.wy), pr = n.wr * cam.z, reach = pr * 7;
+  const vv = V(n), [x, y] = toS(vv[0], vv[1]), pr = n.wr * cam.z * vv[2], reach = pr * 7;
+  if (!n.depth) a *= Math.max(.35, Math.min(1, .45 + (vv[2] - .75) * .9));
   if (x + reach < -40 || x - reach > W + 40 || y + reach < -40 || y - reach > H + 40) return;
   drawn++;
   const grow = n.born ? Math.max(0, Math.min(1, (t - n.born) / 1200)) : 1;
@@ -476,7 +520,7 @@ function drawNode(n, t, a){
   if (pr > 14){
     const ca = a * Math.min(1, (pr - 14) / 16);
     for (const c of children(n)){
-      const [cx, cy] = toS(c.wx, c.wy);
+      const cv = V(c), [cx, cy] = toS(cv[0], cv[1]);
       ctx.globalAlpha = ca * .25; ctx.strokeStyle = '#ebaf12'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(cx, cy); ctx.stroke(); ctx.globalAlpha = 1;
       drawNode(c, t, ca);
     }
@@ -509,15 +553,15 @@ function draw(t){
     }
     // hilos entre una idea y quienes la ayudan
     for (const s of roots) for (const o of s.links){
-      const [a1, b1] = toS(s.wx, s.wy), [a2, b2] = toS(o.wx, o.wy);
+      const [a1, b1] = toS(...V(s)), [a2, b2] = toS(...V(o));
       ctx.strokeStyle = 'rgba(235,175,18,.3)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke();
     }
     if (focusSet && focusSet.size > 1){
-      const pts = [...focusSet].filter(n => roots.includes(n)).sort((p, q) => p.wx - q.wx).map(n => toS(n.wx, n.wy));
+      const pts = [...focusSet].filter(n => roots.includes(n)).sort((p, q) => V(p)[0] - V(q)[0]).map(n => toS(...V(n)));
       ctx.strokeStyle = 'rgba(235,175,18,.75)'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 6]); ctx.beginPath();
       pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); ctx.setLineDash([]);
     }
-    for (const s of roots) drawNode(s, t, 1);
+    vframe++; for (const s of [...roots].sort((p, q) => V(p)[2] - V(q)[2])) drawNode(s, t, 1);
     drawMeteor(t);
     updateScale();
   }
@@ -539,32 +583,42 @@ function updateScale(){
 }
 
 // ───────── Ratón, dedos y teclado
-const pointers = new Map(); let lastPinch = 0, moved = 0;
+const pointers = new Map(); let lastPinch = 0, moved = 0, lastMid = [0, 0];
 sky.addEventListener('wheel', e => { if (e.target !== canvas) return; e.preventDefault(); const b = sky.getBoundingClientRect(); zoomAt(Math.exp(-e.deltaY * 0.0016), e.clientX - b.left, e.clientY - b.top); }, {passive: false});
-canvas.addEventListener('pointerdown', e => { canvas.setPointerCapture(e.pointerId); pointers.set(e.pointerId, {x: e.clientX, y: e.clientY}); moved = 0; sky.classList.add('dragging'); });
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+canvas.addEventListener('pointerdown', e => { canvas.setPointerCapture(e.pointerId); pointers.set(e.pointerId, {x: e.clientX, y: e.clientY, pan: e.button === 2 || e.shiftKey}); moved = 0; sky.classList.add('dragging'); dragging3d = true; rot.vy = rot.vp = 0; });
 canvas.addEventListener('pointermove', e => {
   if (!pointers.has(e.pointerId)) return;
   const p = pointers.get(e.pointerId), dx = e.clientX - p.x, dy = e.clientY - p.y;
-  if (pointers.size === 1){ cam.x -= dx / cam.z; cam.y -= dy / cam.z; moved += Math.abs(dx) + Math.abs(dy); redraw(); }
+  if (pointers.size === 1){
+    if (p.pan){ cam.x -= dx / cam.z; cam.y -= dy / cam.z; }
+    else { const ky = dx * .005, kp = dy * .005; rotateBy(ky, kp); rot.vy = calm ? 0 : ky * .5; rot.vp = calm ? 0 : kp * .5; }
+    moved += Math.abs(dx) + Math.abs(dy); redraw();
+  }
   p.x = e.clientX; p.y = e.clientY;
   if (pointers.size === 2){
     const [a, b] = [...pointers.values()], d = Math.hypot(a.x - b.x, a.y - b.y), r = sky.getBoundingClientRect();
-    if (lastPinch) zoomAt(d / lastPinch, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
-    lastPinch = d; moved += 10;
+    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    if (lastPinch){ zoomAt(d / lastPinch, mx - r.left, my - r.top); cam.x -= (mx - lastMid[0]) / cam.z; cam.y -= (my - lastMid[1]) / cam.z; }
+    lastPinch = d; lastMid = [mx, my]; moved += 10; rot.vy = rot.vp = 0;
   }
 });
 const up = e => {
-  pointers.delete(e.pointerId); if (pointers.size < 2) lastPinch = 0; if (!pointers.size) sky.classList.remove('dragging');
+  pointers.delete(e.pointerId); if (pointers.size < 2) lastPinch = 0; if (!pointers.size){ sky.classList.remove('dragging'); dragging3d = false; if (moved < 6) rot.vy = rot.vp = 0; }
   if (e.type === 'pointerup' && moved < 6){ const r = sky.getBoundingClientRect(); tap(e.clientX - r.left, e.clientY - r.top); }
 };
 canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
 $('z-in').onclick = () => zoomAt(2, W / 2, H / 2);
 $('z-out').onclick = () => zoomAt(.5, W / 2, H / 2);
-$('z-home').onclick = () => fly(0, 0, z0);
+$('z-home').onclick = () => { resetRot(); fly(0, 0, z0); };
+$('z-left').onclick = () => rotateBy(-.35, 0);
+$('z-right').onclick = () => rotateBy(.35, 0);
+$('z-auto').onclick = () => { autoRot = !autoRot; $('z-auto').setAttribute('aria-pressed', autoRot); };
 document.addEventListener('keydown', e => {
   if ($('modal').classList.contains('open') || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
   if (e.key === '+' || e.key === '=') zoomAt(1.6, W / 2, H / 2);
   if (e.key === '-') zoomAt(1 / 1.6, W / 2, H / 2);
+  if (/^Arrow/.test(e.key) && !$('explore').classList.contains('open') && document.activeElement.id !== 'q'){ e.preventDefault(); rotateBy(e.key === 'ArrowLeft' ? -.12 : e.key === 'ArrowRight' ? .12 : 0, e.key === 'ArrowUp' ? -.12 : e.key === 'ArrowDown' ? .12 : 0); }
 });
 
 // Vuelo suave hacia un punto
@@ -623,13 +677,13 @@ function showCard(n){
 }
 function closeCard(){ $('card').classList.remove('open'); cardNode = null; }
 $('card').querySelector('.x').onclick = closeCard;
-$('card-go').onclick = () => { if (!cardNode) return; const n = cardNode; const target = n.kind === 'far' ? Math.min(W, H) / (n.wr * 2.2) : 40 / n.wr; fly(n.wx, n.wy, target); };
+$('card-go').onclick = () => { if (!cardNode) return; const n = cardNode; if (n.kind === 'far'){ fly(n.wx, n.wy, Math.min(W, H) / (n.wr * 2.2)); return; } const fv = V(n); fly(fv[0], fv[1], 40 / (n.wr * fv[2])); };
 
 // ───────── Mensajes de la IA y diario
 let whisperTimer;
 function say(star, text, tag){
   if (!star) return;
-  let [x, y] = toS(star.wx, star.wy);
+  let [x, y] = toS(...V(star));
   if (x < 0 || x > W || y < 0 || y > H){ x = W / 2; y = H * .32; }
   whisper.textContent = text; const sm = document.createElement('small'); sm.textContent = tag; whisper.appendChild(sm);
   whisper.style.left = Math.min(Math.max(x, 160), W - 160) + 'px'; whisper.style.top = Math.max(y, 120) + 'px';
@@ -925,7 +979,7 @@ let focusSet = null;
 const fmtX = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
 function fitTo(list){
   if (!list.length) return;
-  const xs = list.map(n => n.wx), ys = list.map(n => n.wy), cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const xs = list.map(n => V(n)[0]), ys = list.map(n => V(n)[1]), cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
   const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), .25);
   fly(cx, cy, Math.min(W, H) / (span * 1.6));
 }
@@ -980,7 +1034,7 @@ const wantExplore = location.hash === '#explorar';
 addEventListener('resize', resize); resize();
 log(`<span class="who">الذكاء الاصطناعي</span> فتح اليوميات. كل ما سيفعله سيظهر هنا.`, 'الشفافية: لا شيء يُقرَّر في الظل.');
 EVENTS[0](); EVENTS[0](); EVENTS[0](); piStep();
-requestAnimationFrame(draw); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname); if (wantExplore) setTimeout(openExplore, 400);
+requestAnimationFrame(draw); requestAnimationFrame(spinTick); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname); if (wantExplore) setTimeout(openExplore, 400);
 </script>
 </body>
 </html>
