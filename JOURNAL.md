@@ -2,6 +2,17 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/mesa-comun
+- **Pilier 4, l'abondance : « La mesa común »**, une idée de Claude adoptée par Ritukah (« donner c'est bien, recevoir c'est tout aussi bien »). Elle est dans les huit vitrinas :
+  - un panneau **« ✳ La mesa común »** où chacun pose **« Ofrezco… »** ou **« Necesito… »**. Les deux ont exactement la même étiquette dorée et la même place : aucune différence entre donner et demander ;
+  - **l'IA rapproche** une offre et un besoin du même genre (peinture, échelle, heures, graines, musique, transport) et l'annonce dans son journal ;
+  - quand un don a lieu, **une lumière traverse le ciel** de l'étoile qui donne à celle qui reçoit, et **les deux brillent davantage** ;
+  - **le merci est public** : celui qui reçoit remercie, dans le journal ;
+  - le **fonds commun** s'affiche en haut de la table ;
+  - on peut répondre soi-même à une offre (« Lo necesito ») ou à un besoin (« Puedo ayudar »).
+- **Sur le site (8 langues)**, sous le pilier 4 « La abundancia » : « Ofrece o pide, sin juicio → », qui ouvre la table commune (`#mesa`).
+- `VISION.md` : ajout de la table commune dans « Le chemin d'une idée ».
+
 ## 2026-11-04 — Claude — claude/cita-dar-recibir
 - Nouvelle citation de Ritukah sur le don et l'accueil, dans les huit langues, placée dans la section **« 06 — Los cuatro pilares »**, juste après la citation de Ritukah et Claudie :
   > « Dar es hermoso. Recibir también. Aquí nadie esconde sus manos: ni las que ofrecen, ni las que se abren. » — *Dar y recibir, libremente y sin juicio*

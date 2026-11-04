@@ -33,6 +33,7 @@ Sur Hasta La Vista, il n'y a ni « utilisateurs » ni « clients », seulement d
 - **La mezcla (apporter)** : d'autres créateurs ajoutent ce qu'ils ont : des heures, un métier, un outil, un dessin, un encouragement, une IA, un contact, de l'argent. **L'argent n'arrive qu'en dernier**, pour ce que rien d'autre ne peut remplacer.
 - **Hacerlo real (créer)** : humains et technologie construisent ensemble. Les décisions restent humaines.
 - **Compartir (partager)** : la valeur créée revient à celles et ceux qui l'ont rendue possible, et au monde. Ce qui reste d'un projet retourne au fonds commun.
+- **La mesa común (la table commune)** : on peut y offrir comme y demander. Les deux ont exactement la même place et la même apparence, et personne ne cache ses mains. L'IA rapproche ce que l'un a en trop de ce qui manque à l'autre. Quand un don a lieu, l'étoile qui donne et celle qui reçoit brillent toutes les deux davantage, et le merci est visible.
 
 ## La reconnaissance
 
