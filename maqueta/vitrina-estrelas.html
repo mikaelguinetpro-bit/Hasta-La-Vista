@@ -117,6 +117,28 @@
   .page ul.list button.skybtn{margin-left:8px;background:none;border:1px solid #9d9686;border-radius:99px;padding:3px 10px;font:500 12px var(--mono);cursor:pointer;color:#052a58}
   .home-link{pointer-events:auto;display:inline-block;margin-bottom:14px;font:600 13px var(--sans);color:var(--paper);border:1px solid #ffffff55;border-radius:99px;padding:7px 13px;background:#030d1f99}
   .home-link:hover{background:#ffffff1a}
+  .explore-btn{position:absolute;left:clamp(20px,5vw,60px);bottom:calc(clamp(20px,5vh,46px) + 66px);z-index:2;background:#030d1fcc;border:1px solid #ebaf12aa;color:var(--paper);border-radius:99px;padding:10px 16px;font:600 14px var(--sans);cursor:pointer}
+  .explore-btn:hover{background:#ebaf1222}
+  .explore{position:absolute;left:clamp(20px,5vw,60px);top:clamp(90px,14vh,140px);width:min(380px,calc(100% - 40px));max-height:calc(100% - 200px);overflow:auto;background:#071733f5;border:1px solid #ebaf1299;border-radius:16px;padding:20px;z-index:4;display:none;box-shadow:0 10px 40px #0008}
+  .explore.open{display:block;animation:enter .35s ease-out}
+  .explore h3{font:600 22px/1.2 var(--serif);margin:0 0 14px;padding-right:30px}
+  .explore .x{position:absolute;right:8px;top:6px;width:40px;height:40px;border:0;background:none;font-size:24px;cursor:pointer;color:var(--soft)}
+  .explore .rand{width:100%;background:var(--gold);color:#171917;border:0;border-radius:99px;padding:12px 16px;font:600 15px var(--sans);cursor:pointer}
+  .explore p.lbl{margin:16px 0 8px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chips button{background:none;border:1px solid #ffffff55;border-radius:99px;padding:7px 12px;font:500 13px var(--sans);cursor:pointer}
+  .chips button[aria-pressed="true"],.chips button:hover{background:#ebaf12;color:#171917;border-color:#ebaf12}
+  .explore form{display:flex;gap:8px}
+  .explore input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #ffffff55;background:#030d1f;color:var(--paper);font:14px var(--sans)}
+  .explore form button{background:none;border:1px solid #ebaf12;color:var(--gold);border-radius:10px;padding:0 14px;font:600 14px var(--sans);cursor:pointer}
+  .ex-res{margin-top:14px;font-size:14px;line-height:1.5}
+  .ex-res b{display:block;font:500 12px var(--mono);color:var(--gold);margin-bottom:6px}
+  .ex-res ul{list-style:none;margin:0;padding:0}
+  .ex-res li button{background:none;border:0;padding:5px 0;text-align:start;font:italic 15px var(--serif);color:var(--paper);cursor:pointer;text-decoration:underline;text-decoration-color:#ebaf1266}
+  .ex-res .none{color:var(--soft)}
+  .ex-res .lightit{margin-top:8px;background:var(--gold);color:#171917;border:0;border-radius:99px;padding:8px 14px;font:600 13px var(--sans);cursor:pointer}
+  .ex-clear{margin-top:12px;background:none;border:0;color:var(--soft);font:500 12px var(--mono);text-decoration:underline;cursor:pointer;padding:0}
+  @media(max-width:860px){.explore-btn{bottom:auto;top:118px;left:20px}.explore{top:160px;max-height:60vh}}
   /* Mensaje de la IA */
   .whisper{position:absolute;max-width:290px;padding:12px 15px;background:#052a58e6;border:1px solid #ebaf1288;border-radius:14px;font:italic 600 16px/1.35 var(--serif);color:var(--paper);pointer-events:none;opacity:0;transform:translate(-50%,-120%) scale(.9);transition:opacity .5s,transform .5s;z-index:2}
   .whisper.show{opacity:1;transform:translate(-50%,-135%) scale(1)}
@@ -215,6 +237,17 @@
       <input id="q" type="search" autocomplete="off" placeholder="Procurar pessoa, ideia, projeto…" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
       <ul class="results" id="results" role="listbox" aria-label="Resultados"></ul>
     </div>
+    <button class="explore-btn" type="button" id="explore-btn" aria-controls="explore">✳ Explorar</button>
+    <section class="explore" id="explore" aria-labelledby="ex-title">
+      <button class="x" type="button" aria-label="Fechar">×</button>
+      <h3 id="ex-title">Encontre um projeto que te chame</h3>
+      <button class="rand" type="button" id="ex-rand">🎲 Um projeto ao acaso</button>
+      <p class="lbl">Ou escolha um tema:</p>
+      <div class="chips" id="chips" role="group" aria-label="Ou escolha um tema:"></div>
+      <p class="lbl">Ou escreva a sua ideia:</p>
+      <form id="ex-form"><input id="ex-q" type="text" maxlength="120" placeholder="Ex.: plantar flores na minha rua" aria-label="Ou escreva a sua ideia:"><button type="submit">Buscar</button></form>
+      <div class="ex-res" id="ex-res" aria-live="polite"></div>
+    </section>
     <div class="zoom" role="group" aria-label="Zoom">
       <button type="button" id="z-in" aria-label="Aproximar">+</button>
       <button type="button" id="z-out" aria-label="Afastar">−</button>
@@ -350,7 +383,7 @@ let uid = 0;
 function addStar(kind, info){
   const s = Object.assign({id: 'r' + (uid++), kind, wx: -0.95 + Math.random() * 1.9, wy: -0.55 + Math.random() * 1.3,
     wr: kind === 'ai' ? 0.009 : kind === 'mine' ? 0.016 : 0.012, born: performance.now(), links: [], when: new Date()}, info || {});
-  roots.push(s); byId.set(s.id, s);
+  roots.push(s); byId.set(s.id, s); if (s.idea) s.themes = themesFor(s.idea);
   if (kind !== 'ai'){ lit++; countEl.textContent = lit; }
   redraw(); return s;
 }
@@ -425,6 +458,7 @@ function labelAt(x, y, text, sub, a){
 }
 let drawn = 0;
 function drawNode(n, t, a){
+  if (focusSet && !n.depth && !focusSet.has(n) && n.kind !== 'ai') a *= .2;
   if (drawn > 4000) return;
   const [x, y] = toS(n.wx, n.wy), pr = n.wr * cam.z, reach = pr * 7;
   if (x + reach < -40 || x - reach > W + 40 || y + reach < -40 || y - reach > H + 40) return;
@@ -474,6 +508,11 @@ function draw(t){
     for (const s of roots) for (const o of s.links){
       const [a1, b1] = toS(s.wx, s.wy), [a2, b2] = toS(o.wx, o.wy);
       ctx.strokeStyle = 'rgba(235,175,18,.3)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke();
+    }
+    if (focusSet && focusSet.size > 1){
+      const pts = [...focusSet].filter(n => roots.includes(n)).sort((p, q) => p.wx - q.wx).map(n => toS(n.wx, n.wy));
+      ctx.strokeStyle = 'rgba(235,175,18,.75)'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 6]); ctx.beginPath();
+      pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); ctx.setLineDash([]);
     }
     for (const s of roots) drawNode(s, t, 1);
     drawMeteor(t);
@@ -870,11 +909,75 @@ function route(){
 addEventListener('hashchange', route);
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && page.classList.contains('open')) location.hash = 'cielo'; });
 
+
+// ───────── Explorar: un proyecto al azar, por tema o por idea escrita
+const EX = {"n": "{n} projetos conectados", "n1": "1 projeto conectado", "none": "Ainda não há projetos assim… e se fosse você a acender essa faísca?", "light": "✳ Acender esta faísca", "logTheme": "{ai} conectou {n} projetos do tema “{t}” numa constelação.", "whyTheme": "ideias parecidas se encontram; juntas vão mais longe.", "logText": "{ai} buscou projetos próximos de “{q}”: {n} encontrados.", "whyText": "a sua ideia, mesmo pequena, já tem companhia.", "logRand": "{ai} escolheu um projeto ao acaso para você: {p}.", "whyRand": "o acaso também cria belos encontros.", "sayTheme": "Constelação “{t}”: {n} projetos.", "sayRand": "Este projeto espera por você!", "tag": "Explorar", "clear": "Ver todo o céu", "th": ["Natureza", "Arte", "Música", "Consertar", "Aprender", "Comunidade"], "kw": [["jardim", "horta", "árvore", "planta", "flor", "rio", "natureza", "verde", "semente", "terra", "floresta"], ["arte", "pintar", "pintura", "mural", "desenho", "cor", "foto", "escultura"], ["música", "canção", "coro", "cantar", "concerto", "instrumento", "dança"], ["consertar", "reparar", "bicicleta", "oficina", "ferramenta", "construir", "carpintaria", "ofício"], ["aprender", "ensinar", "escola", "livro", "biblioteca", "crianças", "aula", "ler"], ["bairro", "vizinhos", "praça", "comunidade", "idosos", "juntos", "ajuda", "compartilhar", "vila"]]};
+const SPARK_THEMES = [[0, 5], [1, 4], [1, 5], [3, 5], [2, 5], [0], [4, 5]];
+const normX = t => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+function themesFor(text){
+  const i = SPARKS.indexOf(text); if (i > -1) return SPARK_THEMES[i];
+  const t = normX(text); return EX.kw.map((ws, k) => ws.some(w => t.includes(normX(w))) ? k : -1).filter(k => k > -1);
+}
+let focusSet = null;
+const fmtX = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+function fitTo(list){
+  if (!list.length) return;
+  const xs = list.map(n => n.wx), ys = list.map(n => n.wy), cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), .25);
+  fly(cx, cy, Math.min(W, H) / (span * 1.6));
+}
+function showResults(list, title){
+  const box = $('ex-res');
+  if (!list.length){
+    box.innerHTML = `<p class="none">${esc(EX.none)}</p><button type="button" class="lightit" id="ex-light">${esc(EX.light)}</button>`;
+    $('ex-light').onclick = () => { const q = $('ex-q').value.trim(); closeExplore(); openM(); if (q) $('f-dream').value = q; };
+    return;
+  }
+  box.innerHTML = `<b>${esc(list.length === 1 ? EX.n1 : fmtX(EX.n, {n: list.length}))}</b><ul>${list.map(n => `<li><button type="button" data-go="${n.id}">“${esc(n.idea)}” · ${esc(n.name)}</button></li>`).join('')}</ul><button type="button" class="ex-clear" id="ex-clear">${esc(EX.clear)}</button>`;
+  box.querySelectorAll('[data-go]').forEach(b => b.onclick = () => focusStar(byId.get(b.dataset.go)));
+  $('ex-clear').onclick = clearFocus;
+}
+function clearFocus(){ focusSet = null; $('ex-res').innerHTML = ''; document.querySelectorAll('.chips button').forEach(b => b.setAttribute('aria-pressed', 'false')); redraw(); }
+function byTheme(k){
+  document.querySelectorAll('.chips button').forEach((b, i) => b.setAttribute('aria-pressed', i === k));
+  const list = ideas.filter(n => roots.includes(n) && (n.themes || []).includes(k));
+  focusSet = new Set(list); showResults(list); fitTo(list); redraw();
+  if (list.length){ const a = addStar('ai', {title: fmtX(EX.sayTheme, {t: EX.th[k], n: list.length})});
+    say(a, fmtX(EX.sayTheme, {t: EX.th[k], n: list.length}), EX.tag);
+    log(fmtX(EX.logTheme, {ai: who(a), n: list.length, t: esc(EX.th[k])}), EX.whyTheme); }
+}
+function byText(q){
+  const t = normX(q); if (!t) return;
+  const th = themesFor(q), words = t.split(/[\s,.;:!?¿¡«»“”"()]+/).filter(w => w.length >= 4);
+  const list = ideas.filter(n => roots.includes(n) && ((n.themes || []).some(k => th.includes(k)) || words.some(w => normX(n.idea).includes(w))));
+  document.querySelectorAll('.chips button').forEach(b => b.setAttribute('aria-pressed', 'false'));
+  focusSet = list.length ? new Set(list) : null; showResults(list); fitTo(list); redraw();
+  const a = addStar('ai', {title: EX.tag + ' · ' + q});
+  log(fmtX(EX.logText, {ai: who(a), q: esc(q), n: list.length}), EX.whyText);
+}
+function randomProject(){
+  const pool = ideas.filter(n => roots.includes(n)); if (!pool.length) return;
+  const n = pick(pool); clearFocus(); closeExplore(); focusStar(n);
+  const a = addStar('ai', {title: EX.sayRand});
+  setTimeout(() => say(a, EX.sayRand, EX.tag), 900);
+  log(fmtX(EX.logRand, {ai: who(a), p: idea(n)}), EX.whyRand);
+}
+function openExplore(){ $('explore').classList.add('open'); $('ex-rand').focus(); }
+function closeExplore(){ $('explore').classList.remove('open'); }
+$('explore-btn').onclick = () => $('explore').classList.contains('open') ? closeExplore() : openExplore();
+$('explore').querySelector('.x').onclick = closeExplore;
+$('ex-rand').onclick = randomProject;
+$('chips').innerHTML = EX.th.map((t, k) => `<button type="button" aria-pressed="false" data-k="${k}">${esc(t)}</button>`).join('');
+$('chips').querySelectorAll('button').forEach(b => b.onclick = () => byTheme(+b.dataset.k));
+$('ex-form').onsubmit = e => { e.preventDefault(); byText($('ex-q').value.trim()); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('explore').classList.contains('open')) closeExplore(); });
+const wantExplore = location.hash === '#explorar';
+
 // Arranque
 addEventListener('resize', resize); resize();
 log(`<span class="who">IA</span> abriu o diário. Tudo o que fizer aparecerá aqui.`, 'visibilidade: nada se decide às escondidas.');
 EVENTS[0](); EVENTS[0](); EVENTS[0](); piStep();
-requestAnimationFrame(draw); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname);
+requestAnimationFrame(draw); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname); if (wantExplore) setTimeout(openExplore, 400);
 </script>
 </body>
 </html>
