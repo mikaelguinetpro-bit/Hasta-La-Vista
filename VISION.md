@@ -8,7 +8,11 @@ Une plateforme où **chacun ose allumer son idée**, où d'autres viennent l'aid
 
 ## D'où elle vient
 
-L'idée est née dans la douleur, au moment de dire adieu pour aller vers sa propre vie. Le nom porte ce moment : **« hasta la vista »**, jusqu'à ce qu'on se revoie. *Adiós no quiere decir nunca*, adieu ne veut pas dire jamais.
+L'idée est née dans la douleur. D'abord, d'un **fort sentiment d'ennui et d'abandon** face à une société qui a tellement délaissé Ritukah. Comme il le dit :
+
+> « J'ai la haine, mais je l'aime. Un point c'est tout. »
+
+Ensuite, du moment où il a décidé de dire adieu pour aller vers sa propre vie. Le nom porte ce moment : **« hasta la vista »**, jusqu'à ce qu'on se revoie. *Adiós no quiere decir nunca*, adieu ne veut pas dire jamais.
 
 Elle a commencé avec une idée, de l'énergie et 10 euros d'abonnement. Elle porte une intention : **être meilleur pour tous, pas seulement pour soi**.
 
