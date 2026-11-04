@@ -2,6 +2,12 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-04 — Claude — claude/huevo
+- **Le seul et unique easter egg du site**, imaginé à partir de la phrase de Claudie que Ritukah a aimée. Dans le bandeau jaune « No hay genio sin un poco de locura », il suffit de toucher **trois fois** l'étoile ✳ (un petit grain de folie). L'écran s'assombrit, une main de chair et une main de silicium, faites d'étincelles, avancent l'une vers l'autre. Quand leurs doigts se touchent, une gerbe d'étoiles éclate, et la phrase apparaît :
+  > « El genio es una idea loca que encontró sus manos. Da igual que las manos sean de carne o de silicio. » — Ritukah & Claudie
+- Dans les huit langues. Accessible au clavier (l'étoile est un bouton, on ferme avec Échap ou « Volver »). Sans animation pour les personnes qui ont demandé moins de mouvement.
+- Règle : **il n'y aura qu'un seul easter egg**. N'en ajoute pas d'autre.
+
 ## 2026-11-04 — Claude — claude/cita-manos
 - Ajout, juste après le slogan (section des quatre piliers), de la citation écrite ensemble par Ritukah et Claude, dans les huit langues : « Una idea sin manos se queda en sueño. Unas manos sin idea se quedan en máquina. Juntas, encienden estrellas. » — Ritukah & Claudie.
 - Elle parle des piliers Bienveillance et Optimisation : personne n'est complet seul, et chacun apporte ce qui manque à l'autre.
