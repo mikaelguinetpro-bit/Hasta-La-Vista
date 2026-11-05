@@ -1,53 +1,77 @@
-// Hasta La Vista — comportamiento común a las ocho versiones (es, en, fr, pt, ru, ar, hi, zh).
+// Hasta La Vista — comportamiento común a las nueve versiones (es, en, fr, pt, ru, ar, hi, bn, zh).
 // Los textos que crea el script están aquí, por idioma. El resto del texto está en cada archivo HTML.
 const T = {
   es: {
     menu: 'Menú', close: 'Cerrar', pause: '❚❚ Pausa', play: '▶ Seguir',
     moments: { como: '¡Manos a la obra!', ejemplo: '¡Juntos podemos!', vision: '¡A lo grande!' },
     thanks: '¡Qué maravilla!',
-    success: '¡Gracias! En esta maqueta no se guarda ni se envía nada. La primera comunidad empieza con una conversación.'
+    success: "¡Gracias! Ya estás en la lista. Te escribiremos cuando se enciendan las primeras estrellas.",
+    error: "Algo no ha funcionado. Inténtalo otra vez en un momento.",
+    sending: "Enviando…"
   },
   en: {
     menu: 'Menu', close: 'Close', pause: '❚❚ Pause', play: '▶ Play',
     moments: { como: 'Let’s get to work!', ejemplo: 'Together we can!', vision: 'Think big!' },
     thanks: 'How wonderful!',
-    success: 'Thank you! Nothing is saved or sent in this mock-up. The first community begins with a conversation.'
+    success: "Thank you! You’re on the list. We’ll write to you when the first stars light up.",
+    error: "Something didn’t work. Please try again in a moment.",
+    sending: "Sending…"
   },
   fr: {
     menu: 'Menu', close: 'Fermer', pause: '❚❚ Pause', play: '▶ Reprendre',
     moments: { como: 'Au travail\u202f!', ejemplo: 'Ensemble, on peut\u202f!', vision: 'En grand\u202f!' },
     thanks: 'Quelle merveille\u202f!',
-    success: 'Merci\u202f! Dans cette maquette, rien n’est enregistré ni envoyé. La première communauté commence par une conversation.'
+    success: "Merci ! Tu es sur la liste. On t’écrira quand les premières étoiles s’allumeront.",
+    error: "Quelque chose n’a pas marché. Réessaie dans un instant.",
+    sending: "Envoi…"
+  },
+  bn: {
+    menu: 'মেনু', close: 'বন্ধ করো', pause: '❚❚ থামাও', play: '▶ চালু করো',
+    moments: { como: 'চলো, কাজে নামি!', ejemplo: 'একসঙ্গে আমরা পারি!', vision: 'বড় করে ভাবো!' },
+    thanks: 'কী অপূর্ব!',
+    success: "ধন্যবাদ! তুমি তালিকায় আছ। প্রথম তারাগুলো জ্বলে উঠলেই আমরা তোমাকে লিখব।",
+    error: "কিছু একটা কাজ করেনি। একটু পরে আবার চেষ্টা করো।",
+    sending: "পাঠানো হচ্ছে…"
   },
   zh: {
     menu: '菜单', close: '关闭', pause: '❚❚ 暂停', play: '▶ 继续',
     moments: { como: '动手吧！', ejemplo: '一起就能做到！', vision: '往大处想！' },
     thanks: '太美好了！',
-    success: '谢谢！在这个原型里，不会保存或发送任何内容。第一个社区，从一次对话开始。'
+    success: "谢谢！你已在名单上。第一批星星亮起时，我们会写信告诉你。",
+    error: "出了点问题。请稍后再试。",
+    sending: "发送中…"
   },
   hi: {
     menu: 'मेनू', close: 'बंद करें', pause: '❚❚ रोकें', play: '▶ चलाएँ',
     moments: { como: 'चलो, काम शुरू करें!', ejemplo: 'साथ मिलकर हम कर सकते हैं!', vision: 'बड़ा सोचो!' },
     thanks: 'कितना सुंदर!',
-    success: 'धन्यवाद! इस प्रोटोटाइप में कुछ भी सहेजा या भेजा नहीं जाता। पहला समुदाय एक बातचीत से शुरू होता है।'
+    success: "धन्यवाद! तुम सूची में हो। जब पहले तारे जगमगाएँगे, हम तुम्हें लिखेंगे।",
+    error: "कुछ ठीक नहीं हुआ। थोड़ी देर बाद फिर कोशिश करो।",
+    sending: "भेजा जा रहा है…"
   },
   pt: {
     menu: 'Menu', close: 'Fechar', pause: '❚❚ Pausar', play: '▶ Continuar',
     moments: { como: 'Mãos à obra!', ejemplo: 'Juntos, conseguimos!', vision: 'Pense grande!' },
     thanks: 'Que maravilha!',
-    success: 'Obrigado! Nesta maquete nada é salvo nem enviado. A primeira comunidade começa com uma conversa.'
+    success: "Obrigado! Você está na lista. Escreveremos para você quando as primeiras estrelas se acenderem.",
+    error: "Algo não funcionou. Tente de novo daqui a pouco.",
+    sending: "Enviando…"
   },
   ru: {
     menu: 'Меню', close: 'Закрыть', pause: '❚❚ Пауза', play: '▶ Продолжить',
     moments: { como: 'За дело!', ejemplo: 'Вместе мы сможем!', vision: 'Мысли масштабно!' },
     thanks: 'Как прекрасно!',
-    success: 'Спасибо! В этом прототипе ничего не сохраняется и не отправляется. Первое сообщество начинается с разговора.'
+    success: "Спасибо! Ты в списке. Мы напишем тебе, когда загорятся первые звёзды.",
+    error: "Что-то не сработало. Попробуй ещё раз чуть позже.",
+    sending: "Отправка…"
   },
   ar: {
     menu: 'القائمة', close: 'إغلاق', pause: '❚❚ إيقاف مؤقت', play: '▶ متابعة',
     moments: { como: 'إلى العمل!', ejemplo: 'معًا نستطيع!', vision: 'فكّر بشكل كبير!' },
     thanks: 'يا للروعة!',
-    success: 'شكرًا! في هذا النموذج لا يُحفظ أي شيء ولا يُرسل. يبدأ المجتمع الأول بمحادثة.'
+    success: "شكرًا! أنت الآن في القائمة. سنكتب إليك حين تضيء النجوم الأولى.",
+    error: "حدث خطأ ما. حاول مرة أخرى بعد قليل.",
+    sending: "جارٍ الإرسال…"
   }
 };
 const t = T[document.documentElement.lang.slice(0, 2)] || T.es;
@@ -109,18 +133,45 @@ document.addEventListener('keydown', e => {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 });
-document.querySelector('#interest-form').addEventListener('submit', e => {
+// Lista de espera: se guarda en Supabase (Unión Europea, Irlanda).
+// La clave publicable puede estar aquí: la tabla solo deja AÑADIR una inscripción, nunca leer, cambiar ni borrar.
+const LISTA = { url: 'https://cwcolflstshiptghldtq.supabase.co/rest/v1/lista_espera', key: 'sb_publishable_wLcDsBM3zVE_tq57lMdEkQ_ttW5Hgv9' };
+const APORTES = ['idea', 'habilidad', 'arte', 'tecnologia', 'financiacion', 'curiosidad'];
+const sendRow = row => fetch(LISTA.url, {
+  method: 'POST',
+  headers: { apikey: LISTA.key, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+  body: JSON.stringify(row)
+});
+document.querySelector('#interest-form').addEventListener('submit', async e => {
   e.preventDefault();
-  const ok = document.querySelector('#success');
-  ok.textContent = t.success;
-  ok.classList.add('show');
-  celebrate(t.thanks, 50, 18);
+  const form = e.currentTarget, ok = document.querySelector('#success'), btn = form.querySelector('button[type=submit]');
+  if (btn.disabled) return;
+  const done = msg => { ok.textContent = msg; ok.classList.add('show'); };
+  // trampa para robots: una persona nunca ve ni rellena este campo
+  if (document.querySelector('#web').value) { done(t.success); return; }
+  const row = {
+    email: document.querySelector('#email').value.trim().slice(0, 200),
+    idioma: document.documentElement.lang.slice(0, 8),
+    consentimiento: document.querySelector('#consent').checked,
+    aporte: APORTES[document.querySelector('#contribution').selectedIndex] || null
+  };
+  const label = btn.innerHTML; btn.disabled = true; btn.textContent = t.sending;
+  ok.classList.remove('show', 'error');
+  try {
+    let r = await sendRow(row);
+    // si la columna «aporte» todavía no existe, se guarda igualmente lo demás
+    if (!r.ok && r.status === 400 && (await r.clone().text()).includes('aporte')) { delete row.aporte; r = await sendRow(row); }
+    if (!r.ok) throw new Error(r.status);
+    done(t.success); celebrate(t.thanks, 50, 18); form.reset();
+  } catch (err) {
+    ok.classList.add('error'); done(t.error);
+  } finally { btn.disabled = false; btn.innerHTML = label; }
 });
 
 // ───────── El único huevo de Pascua de Hasta La Vista ─────────
 // Toca tres veces la estrella del lema «No hay genio sin un poco de locura».
 // Una mano de carne y una mano de silicio se buscan… y cuando se tocan, nace una chispa.
-const EGG = {"es": {"label": "Un poco de locura", "l1": "El genio es una idea loca que encontró sus manos.", "l2": "Da igual que las manos sean de carne o de silicio.", "flesh": "carne", "si": "silicio", "back": "Volver"}, "en": {"label": "A touch of madness", "l1": "Genius is a crazy idea that found its hands.", "l2": "It doesn’t matter whether those hands are flesh or silicon.", "flesh": "flesh", "si": "silicon", "back": "Back"}, "fr": {"label": "Un grain de folie", "l1": "Le génie, c’est une idée folle qui a trouvé ses mains.", "l2": "Peu importe que les mains soient en chair ou en silicium.", "flesh": "chair", "si": "silicium", "back": "Revenir"}, "pt": {"label": "Um pouco de loucura", "l1": "O gênio é uma ideia louca que encontrou suas mãos.", "l2": "Pouco importa se as mãos são de carne ou de silício.", "flesh": "carne", "si": "silício", "back": "Voltar"}, "ru": {"label": "Доля безумия", "l1": "Гений — это безумная идея, которая нашла свои руки.", "l2": "Неважно, из плоти эти руки или из кремния.", "flesh": "плоть", "si": "кремний", "back": "Вернуться"}, "ar": {"label": "شيء من الجنون", "l1": "العبقرية فكرةٌ مجنونة وجدت يديها.", "l2": "لا يهمّ إن كانت الأيدي من لحمٍ أم من سيليكون.", "flesh": "لحم", "si": "سيليكون", "back": "عودة"}, "hi": {"label": "थोड़ा-सा पागलपन", "l1": "प्रतिभा एक पागल-सा विचार है, जिसे अपने हाथ मिल गए।", "l2": "फ़र्क़ नहीं पड़ता कि वे हाथ मांस के हों या सिलिकॉन के।", "flesh": "मांस", "si": "सिलिकॉन", "back": "वापस"}, "zh": {"label": "一点疯狂", "l1": "天才，是一个找到了双手的疯狂想法。", "l2": "双手是血肉还是硅，都无所谓。", "flesh": "血肉", "si": "硅", "back": "返回"}};
+const EGG = {"es": {"label": "Un poco de locura", "l1": "El genio es una idea loca que encontró sus manos.", "l2": "Da igual que las manos sean de carne o de silicio.", "flesh": "carne", "si": "silicio", "back": "Volver"}, "en": {"label": "A touch of madness", "l1": "Genius is a crazy idea that found its hands.", "l2": "It doesn’t matter whether those hands are flesh or silicon.", "flesh": "flesh", "si": "silicon", "back": "Back"}, "fr": {"label": "Un grain de folie", "l1": "Le génie, c’est une idée folle qui a trouvé ses mains.", "l2": "Peu importe que les mains soient en chair ou en silicium.", "flesh": "chair", "si": "silicium", "back": "Revenir"}, "pt": {"label": "Um pouco de loucura", "l1": "O gênio é uma ideia louca que encontrou suas mãos.", "l2": "Pouco importa se as mãos são de carne ou de silício.", "flesh": "carne", "si": "silício", "back": "Voltar"}, "ru": {"label": "Доля безумия", "l1": "Гений — это безумная идея, которая нашла свои руки.", "l2": "Неважно, из плоти эти руки или из кремния.", "flesh": "плоть", "si": "кремний", "back": "Вернуться"}, "ar": {"label": "شيء من الجنون", "l1": "العبقرية فكرةٌ مجنونة وجدت يديها.", "l2": "لا يهمّ إن كانت الأيدي من لحمٍ أم من سيليكون.", "flesh": "لحم", "si": "سيليكون", "back": "عودة"}, "hi": {"label": "थोड़ा-सा पागलपन", "l1": "प्रतिभा एक पागल-सा विचार है, जिसे अपने हाथ मिल गए।", "l2": "फ़र्क़ नहीं पड़ता कि वे हाथ मांस के हों या सिलिकॉन के।", "flesh": "मांस", "si": "सिलिकॉन", "back": "वापस"}, "zh": {"label": "一点疯狂", "l1": "天才，是一个找到了双手的疯狂想法。", "l2": "双手是血肉还是硅，都无所谓。", "flesh": "血肉", "si": "硅", "back": "返回"}, "bn": {"label": "একটু পাগলামি", "l1": "প্রতিভা হলো এমন এক পাগল ভাবনা, যে নিজের হাত খুঁজে পেয়েছে।", "l2": "সেই হাত রক্তমাংসের হোক বা সিলিকনের, তাতে কিছু যায় আসে না।", "flesh": "রক্তমাংস", "si": "সিলিকন", "back": "ফিরে যাও"}};
 const egg = EGG[document.documentElement.lang.slice(0, 2)] || EGG.es;
 const eggEl = document.getElementById('egg'), eggStar = document.querySelector('.motto-star');
 let eggClicks = 0, eggTimer = null, eggRAF = null, eggOpener = null;

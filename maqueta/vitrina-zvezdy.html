@@ -86,7 +86,7 @@
 
   <aside aria-labelledby="log-title">
     <header>
-      <nav class="langs" aria-label="Язык"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru" aria-current="page">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
+      <nav class="langs" aria-label="Язык"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru" aria-current="page">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-tara.html" lang="bn" hreflang="bn">বাংলা</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
       <div class="label">Видимость</div>
       <h2 id="log-title">Дневник ИИ</h2>
       <p>Всё, что делает ИИ, появляется здесь в прямом эфире, с объяснением. Ничего не решается в тени: ИИ предлагает, решают люди.</p>
@@ -860,7 +860,7 @@ function mesaMatch(){
   return false;
 }
 function renderMesa(){
-  $('mesa-fund').textContent = fmtX(MS.fund, {m: fundM.toLocaleString(document.documentElement.lang), o: fundO});
+  $('mesa-fund').textContent = fmtX(MS.fund, {m: fundM.toLocaleString(document.documentElement.lang), o: fundO.toLocaleString(document.documentElement.lang)});
   const open = mesa.filter(i => !i.done);
   $('mesa-list').innerHTML = open.length ? open.map(i => `<li><span class="k">${esc(i.kind === 'offer' ? MS.offer : MS.need)}</span><b>${esc(i.name)}</b> · <span class="t">${esc(i.text)}</span><button type="button" data-m="${i.id}">${esc(i.kind === 'offer' ? MS.rOffer : MS.rNeed)}</button></li>`).join('') : `<li>${esc(MS.empty)}</li>`;
   $('mesa-list').querySelectorAll('[data-m]').forEach(b => b.onclick = () => {

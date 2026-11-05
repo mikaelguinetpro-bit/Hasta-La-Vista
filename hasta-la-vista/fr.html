@@ -17,6 +17,7 @@
   <link rel="alternate" hreflang="ru" href="ru.html">
   <link rel="alternate" hreflang="ar" href="ar.html">
   <link rel="alternate" hreflang="hi" href="hi.html">
+  <link rel="alternate" hreflang="bn" href="bn.html">
   <link rel="alternate" hreflang="zh" href="zh.html">
   <link rel="icon" type="image/png" href="icono.png">
   <link rel="apple-touch-icon" href="icono.png">
@@ -25,7 +26,7 @@
 <body>
   <a class="skip" href="#contenido">Aller au contenu</a>
   <div class="topline" aria-hidden="true"></div>
-  <nav class="langbar" aria-label="Langue"><a href="index.html" hreflang="es" lang="es" title="Español">ES</a><a href="en.html" hreflang="en" lang="en" title="English">EN</a><a href="fr.html" hreflang="fr" lang="fr" title="Français" aria-current="page">FR</a><a href="pt.html" hreflang="pt" lang="pt" title="Português">PT</a><a href="ru.html" hreflang="ru" lang="ru" title="Русский">RU</a><a href="ar.html" hreflang="ar" lang="ar" title="العربية">عربي</a><a href="hi.html" hreflang="hi" lang="hi" title="हिन्दी">हिन्दी</a><a href="zh.html" hreflang="zh" lang="zh-CN" title="中文">中文</a></nav>
+  <nav class="langbar" aria-label="Langue"><a href="index.html" hreflang="es" lang="es" title="Español">ES</a><a href="en.html" hreflang="en" lang="en" title="English">EN</a><a href="fr.html" hreflang="fr" lang="fr" title="Français" aria-current="page">FR</a><a href="pt.html" hreflang="pt" lang="pt" title="Português">PT</a><a href="ru.html" hreflang="ru" lang="ru" title="Русский">RU</a><a href="ar.html" hreflang="ar" lang="ar" title="العربية">عربي</a><a href="hi.html" hreflang="hi" lang="hi" title="हिन्दी">हिन्दी</a><a href="bn.html" hreflang="bn" lang="bn" title="বাংলা">বাংলা</a><a href="zh.html" hreflang="zh" lang="zh-CN" title="中文">中文</a></nav>
   <header>
     <a class="brand" href="#inicio" aria-label="Hasta La Vista, accueil"><img src="icono.png" alt=""> HASTA LA VISTA</a>
     <nav class="nav" aria-label="Navigation principale">
@@ -118,7 +119,7 @@
       <div class="slogan">
         <span class="slogan-tag">Optimisation · Disponibilité</span>
         <p class="slogan-text">En quelques minutes avec l’IA, Hasta La Vista parle la langue de <em>la moitié de la planète.</em></p>
-        <p class="slogan-sign">8 langues · Un cadeau de l’IA. Un cadeau de Ritukah.</p>
+        <p class="slogan-sign">9 langues · Un cadeau de l’IA. Un cadeau de Ritukah.</p>
       </div>
       <figure class="cita-duo"><blockquote>«&nbsp;Une idée sans mains reste un rêve.<br>Des mains sans idée restent une machine.<br><em>Ensemble, elles allument des étoiles.</em>&nbsp;»</blockquote><figcaption>— Ritukah &amp; Claudie</figcaption></figure>
       <figure class="cita-duo cita-dar"><blockquote>« Donner est beau. Recevoir aussi.<br>Ici, personne ne cache ses mains : ni celles qui offrent, ni celles qui s’ouvrent. »</blockquote><figcaption>Donner et recevoir, librement et sans jugement</figcaption></figure>
@@ -127,19 +128,21 @@
     <section class="origin-story" aria-labelledby="origin-title"><div class="section-label">La graine de Hasta La Vista</div><h2 id="origin-title">D’une grande douleur peut naître quelque chose d’immense.</h2><p>Cette idée est née de ma propre souffrance et d’un ennui qui pesait. Avec une idée, mon énergie et <strong>10 euros d’abonnement à ChatGPT</strong>, j’ai commencé à la construire. Je rêve que Hasta La Vista atteigne le monde entier et se fasse une belle réputation : par la beauté de ce qu’elle crée et par la reconnaissance que méritent les personnes qui la rendent possible.</p><p class="origin-wish" lang="en">I wish the World for the planet Earth.<br>World means the fucking universe.<br>And you can say fucking in my company. No problemos.</p><a class="origin-link" href="../maqueta/vitrina-etoiles.html">✳ Entre dans l’univers</a></section>
   </main>
 
-  <footer><strong>HASTA LA VISTA</strong><span>Faisons advenir quelque chose de beau.</span><span>PROTOTYPE EN CONSTRUCTION · 2026</span></footer>
+  <footer><strong>HASTA LA VISTA</strong><span>Faisons advenir quelque chose de beau.</span><span>PROTOTYPE EN CONSTRUCTION · 2026</span><a href="privacidad.html#fr">Confidentialité</a></footer>
 
   <div class="modal" id="join-modal">
     <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <button class="close" type="button" aria-label="Fermer">×</button>
       <div class="section-label">La première conversation</div>
       <h2 id="modal-title">Qu’aimerais-tu apporter ?</h2>
-      <p>Nous donnons forme à l’idée. Ce prototype n’envoie encore aucune donnée : il sert à imaginer qui pourrait se retrouver ici.</p>
+      <p>Laisse-nous ton e-mail et on t’écrira quand les premières étoiles s’allumeront. Seulement pour ça, rien d’autre.</p>
       <form id="interest-form">
         <label for="contribution">J’aimerais apporter</label>
         <select id="contribution"><option>Une idée ou une vision</option><option>Un savoir-faire ou du travail</option><option>De l’art, de la musique ou de la culture</option><option>De l’IA, de la technologie ou des connaissances</option><option>Du financement ou des contacts</option><option>De la curiosité : je veux en savoir plus</option></select>
-        <label for="email">E-mail (facultatif, seulement pour visualiser le prototype)</label>
-        <input id="email" type="email" autocomplete="email" placeholder="bonjour@exemple.fr">
+        <label for="email">Ton e-mail</label>
+        <input id="email" type="email" autocomplete="email" required maxlength="200" placeholder="bonjour@exemple.fr">
+        <label class="consent"><input id="consent" type="checkbox" required> <span>J’accepte que Hasta La Vista garde mon e-mail pour me prévenir. Je peux demander à tout moment qu’il soit effacé. <a href="privacidad.html#fr">Confidentialité</a></span></label>
+        <input class="hp" id="web" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="button" type="submit">Je m’inscris <span class="arrow" aria-hidden="true">↗</span></button>
         <div class="success" id="success" role="status"></div>
       </form>

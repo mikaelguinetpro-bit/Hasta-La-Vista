@@ -2,6 +2,43 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-05 — Claude — claude/lista-espera
+- **Neuvième langue : le bengali**, demandé par Ritukah.
+  - Site : `bn.html`.
+  - Vitrina : `maqueta/vitrina-tara.html` (« tara » veut dire étoile).
+  - Page de confidentialité : section `#bn`.
+  - Les textes du script (`app.js`) et l'easter egg sont aussi traduits.
+  - Polices bengalies de l'appareil (`:lang(bn)`), comme pour le hindi.
+- « বাংলা » ajouté au menu des langues des 9 pages et des 9 vitrinas. La redirection de `index.html` à la racine envoie aussi les navigateurs en bengali vers `bn.html`.
+- Le slogan dit maintenant « 9 langues » partout. `AGENTS.md` et `VISION.md` sont mis à jour.
+- Corrigé au passage :
+  - avec 9 langues, la barre des langues de la vitrina débordait sur les petits téléphones (360 px). Elle passe maintenant sur deux lignes ;
+  - le fonds commun de la table affiche ses deux nombres avec les mêmes chiffres (bengalis en bengali).
+- Supabase : rien à changer. La colonne `idioma` accepte `bn`.
+- Testé :
+  - toute la batterie, dans les 9 langues : vitrina, table commune, Explorer, 3D, pages, formulaire, confidentialité, easter egg ;
+  - capture d'écran du bengali sur téléphone et sur ordinateur.
+- À faire plus tard : faire relire le bengali par une personne dont c'est la langue (comme le hindi, l'arabe et le chinois).
+
+## 2026-11-04 — Claude — claude/lista-espera
+- **La vraie liste d'attente**, demandée par Ritukah. Le formulaire « Participer » enregistre maintenant pour de vrai, dans les 8 langues :
+  - il garde l'**e-mail** (obligatoire), l'**apport** choisi (idea, habilidad, arte, tecnologia, financiacion, curiosidad), la **langue** de la page et le **consentement** ;
+  - les données vont dans **Supabase** (projet de Ritukah, table `lista_espera`, serveur dans l'UE, en Irlande) ;
+  - la **case de consentement est obligatoire** : sans elle, rien n'est envoyé, et la base refuse aussi une inscription sans consentement ;
+  - la table permet seulement d'**ajouter** une inscription. Le site ne peut ni lire, ni modifier, ni effacer ;
+  - un **champ piège** invisible arrête les robots simples ;
+  - en cas de problème, un message clair invite à réessayer, et le bouton revient ;
+  - si la colonne `aporte` n'existe pas encore dans la base, l'inscription est quand même enregistrée sans elle.
+- **Nouvelle page `privacidad.html`** (adresse de contact : `connecto@hasta-la-vista.org`, créée par Ritukah chez OVH) : ce qu'on garde, pourquoi, où, combien de temps (jusqu'à l'ouverture, deux ans au maximum), les droits (voir, corriger, effacer, retirer son consentement, réclamation à la CNIL) et le contact. On y arrive depuis la case de consentement et depuis le pied de chaque page.
+- `AGENTS.md` :
+  - seule la clé publishable de Supabase peut être dans le dépôt ;
+  - jamais la clé secret, la clé service_role ni le mot de passe de la base ;
+  - la page de confidentialité doit suivre tout changement des données gardées.
+- Testé avec un Supabase simulé, dans les 8 langues, sur ordinateur et téléphone :
+  - envoi, refus sans e-mail ou sans consentement, erreur du serveur, colonne manquante, robot, page de confidentialité.
+  - Ma sandbox ne peut pas joindre Supabase : **le vrai premier test est à faire par Ritukah**, dans son navigateur.
+- À faire plus tard : envoyer les e-mails le jour de l'ouverture, et éventuellement un double opt-in (e-mail de confirmation).
+
 ## 2026-11-04 — Claude — claude/mesa-comun
 - **Pilier 4, l'abondance : « La mesa común »**, une idée de Claude adoptée par Ritukah (« donner c'est bien, recevoir c'est tout aussi bien »). Elle est dans les huit vitrinas :
   - un panneau **« ✳ La mesa común »** où chacun pose **« Ofrezco… »** ou **« Necesito… »**. Les deux ont exactement la même étiquette dorée et la même place : aucune différence entre donner et demander ;
