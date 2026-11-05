@@ -29,7 +29,7 @@ Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
   - un **champ piège** invisible arrête les robots simples ;
   - en cas de problème, un message clair invite à réessayer, et le bouton revient ;
   - si la colonne `aporte` n'existe pas encore dans la base, l'inscription est quand même enregistrée sans elle.
-- **Nouvelle page `privacidad.html`**, en 8 langues : ce qu'on garde, pourquoi, où, combien de temps (jusqu'à l'ouverture, deux ans au maximum), les droits (voir, corriger, effacer, retirer son consentement, réclamation à la CNIL) et le contact. On y arrive depuis la case de consentement et depuis le pied de chaque page.
+- **Nouvelle page `privacidad.html`** (adresse de contact : `connecto@hasta-la-vista.org`, créée par Ritukah chez OVH) : ce qu'on garde, pourquoi, où, combien de temps (jusqu'à l'ouverture, deux ans au maximum), les droits (voir, corriger, effacer, retirer son consentement, réclamation à la CNIL) et le contact. On y arrive depuis la case de consentement et depuis le pied de chaque page.
 - `AGENTS.md` :
   - seule la clé publishable de Supabase peut être dans le dépôt ;
   - jamais la clé secret, la clé service_role ni le mot de passe de la base ;
