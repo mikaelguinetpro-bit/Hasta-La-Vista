@@ -32,6 +32,10 @@ Ces quatre piliers, définis par Ritukah, guident **chaque décision**, sur le s
 - Le site contient **un seul et unique easter egg** (trois touches sur l'étoile du bandeau jaune). N'en ajoute pas d'autre, et ne le supprime pas.
 - La phrase dorée de Ritukah, à la fin de son histoire, reste **en anglais dans toutes les langues** : c'est sa voix.
 - Les échanges avec Ritukah, les messages de commit et le journal sont **en français**.
+- **Nom de domaine** : le site est en ligne sur **https://hasta-la-vista.org**, servi par GitHub Pages. Le fichier `CNAME`, à la racine, garde ce nom de domaine : **ne jamais le supprimer ni le modifier**. La zone DNS est chez OVH, et seul Ritukah y touche.
+- **Partage et référencement** :
+  - Chaque page et chaque vitrina annonce une **carte de partage** (`og:*`, `twitter:*`) qui utilise l'image de sa langue, `hasta-la-vista/compartir/og-<langue>.jpg` (1200 × 630). Si le titre ou la phrase de la graine changent, il faut refaire l'image de la langue concernée.
+  - `sitemap.xml` et `robots.txt` sont à la racine. Une nouvelle page ou une nouvelle langue doit être ajoutée au sitemap, aux liens `hreflang` de toutes les pages et aux balises `og:locale:alternate`.
 - **Liste d'attente** : le formulaire « Participer » enregistre l'e-mail, l'apport choisi, la langue et le consentement dans Supabase (table `lista_espera`, serveur dans l'Union européenne, en Irlande). La case de consentement est obligatoire. La page `privacidad.html` explique tout en neuf langues. Si on change ce qu'on garde, il faut aussi changer la page de confidentialité.
 - Le site doit rester **beau, ambitieux et accessible**, au service des quatre piliers ci-dessus.
 
