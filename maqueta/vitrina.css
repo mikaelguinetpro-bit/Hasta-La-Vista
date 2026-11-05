@@ -1,4 +1,4 @@
-/* Hasta La Vista — estilos comunes de la vitrina (8 idiomas). Generado por build.py */
+/* Hasta La Vista — estilos comunes de la vitrina (9 idiomas). Generado por build.py */
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url('../hasta-la-vista/fuentes/playfair-display-latin-600-normal.woff2') format('woff2')}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:600;font-display:swap;src:url('../hasta-la-vista/fuentes/playfair-display-latin-600-italic.woff2') format('woff2')}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('../hasta-la-vista/fuentes/playfair-display-latin-700-normal.woff2') format('woff2')}
@@ -99,7 +99,7 @@
   .page form.join label{display:flex;flex-direction:column;gap:6px;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.06em}
   .page form.join input,.page form.join select{padding:11px;border:1px solid #9d9686;background:#fff;font:15px var(--sans);min-width:200px}
   .page .note{font:12px var(--mono);color:#55574f;margin-top:40px}
-  .langs{float:right;font:500 12px var(--mono);display:flex;gap:4px}
+  .langs{float:right;font:500 12px var(--mono);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:100%}
   .langs a{padding:4px 8px;border-radius:99px;color:var(--soft);text-decoration:none}
   .langs a[aria-current]{background:var(--gold);color:#171917}
   .legend{position:absolute;right:20px;bottom:92px;background:#030d1fcc;border:1px solid #ffffff2e;border-radius:12px;padding:10px 12px;font:500 12px var(--mono);color:var(--soft);z-index:1}
@@ -241,6 +241,9 @@
   :lang(hi){--serif:'Playfair Display','Noto Serif Devanagari','Kohinoor Devanagari','Mangal','Nirmala UI',serif;--sans:'DM Sans','Noto Sans Devanagari','Kohinoor Devanagari','Nirmala UI',sans-serif;--mono:'Noto Sans Devanagari','Nirmala UI',sans-serif}
   :lang(hi) h1,:lang(hi) h2,:lang(hi) h3,:lang(hi) .label,:lang(hi) .kind{letter-spacing:0}
   :lang(hi) em,:lang(hi) .whisper,:lang(hi) .phrase,:lang(hi) .ref.idea,:lang(hi) .slogan-sign{font-style:normal}
+  :lang(bn){--serif:'Playfair Display','Noto Serif Bengali','Hind Siliguri','Kohinoor Bangla','Vrinda','Nirmala UI',serif;--sans:'DM Sans','Noto Sans Bengali','Hind Siliguri','Kohinoor Bangla','Vrinda','Nirmala UI',sans-serif;--mono:'Noto Sans Bengali','Kohinoor Bangla','Nirmala UI',sans-serif}
+  :lang(bn) h1,:lang(bn) h2,:lang(bn) h3,:lang(bn) .label,:lang(bn) .kind{letter-spacing:0}
+  :lang(bn) em,:lang(bn) .whisper,:lang(bn) .phrase,:lang(bn) .ref.idea,:lang(bn) .slogan-sign{font-style:normal}
   :lang(zh){--serif:'Playfair Display','Noto Serif SC','Noto Serif CJK SC','Songti SC','STSong',serif;--sans:'DM Sans','PingFang SC','Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;--mono:'PingFang SC','Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif}
   :lang(zh) h1,:lang(zh) h2,:lang(zh) h3,:lang(zh) .label,:lang(zh) .kind{letter-spacing:0}
   :lang(zh) em,:lang(zh) .whisper,:lang(zh) .phrase,:lang(zh) .ref.idea,:lang(zh) .slogan-sign{font-style:normal}
