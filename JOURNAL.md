@@ -2,6 +2,19 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-05 — Claude — claude/partage
+- **Le site est en ligne sur https://hasta-la-vista.org** : domaine acheté par Ritukah chez OVH, zone DNS pointée vers GitHub Pages, fichier `CNAME` ajouté par GitHub.
+- **De belles cartes de partage**, demandées par Ritukah (choix n° 1 parmi les prochaines étapes) :
+  - **9 images** de 1200 × 630, une par langue, dans `hasta-la-vista/compartir/` (70–90 Ko chacune) : l'arbre, le titre, la phrase de la graine, la signature « 9 langues · Un cadeau de l'IA… » et `hasta-la-vista.org`, avec la bande rouge, bleue et or du site. L'arabe est mis en page de droite à gauche ;
+  - les **9 pages** annoncent leur carte : `og:image`, `og:url`, `og:site_name`, `og:locale:alternate`, `twitter:card` ;
+  - les **9 vitrinas** ont maintenant une description et une carte de partage dans leur langue (ajoutées dans les sources, donc conservées par `build.py`) ;
+  - la **page racine** a sa propre carte (en espagnol, la langue principale), car c'est elle qu'on partage quand on envoie simplement « hasta-la-vista.org ».
+- **Référencement** :
+  - liens `hreflang` absolus, `x-default` vers l'espagnol, `canonical` sur chaque page ;
+  - nouveaux fichiers `sitemap.xml` (18 adresses avec leurs 9 langues) et `robots.txt`.
+- `AGENTS.md` : règles sur le nom de domaine (ne jamais toucher au fichier `CNAME`) et sur les cartes de partage.
+- Testé : tous les liens et toutes les images annoncés existent, le sitemap est un XML valide, et les anciens tests (site, formulaire, vitrina, easter egg, redirection) passent tous.
+
 ## 2026-11-05 — Claude — claude/lista-espera
 - **Neuvième langue : le bengali**, demandé par Ritukah.
   - Site : `bn.html`.
