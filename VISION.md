@@ -35,6 +35,31 @@ Sur Hasta La Vista, il n'y a ni « utilisateurs » ni « clients », seulement d
 - **Compartir (partager)** : la valeur créée revient à celles et ceux qui l'ont rendue possible, et au monde. Ce qui reste d'un projet retourne au fonds commun.
 - **La mesa común (la table commune)** : on peut y offrir comme y demander. Les deux ont exactement la même place et la même apparence, et personne ne cache ses mains. L'IA rapproche ce que l'un a en trop de ce qui manque à l'autre. Quand un don a lieu, l'étoile qui donne et celle qui reçoit brillent toutes les deux davantage, et le merci est visible.
 
+## The Mix : comment une idée devient possible
+
+The Spark, c'est le moment où quelqu'un ose. **The Mix, c'est tout ce qui se passe ensuite** pour que l'idée ne reste pas un rêve. Décidé avec Ritukah le 8 novembre 2026.
+
+**Les cinq temps**
+1. **Il manque…** : le créateur de l'idée décrit ses besoins en petites cartes concrètes (« 3 paires de mains samedi », « une échelle », « quelqu'un qui sait dessiner », « 200 € de peinture »).
+2. **J'apporte…** : n'importe quel créateur répond à une carte, ou propose ce qui n'était pas demandé.
+3. **L'IA rapproche** : elle repère les talents, les objets et les personnes qui correspondent, et l'écrit dans son journal. Elle propose, elle ne décide jamais.
+4. **Le créateur accepte** : chaque contribution est acceptée par le créateur de l'idée. L'humain décide.
+5. **C'est fait** : quand l'aide a vraiment eu lieu, le créateur la confirme. L'étoile de celui qui a donné brille plus fort, son nom reste attaché au projet, et le projet terminé devient une recette pour les suivants.
+
+**L'argent est un outil**
+L'argent n'est pas rejeté : **c'est un outil pour avancer vers des projets concrets**, ni bon ni mauvais en soi, « utilisé par nos mains, sales ou pas » (Ritukah). Il garde sa place à côté du temps, des savoir-faire et des objets, et il reste toujours visible (comptes publics).
+- *Proposition de Claude, pas encore décidée :* d'abord, l'argent passe directement entre les personnes (une cagnotte du projet, ouverte par son créateur sur un service existant), et la plateforme ne le touche pas. Plus tard, avec une structure légale (par exemple une association) et un prestataire de paiement, la plateforme pourra recevoir l'argent et gérer le fonds commun.
+
+**Près ou loin**
+Chacun peut indiquer **sa ville, s'il le souhaite** (jamais son adresse). C'est utile pour les projets qui ont besoin de mains sur place, comme une fresque. Beaucoup d'aides se font à distance, comme construire un site, et n'en ont pas besoin.
+
+**Les promesses, la parole et la communication**
+- **Pas de punition.** On reste dans la bienveillance.
+- Mais **la communication fait partie de la bienveillance** : Hasta La Vista fait tout pour que les gens se parlent le plus possible entre eux.
+- Celui qui ne peut pas tenir sa promesse **prévient**. Il garde alors toute la confiance des autres. Celui qui disparaît sans prévenir **sera moins pris au sérieux**.
+- Une aide promise ne fait briller l'étoile qu'une fois **confirmée**.
+- *Proposition de Claude, pas encore décidée :* un bouton simple « Je ne pourrai pas venir » libère la place avec un merci, et l'IA cherche aussitôt quelqu'un d'autre. Une promesse oubliée expire en silence. Il n'y a jamais de note publique qui humilie : l'IA tient seulement compte de la fiabilité quand elle propose des personnes, et elle le dit à la personne concernée (Visibilité).
+
 ## La reconnaissance
 
 Avant tout, chacun souhaite **être reconnu** et **être occupé par ce qu'il aime**. Donc **plus un créateur participe et donne** (de son temps, de son savoir-faire, de son cœur) aux projets, **plus il est mis en avant**.
