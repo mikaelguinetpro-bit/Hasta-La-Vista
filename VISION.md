@@ -48,7 +48,7 @@ The Spark, c'est le moment où quelqu'un ose. **The Mix, c'est tout ce qui se pa
 
 **L'argent est un outil**
 L'argent n'est pas rejeté : **c'est un outil pour avancer vers des projets concrets**, ni bon ni mauvais en soi, « utilisé par nos mains, sales ou pas » (Ritukah). Il garde sa place à côté du temps, des savoir-faire et des objets, et il reste toujours visible (comptes publics).
-- *Proposition de Claude, pas encore décidée :* d'abord, l'argent passe directement entre les personnes (une cagnotte du projet, ouverte par son créateur sur un service existant), et la plateforme ne le touche pas. Plus tard, avec une structure légale (par exemple une association) et un prestataire de paiement, la plateforme pourra recevoir l'argent et gérer le fonds commun.
+- **Décidé (8 novembre 2026)** : d'abord, l'argent passe directement entre les personnes (une cagnotte du projet, ouverte par son créateur sur un service existant comme HelloAsso ou Leetchi), et la plateforme l'affiche en toute transparence sans le toucher. Plus tard, avec une structure légale (par exemple une association) et un prestataire de paiement, la plateforme pourra recevoir l'argent et gérer le fonds commun.
 
 **Près ou loin**
 Chacun peut indiquer **sa ville, s'il le souhaite** (jamais son adresse). C'est utile pour les projets qui ont besoin de mains sur place, comme une fresque. Beaucoup d'aides se font à distance, comme construire un site, et n'en ont pas besoin.
@@ -58,7 +58,12 @@ Chacun peut indiquer **sa ville, s'il le souhaite** (jamais son adresse). C'est 
 - Mais **la communication fait partie de la bienveillance** : Hasta La Vista fait tout pour que les gens se parlent le plus possible entre eux.
 - Celui qui ne peut pas tenir sa promesse **prévient**. Il garde alors toute la confiance des autres. Celui qui disparaît sans prévenir **sera moins pris au sérieux**.
 - Une aide promise ne fait briller l'étoile qu'une fois **confirmée**.
-- *Proposition de Claude, pas encore décidée :* un bouton simple « Je ne pourrai pas venir » libère la place avec un merci, et l'IA cherche aussitôt quelqu'un d'autre. Une promesse oubliée expire en silence. Il n'y a jamais de note publique qui humilie : l'IA tient seulement compte de la fiabilité quand elle propose des personnes, et elle le dit à la personne concernée (Visibilité).
+- **Décidé (8 novembre 2026)** : un bouton simple « Je ne pourrai pas venir » libère la place avec un merci, et l'IA cherche aussitôt quelqu'un d'autre. Il n'y a jamais de note publique qui humilie : l'IA tient seulement compte de la fiabilité quand elle propose des personnes, et elle le dit à la personne concernée (Visibilité).
+- **Décidé (8 novembre 2026) — dire à l'IA qu'une personne n'est pas venue** : celui qui attendait de l'aide peut prévenir l'IA que la personne n'est pas venue et n'a pas prévenu. Pour rester dans la bienveillance :
+  - c'est **privé** : rien n'est affiché publiquement ;
+  - la personne concernée est **informée et peut s'expliquer** (un empêchement, un malentendu…), comme dans la Tríada ;
+  - c'est seulement la **répétition** de ces absences, sans explication, qui fait qu'elle est moins prise au sérieux ; un oubli isolé ne compte pas ;
+  - l'IA le dit franchement à la personne, pour qu'elle puisse changer les choses (Visibilité).
 
 ## La reconnaissance
 
