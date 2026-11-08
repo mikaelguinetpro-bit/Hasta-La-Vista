@@ -2,6 +2,14 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-08 — Claude — claude/vision-the-mix
+- **The Mix décrit dans `VISION.md`**, après une discussion avec Ritukah (aucun code). Une nouvelle section « The Mix : comment une idée devient possible », qui ne retire aucun texte existant :
+  - les cinq temps : il manque… → j'apporte… → l'IA rapproche → le créateur accepte → c'est fait (l'étoile brille seulement quand l'aide est confirmée) ;
+  - **l'argent est un outil** pour avancer vers des projets concrets, il n'est pas rejeté (décision de Ritukah) ;
+  - la ville est indiquée si on le souhaite, et elle est inutile pour les aides à distance ;
+  - pas de punition, mais la communication fait partie de la bienveillance : on prévient si on ne peut pas venir, sinon on est moins pris au sérieux.
+- Deux propositions de Claude sont marquées « pas encore décidées » : comment faire circuler l'argent au début, et le bouton « Je ne pourrai pas venir ».
+
 ## 2026-11-05 — Claude — claude/partage
 - **Le site est en ligne sur https://hasta-la-vista.org** : domaine acheté par Ritukah chez OVH, zone DNS pointée vers GitHub Pages, fichier `CNAME` ajouté par GitHub.
 - **De belles cartes de partage**, demandées par Ritukah (choix n° 1 parmi les prochaines étapes) :
