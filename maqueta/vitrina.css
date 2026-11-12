@@ -216,6 +216,25 @@
   .dialog label.consent input{width:20px;height:20px;flex:none;margin:2px 0 0;padding:0;accent-color:var(--navy)}
   .dialog label.consent a{color:var(--navy)}
   .dialog .hp{position:absolute;top:0;inset-inline-start:0;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);opacity:0;pointer-events:none}
+  .auth h3{font:600 26px/1.15 var(--serif);margin:6px 0 10px}
+  .auth p{margin:0 0 16px;color:#55574f}
+  .auth .oauth{display:block;width:100%;margin:0 0 10px;padding:13px 16px;border:1px solid #17191733;border-radius:12px;background:#fff;font:600 15px var(--sans);cursor:pointer}
+  .auth .oauth:hover{border-color:var(--navy)}
+  .auth form{margin-top:16px}
+  .auth form label{display:block;font:500 12px var(--mono);letter-spacing:.04em;margin:0 0 6px;text-transform:none}
+  .auth form input{width:100%;margin:0 0 10px}
+  .auth form button{width:100%;padding:12px;border:0;border-radius:99px;background:var(--navy);color:#fff;font:600 14px var(--sans);cursor:pointer}
+  .auth-msg{min-height:1.4em;font-size:14px}
+  .auth-back{background:none;border:0;color:var(--navy);font:500 13px var(--mono);cursor:pointer;padding:6px 0}
+  .account{position:absolute;right:20px;top:66px;display:none;background:#030d1fcc;border:1px solid #ebaf1288;color:#f4efe5;border-radius:99px;padding:8px 14px;font:500 12px var(--mono);cursor:pointer;z-index:3}
+  .account.on{display:inline-block}
+  .account.on ~ .mydata{top:110px}
+  .dialog.authing > p{display:none}
+  .account-menu{position:absolute;right:20px;top:104px;display:none;flex-direction:column;gap:6px;background:#030d1fee;border:1px solid #ffffff44;border-radius:14px;padding:10px;z-index:3}
+  .account-menu.open{display:flex}
+  .account-menu small{color:#c9d2ea;font:500 11px var(--mono);padding:2px 6px}
+  .account-menu button{background:none;border:1px solid #ffffff55;color:#f4efe5;border-radius:99px;padding:8px 12px;font:500 12px var(--mono);cursor:pointer;text-align:start}
+  .account-menu button.danger{border-color:#ff5a4f99;color:#ffb3ad}
   .card .real{display:inline-block;margin:0 6px 8px 0;padding:3px 9px;border:1px solid #ebaf12;border-radius:99px;font:500 11px var(--mono);color:#ebaf12;letter-spacing:.04em}
   .dialog input,.dialog textarea{width:100%;padding:12px;border:1px solid #9d9686;background:#fff;font:15px var(--sans);color:#171917;resize:vertical}
   .send{margin-top:20px;background:#171917;color:#fff;border:0;border-radius:99px;padding:14px 20px;font:600 14px var(--sans);cursor:pointer}
@@ -238,6 +257,7 @@
     .scale b{font-size:16px}
     .legend ul{grid-template-columns:auto auto auto}
     .mydata{top:118px}
+    .account{top:118px}.account.on ~ .mydata{top:162px}.account-menu{top:156px}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
   :lang(ar){--serif:'Noto Naskh Arabic','Amiri','Geeza Pro','Traditional Arabic',serif;--sans:'Noto Sans Arabic','Segoe UI','Geeza Pro','Tahoma',sans-serif;--mono:'Noto Sans Arabic','Segoe UI','Tahoma',sans-serif}

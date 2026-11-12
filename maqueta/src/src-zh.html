@@ -241,6 +241,25 @@
   .dialog label.consent input{width:20px;height:20px;flex:none;margin:2px 0 0;padding:0;accent-color:var(--navy)}
   .dialog label.consent a{color:var(--navy)}
   .dialog .hp{position:absolute;top:0;inset-inline-start:0;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);opacity:0;pointer-events:none}
+  .auth h3{font:600 26px/1.15 var(--serif);margin:6px 0 10px}
+  .auth p{margin:0 0 16px;color:#55574f}
+  .auth .oauth{display:block;width:100%;margin:0 0 10px;padding:13px 16px;border:1px solid #17191733;border-radius:12px;background:#fff;font:600 15px var(--sans);cursor:pointer}
+  .auth .oauth:hover{border-color:var(--navy)}
+  .auth form{margin-top:16px}
+  .auth form label{display:block;font:500 12px var(--mono);letter-spacing:.04em;margin:0 0 6px;text-transform:none}
+  .auth form input{width:100%;margin:0 0 10px}
+  .auth form button{width:100%;padding:12px;border:0;border-radius:99px;background:var(--navy);color:#fff;font:600 14px var(--sans);cursor:pointer}
+  .auth-msg{min-height:1.4em;font-size:14px}
+  .auth-back{background:none;border:0;color:var(--navy);font:500 13px var(--mono);cursor:pointer;padding:6px 0}
+  .account{position:absolute;right:20px;top:66px;display:none;background:#030d1fcc;border:1px solid #ebaf1288;color:#f4efe5;border-radius:99px;padding:8px 14px;font:500 12px var(--mono);cursor:pointer;z-index:3}
+  .account.on{display:inline-block}
+  .account.on ~ .mydata{top:110px}
+  .dialog.authing > p{display:none}
+  .account-menu{position:absolute;right:20px;top:104px;display:none;flex-direction:column;gap:6px;background:#030d1fee;border:1px solid #ffffff44;border-radius:14px;padding:10px;z-index:3}
+  .account-menu.open{display:flex}
+  .account-menu small{color:#c9d2ea;font:500 11px var(--mono);padding:2px 6px}
+  .account-menu button{background:none;border:1px solid #ffffff55;color:#f4efe5;border-radius:99px;padding:8px 12px;font:500 12px var(--mono);cursor:pointer;text-align:start}
+  .account-menu button.danger{border-color:#ff5a4f99;color:#ffb3ad}
   .card .real{display:inline-block;margin:0 6px 8px 0;padding:3px 9px;border:1px solid #ebaf12;border-radius:99px;font:500 11px var(--mono);color:#ebaf12;letter-spacing:.04em}
   .dialog input,.dialog textarea{width:100%;padding:12px;border:1px solid #9d9686;background:#fff;font:15px var(--sans);color:#171917;resize:vertical}
   .send{margin-top:20px;background:#171917;color:#fff;border:0;border-radius:99px;padding:14px 20px;font:600 14px var(--sans);cursor:pointer}
@@ -263,6 +282,7 @@
     .scale b{font-size:16px}
     .legend ul{grid-template-columns:auto auto auto}
     .mydata{top:118px}
+    .account{top:118px}.account.on ~ .mydata{top:162px}.account-menu{top:156px}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -318,6 +338,8 @@
     </div>
     <div class="hint">拖动以旋转宇宙 · 滚轮或双指捏合缩放 · 右键或双指拖动来移动</div>
     <button class="light-btn" type="button" id="open">✳ 点亮你的火花</button>
+    <button class="account" type="button" id="account" aria-haspopup="true" aria-expanded="false">✳ 我的账户</button>
+    <div class="account-menu" id="account-menu"><small id="account-who"></small><button type="button" id="account-logout">退出登录</button><button type="button" class="danger" id="account-delete">删除我的账户</button></div>
     <button class="mydata" type="button" id="mydata">删除我的星星和我的数据</button>
     <div class="legend" role="group" aria-labelledby="legend-title">
       <h3 id="legend-title">图例</h3>
@@ -389,6 +411,15 @@
     <div class="label">勇敢一点</div>
     <h2 id="d-title">点亮你的火花</h2>
     <p>三个问题，一个不多。没有标准答案。一句话就够了。</p>
+    <div id="auth" class="auth" hidden>
+      <h3 id="auth-title">要点亮你的火花，请先登录</h3>
+      <p>这样你的星星才真正属于你：你可以随时找到它、照顾它、删除它。你的邮箱永远不会被显示。</p>
+      <button class="oauth" type="button" data-provider="google">使用 Google 继续</button>
+      <button class="oauth" type="button" data-provider="facebook">使用 Facebook 继续</button>
+      <form id="auth-email"><label for="auth-mail">或通过邮件获取一个魔法链接</label><input id="auth-mail" type="email" autocomplete="email" required maxlength="200" placeholder="you@email.com"><button type="submit">发送链接给我</button></form>
+      <p class="auth-msg" id="auth-msg" aria-live="polite"></p>
+      <button class="auth-back" type="button" id="auth-back">← 返回我的火花</button>
+    </div>
     <form id="form">
       <label for="f-name">你的名字 <span>（随你喜欢：你的名字、一个昵称、一个词…）</span></label>
       <input id="f-name" maxlength="30" placeholder="Ritukah" required>
@@ -401,7 +432,7 @@
       <label class="consent"><input id="f-consent" type="checkbox" required> <span>我同意：在三方守护接纳后，我的名字和我的火花将在天空中为所有人闪耀。 <a href="../hasta-la-vista/privacidad.html#zh" target="_blank" rel="noopener">隐私</a></span></label>
       <input class="hp" id="f-web" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="send" type="submit">✳ 点亮我的星星</button>
-      <p class="note">你的火花会被保存，并在有人接纳它（三方守护）后为所有人点亮。我们不会向你索要任何邮箱。</p>
+      <p class="note">你的火花会和你的账户一起保存，并在有人接纳它（三方守护）后为所有人点亮。你的邮箱永远不会被显示。</p>
     </form>
   </div>
 </div>
@@ -409,6 +440,15 @@
 <script>
 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = id => document.getElementById(id);
+
+// ───────── Vuelta de la conexión (Google, Facebook o enlace mágico): la sesión llega en la dirección
+const AUTH_BACK = (() => {
+  const h = location.hash.slice(1);
+  if (!/(^|&)(access_token|error)=/.test(h)) return null;
+  const p = Object.fromEntries(new URLSearchParams(h));
+  history.replaceState(null, '', location.pathname + location.search);
+  return p;
+})();
 const canvas = $('canvas'), ctx = canvas.getContext('2d'), sky = $('sky');
 const logEl = $('log'), countEl = $('count'), whisper = $('whisper');
 let W = 0, H = 0, dpr = 1, paused = false, lit = 0;
@@ -1160,45 +1200,50 @@ EVENTS[0](); EVENTS[0](); EVENTS[0](); piStep();
 requestAnimationFrame(draw); requestAnimationFrame(spinTick); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname); if (wantExplore) setTimeout(openExplore, 400); if (wantMesa) setTimeout(openMesa, 400);
 
 // ───────── Las estrellas reales: las chispas se guardan en Supabase (UE, Irlanda)
-// La clave publicable puede estar aquí: la tabla solo deja AÑADIR una chispa «pendiente»
-// y LEER las ya acogidas por la Tríada. Nunca cambiar ni borrar.
+// La clave publicable puede estar aquí: la base solo deja LEER las chispas acogidas por la Tríada,
+// y a cada creador conectado AÑADIR, ver y borrar las suyas. Nunca cambiar las de otros.
 const REAL = { url: 'https://cwcolflstshiptghldtq.supabase.co/rest/v1/chispas', key: 'sb_publishable_wLcDsBM3zVE_tq57lMdEkQ_ttW5Hgv9' };
-const RS = {"consent": "我同意：在三方守护接纳后，我的名字和我的火花将在天空中为所有人闪耀。", "priv": "隐私", "note": "你的火花会被保存，并在有人接纳它（三方守护）后为所有人点亮。我们不会向你索要任何邮箱。", "sent": "我已保存你的火花。一旦三方守护接纳，它就会为所有人闪耀。", "sentWhy": "没有人的目光，天空中不会出现任何东西。", "fail": "现在没能保存你的火花。它在你的屏幕上闪耀着：请稍后再试。", "loaded": "已有 {n} 颗真实的火花在天空中闪耀，由三方守护接纳。", "loadedWhy": "每一颗都是一位真实创造者的想法。", "badge": "✳ 真实的创造者 · 由三方守护接纳", "del": "如果你已经发送了它，请写信至 connecto@hasta-la-vista.org，我们会将其删除。", "pending": "⏳ 等待三方守护", "back": "你的火花还在这里，等待三方守护接纳。", "accepted": "你的火花已被接纳！现在它为所有人闪耀。", "trNote": "🌐 由AI翻译"};
+const RS = {"consent": "我同意：在三方守护接纳后，我的名字和我的火花将在天空中为所有人闪耀。", "priv": "隐私", "note": "你的火花会和你的账户一起保存，并在有人接纳它（三方守护）后为所有人点亮。你的邮箱永远不会被显示。", "sent": "我已保存你的火花。一旦三方守护接纳，它就会为所有人闪耀。", "sentWhy": "没有人的目光，天空中不会出现任何东西。", "fail": "现在没能保存你的火花。它在你的屏幕上闪耀着：请稍后再试。", "loaded": "已有 {n} 颗真实的火花在天空中闪耀，由三方守护接纳。", "loadedWhy": "每一颗都是一位真实创造者的想法。", "badge": "✳ 真实的创造者 · 由三方守护接纳", "del": "如果你已经发送了它，请写信至 connecto@hasta-la-vista.org，我们会将其删除。", "pending": "⏳ 等待三方守护", "back": "你的火花还在这里，等待三方守护接纳。", "accepted": "你的火花已被接纳！现在它为所有人闪耀。", "trNote": "🌐 由AI翻译"};
 const LANG2 = (document.documentElement.lang || 'es').slice(0, 2);
-const PEND_KEY = 'hlv_chispa_pendiente';            // tu chispa en espera se recuerda en TU navegador, en ningún otro sitio
-const pendGet = () => { try { const p = JSON.parse(localStorage.getItem(PEND_KEY) || 'null'); return p && Date.now() - p.t < 90 * 864e5 ? p : null; } catch (e) { return null; } };
-const pendSet = p => { try { p ? localStorage.setItem(PEND_KEY, JSON.stringify(p)) : localStorage.removeItem(PEND_KEY); } catch (e) {} };
-const realFetch = (q, opt) => fetch(REAL.url + q, Object.assign({ headers: { apikey: REAL.key, 'Content-Type': 'application/json' } }, opt || {}));
+const MINE_KEY = 'hlv_mis_chispas';                  // los números de tus chispas, solo en tu navegador, para avisarte cuando sean acogidas
+const realFetch = async (q, opt) => {
+  const t = typeof freshToken === 'function' ? await freshToken() : null;
+  const o = Object.assign({}, opt || {}); o.headers = Object.assign({apikey: REAL.key, 'Content-Type': 'application/json'}, t ? {Authorization: 'Bearer ' + t} : {}, (opt && opt.headers) || {});
+  return fetch(REAL.url + q, o);
+};
+const myIds = () => { try { return JSON.parse(localStorage.getItem(MINE_KEY) || '[]'); } catch (e) { return []; } };
+const setMyIds = a => { try { localStorage.setItem(MINE_KEY, JSON.stringify(a.slice(-50))); localStorage.removeItem('hlv_chispa_pendiente'); } catch (e) {} };
 async function loadRealStars(){
   let rows = [];
   try {
-    const cols = 'id,creado,nombre,idea,porque,necesita,idioma';
-    let r = await realFetch(`?select=${cols},traducciones&estado=eq.aceptada&order=creado.asc&limit=300`);
-    if (!r.ok) r = await realFetch(`?select=${cols}&estado=eq.aceptada&order=creado.asc&limit=300`);   // aún sin la columna de traducciones
+    const cols = 'id,creado,nombre,idea,porque,necesita,idioma,estado';
+    let r = await realFetch(`?select=${cols},traducciones&order=creado.asc&limit=300`);
+    if (!r.ok) r = await realFetch(`?select=${cols}&order=creado.asc&limit=300`);   // aún sin la columna de traducciones
     if (r.ok){ const j = await r.json(); if (Array.isArray(j)) rows = j; }
   } catch (e) { /* sin red: el cielo de ejemplo sigue brillando */ }
-  const pend = pendGet();
+  const ids = myIds(), accepted = rows.filter(c => c.estado === 'aceptada');
   let mineAccepted = null;
   for (const c of rows){
     const tr = c.traducciones && c.traducciones[LANG2];
     const original = String(c.idioma || '').slice(0, 2);
-    const s = addStar('spark', {name: String(c.nombre || '').slice(0, 30),
-      idea: String((tr && tr.idea) || c.idea || '').slice(0, 140), why: (tr && tr.porque) || c.porque || '', need: (tr && tr.necesita) || c.necesita || '',
-      real: true, translated: !!(tr && tr.idea) && original !== LANG2, when: new Date(c.creado), wr: 0.015});
-    ideas.push(s);
-    if (pend && c.nombre === pend.name && c.idea === pend.idea) mineAccepted = s;
+    const info = {name: String(c.nombre || '').slice(0, 30), idea: String((tr && tr.idea) || c.idea || '').slice(0, 140),
+      why: (tr && tr.porque) || c.porque || '', need: (tr && tr.necesita) || c.necesita || '',
+      translated: !!(tr && tr.idea) && original !== LANG2, when: new Date(c.creado), dbId: c.id};
+    if (c.estado === 'aceptada'){
+      const s = addStar('spark', Object.assign(info, {real: true, wr: 0.015})); ideas.push(s);
+      if (ids.includes(c.id)){ s.own = true; mineAccepted = s; }
+    } else {                                           // solo puede ser tuya: la base no enseña las chispas en espera de otros
+      const s = addStar('mine', Object.assign(info, {pending: true, sent: true})); ideas.push(s); mine = s; $('mydata').classList.add('on');
+      setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.back)}`, RS.sentWhy), 1600);
+    }
   }
-  if (rows.length){
-    addStar('ai', {title: RS.loaded.replace('{n}', rows.length)});
-    log(`<span class="who">IA</span> ${esc(RS.loaded.replace('{n}', rows.length))}`, RS.loadedWhy);
+  if (accepted.length){
+    addStar('ai', {title: RS.loaded.replace('{n}', accepted.length)});
+    log(`<span class="who">IA</span> ${esc(RS.loaded.replace('{n}', accepted.length))}`, RS.loadedWhy);
   }
   if (mineAccepted){                                   // tu chispa ha sido acogida: ya es una estrella real
-    pendSet(null);
+    setMyIds(ids.filter(x => x !== mineAccepted.dbId));
     setTimeout(() => { say(mineAccepted, RS.accepted, '✳'); log(`<span class="who">IA</span> ${esc(RS.accepted)}`, RS.sentWhy); }, 1600);
-  } else if (pend && !mine){                           // sigue en espera: se vuelve a encender en tu pantalla
-    const s = addStar('mine', {name: pend.name, idea: pend.idea, why: pend.why, need: pend.need, pending: true, sent: true, when: new Date(pend.t)});
-    ideas.push(s); mine = s; $('mydata').classList.add('on');
-    setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.back)}`, RS.sentWhy), 1600);
   }
 }
 async function sendChispa(s, bot){
@@ -1206,10 +1251,11 @@ async function sendChispa(s, bot){
   const row = {nombre: s.name.slice(0, 30), idea: s.idea.slice(0, 140), porque: (s.why || '').slice(0, 140) || null,
     necesita: (s.need || '').slice(0, 80) || null, idioma: document.documentElement.lang.slice(0, 8), consentimiento: true};
   try {
-    const r = await realFetch('', {method: 'POST', headers: {apikey: REAL.key, 'Content-Type': 'application/json', Prefer: 'return=minimal'}, body: JSON.stringify(row)});
+    const r = await realFetch('?select=id', {method: 'POST', headers: {Prefer: 'return=representation'}, body: JSON.stringify(row)});
     if (!r.ok) throw new Error(r.status);
-    s.sent = true; s.pending = true;
-    pendSet({name: row.nombre, idea: row.idea, why: s.why || '', need: s.need || '', t: Date.now()});
+    const out = await r.json().catch(() => []);
+    s.sent = true; s.pending = true; s.dbId = out && out[0] && out[0].id;
+    if (s.dbId) setMyIds(myIds().concat([s.dbId]));
     setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.sent)}`, RS.sentWhy), 5200);
   } catch (e) {
     setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.fail)}`, ''), 5200);
@@ -1229,11 +1275,103 @@ async function sendChispa(s, bot){
     for (const t of tags){ const b = document.createElement('span'); b.className = 'real'; b.textContent = t; first?.before(b); }
   };
 }
-{ // borrar mis datos: se olvida también en este navegador, y se explica cómo borrar una chispa ya enviada
-  const _del = $('mydata').onclick;
-  $('mydata').onclick = () => { const wasSent = mine && mine.sent; pendSet(null); _del(); if (wasSent) log(`<span class="who">IA</span> ${esc(RS.del)}`, ''); };
+// borrar mis datos: la chispa se borra de verdad también en la base
+const _delLocal = $('mydata').onclick;
+$('mydata').onclick = async () => {
+  const m = mine;
+  if (m && m.dbId){
+    try { const r = await realFetch(`?id=eq.${m.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== m.dbId)); }
+    catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
+  }
+  _delLocal();
+};
+
+// ───────── Cuentas: mirar es libre; para participar (encender una chispa) hay que conectarse.
+// Conexión con Google, Facebook o un enlace mágico por correo (Supabase Auth). El correo nunca se muestra.
+const AUTH = { url: REAL.url.replace('/rest/v1/chispas', '/auth/v1'), rpc: REAL.url.replace('/chispas', '/rpc/borrar_mi_cuenta') };
+const AT = {"loginTitle": "要点亮你的火花，请先登录", "loginWhy": "这样你的星星才真正属于你：你可以随时找到它、照顾它、删除它。你的邮箱永远不会被显示。", "google": "使用 Google 继续", "facebook": "使用 Facebook 继续", "orEmail": "或通过邮件获取一个魔法链接", "emailPh": "you@email.com", "emailBtn": "发送链接给我", "linkSent": "我们已向你发送了一个链接。请在同一台设备上打开它：你的火花会在那里等你。", "linkFail": "链接未能发送。请稍后再试。", "back": "← 返回我的火花", "welcome": "欢迎！你的火花在等你：现在就可以点亮它。", "account": "✳ 我的账户", "logout": "退出登录", "deleteAcc": "删除我的账户", "confirmDel": "真的要永久删除你的账户和你所有的火花吗？", "deleted": "你的账户和火花已被真正删除。", "loginErr": "登录没有成功。请再试一次。", "note": "你的火花会和你的账户一起保存，并在有人接纳它（三方守护）后为所有人点亮。你的邮箱永远不会被显示。", "delFail": "现在没能删除你的火花。请再试一次，或写信至 connecto@hasta-la-vista.org。", "loggedOut": "你已退出登录。天空依然开放，可以随意观看。"};
+const SES_KEY = 'hlv_sesion', DRAFT_KEY = 'hlv_chispa_borrador';
+const store = (k, v) => { try { v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const read = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
+let session = read(SES_KEY);
+const here = () => location.origin + location.pathname;
+async function authApi(path, body, token){
+  return fetch(AUTH.url + path, {method: body ? 'POST' : 'GET', headers: Object.assign({apikey: REAL.key, 'Content-Type': 'application/json'}, token ? {Authorization: 'Bearer ' + token} : {}), body: body ? JSON.stringify(body) : undefined});
 }
-loadRealStars();
+async function saveSession(p){
+  const s = {access_token: p.access_token, refresh_token: p.refresh_token, expires_at: Date.now() + (Number(p.expires_in) || 3600) * 1000};
+  try { const r = await authApi('/user', null, s.access_token); if (r.ok){ const u = await r.json(); s.user = {id: u.id, email: u.email || ''}; } } catch (e) {}
+  session = s; store(SES_KEY, s); return s;
+}
+async function freshToken(){
+  if (!session) return null;
+  if (Date.now() < session.expires_at - 60000) return session.access_token;
+  try {
+    const r = await authApi('/token?grant_type=refresh_token', {refresh_token: session.refresh_token});
+    if (!r.ok) throw 0;
+    await saveSession(await r.json()); return session.access_token;
+  } catch (e) { session = null; store(SES_KEY); showAccount(); return null; }
+}
+function showAccount(){
+  $('account').classList.toggle('on', !!session);
+  $('account-who').textContent = session && session.user ? session.user.email.replace(/^(.).*(@.*)$/, '$1…$2') : '';
+  if (!session) $('account-menu').classList.remove('open');
+}
+// Panel de conexión dentro de la ventana «Enciende tu chispa»
+const authBox = $('auth'), sparkForm = $('form');
+const showAuth = on => { authBox.hidden = !on; authBox.parentNode.classList.toggle('authing', on); sparkForm.hidden = on; $('auth-msg').textContent = ''; if (on) authBox.querySelector('.oauth').focus(); };
+const saveDraft = () => store(DRAFT_KEY, {n: $('f-name').value, i: $('f-dream').value, w: $('f-why').value, d: $('f-need').value, t: Date.now()});
+authBox.querySelectorAll('.oauth').forEach(b => b.onclick = () => {
+  saveDraft();
+  location.href = `${AUTH.url}/authorize?provider=${b.dataset.provider}&redirect_to=${encodeURIComponent(here())}`;
+});
+$('auth-email').onsubmit = async e => {
+  e.preventDefault(); saveDraft();
+  const btn = e.target.querySelector('button'); btn.disabled = true;
+  try {
+    const r = await authApi(`/otp?redirect_to=${encodeURIComponent(here())}`, {email: $('auth-mail').value.trim(), create_user: true});
+    $('auth-msg').textContent = r.ok ? AT.linkSent : AT.linkFail;
+  } catch (err) { $('auth-msg').textContent = AT.linkFail; }
+  btn.disabled = false;
+};
+$('auth-back').onclick = () => showAuth(false);
+{ // sin sesión, «Encender mi estrella» abre primero la conexión; el texto escrito no se pierde
+  const _submit = sparkForm.onsubmit;
+  sparkForm.onsubmit = e => { if (!session){ e.preventDefault(); saveDraft(); showAuth(true); return; } store(DRAFT_KEY); _submit(e); };
+  const _openM = $('open').onclick;
+  $('open').onclick = () => { showAuth(false); _openM(); };
+}
+// Mi cuenta: cerrar sesión, borrar la cuenta de verdad
+$('account').onclick = () => { const m = $('account-menu'); m.classList.toggle('open'); $('account').setAttribute('aria-expanded', m.classList.contains('open')); };
+$('account-logout').onclick = async () => {
+  const t = await freshToken(); try { if (t) await authApi('/logout', {}, t); } catch (e) {}
+  session = null; store(SES_KEY); showAccount();
+  log(`<span class="who">IA</span> ${esc(AT.loggedOut)}`, '');
+};
+$('account-delete').onclick = async () => {
+  if (!confirm(AT.confirmDel)) return;
+  const t = await freshToken(); if (!t) return;
+  try {
+    const r = await fetch(AUTH.rpc, {method: 'POST', headers: {apikey: REAL.key, Authorization: 'Bearer ' + t, 'Content-Type': 'application/json'}, body: '{}'});
+    if (!r.ok) throw 0;
+    for (const n of roots.filter(x => x.kind === 'mine')){ mine = n; _delLocal(); }
+    session = null; store(SES_KEY); store(DRAFT_KEY); showAccount();
+    log(`<span class="who">IA</span> ${esc(AT.deleted)}`, RS.sentWhy);
+  } catch (e) { log(`<span class="who">IA</span> ${esc(AT.loginErr)}`, ''); }
+};
+// Al volver de la conexión: guardar la sesión y recuperar el borrador
+async function startAuth(){
+  if (AUTH_BACK && AUTH_BACK.access_token) await saveSession(AUTH_BACK);
+  showAccount();
+  if (AUTH_BACK && AUTH_BACK.error) log(`<span class="who">IA</span> ${esc(AT.loginErr)}`, '');
+  const d = read(DRAFT_KEY);
+  if (session && d && Date.now() - d.t < 864e5 && (d.i || d.n)){
+    $('open').onclick();
+    $('f-name').value = d.n || ''; $('f-dream').value = d.i || ''; $('f-why').value = d.w || ''; $('f-need').value = d.d || '';
+    log(`<span class="who">IA</span> ${esc(AT.welcome)}`, '');
+  }
+}
+startAuth().then(loadRealStars);
 </script>
 </body>
 </html>
