@@ -83,7 +83,7 @@
     <div class="hint">اسحب لتدوير الكون · العجلة أو القرص للتكبير · الزر الأيمن أو إصبعان للتحرّك</div>
     <button class="light-btn" type="button" id="open">✳ أشعل شرارتك</button>
     <button class="account" type="button" id="account" aria-haspopup="true" aria-expanded="false">✳ تسجيل الدخول</button>
-    <div class="account-menu" id="account-menu"><small id="account-who"></small><h4>شراراتي</h4><ul class="space-list" id="space-list" aria-live="polite"></ul><button type="button" id="account-logout">تسجيل الخروج</button><button type="button" class="danger" id="account-delete">حذف حسابي</button></div>
+    <div class="account-menu" id="account-menu"><button type="button" class="space-x" id="space-x" aria-label="إغلاق">×</button><small id="account-who"></small><h4>شراراتي</h4><ul class="space-list" id="space-list" aria-live="polite"></ul><div id="mix-space"></div><button type="button" id="account-logout">تسجيل الخروج</button><button type="button" class="danger" id="account-delete">حذف حسابي</button></div>
     <button class="mydata" type="button" id="mydata">احذف نجمتي وبياناتي</button>
     <div class="legend" role="group" aria-labelledby="legend-title">
       <h3 id="legend-title">دليل الألوان</h3>
@@ -172,11 +172,30 @@
       <label for="f-why">لماذا يهمّك ذلك؟ <span>(اختياري)</span></label>
       <textarea id="f-why" rows="2" maxlength="140"></textarea>
       <label for="f-need">ماذا قد تحتاج؟ <span>(اختياري)</span></label>
-      <input id="f-need" maxlength="80" placeholder="أيدٍ، تراب، قليل من الوقت">
+      <div class="need-row"><select id="f-need-type" class="need-type" aria-label="ينقصنا…"><option value="manos">أيادٍ</option><option value="objeto">غرض</option><option value="saber">مهارة</option><option value="dinero">مال</option><option value="otro" selected>شيء آخر</option></select><input id="f-need" maxlength="80" placeholder="أيدٍ، تراب، قليل من الوقت"></div>
+      <div id="f-needs-extra"></div>
+      <button type="button" class="add-need" id="f-add-need">+ حاجة أخرى</button>
+      <label for="f-place">مدينتك <span>(اختياري، وليس عنوانك أبدًا)</span></label>
+      <input id="f-place" maxlength="40" placeholder="مثلًا: الرباط، أو «عن بُعد»">
       <label class="consent"><input id="f-consent" type="checkbox" required> <span>أوافق على أن يضيء اسمي وشرارتي في السماء للجميع، حين يستقبلها الثالوث. <a href="../hasta-la-vista/privacidad.html#ar" target="_blank" rel="noopener">الخصوصية</a></span></label>
       <input class="hp" id="f-web" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="send" type="submit">✳ أشعل نجمتي</button>
       <p class="note">تُحفظ شرارتك مع حسابك، وتضيء للجميع حين يستقبلها إنسان (الثالوث). لا يُعرض بريدك الإلكتروني أبدًا.</p>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="mix-modal">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="mx-title">
+    <button class="close" type="button" aria-label="إغلاق">×</button>
+    <h2 id="mx-title">أساهم بـ…</h2>
+    <p id="mx-for"></p>
+    <form id="mx-form">
+      <label for="mx-name">اسمك <span>(أي اسم تشاء)</span></label>
+      <input id="mx-name" maxlength="30" required>
+      <label for="mx-text">بماذا تساهم</label>
+      <textarea id="mx-text" rows="3" maxlength="200" required placeholder="مثلًا: آتي يوم السبت ومعي سُلَّمي"></textarea>
+      <button class="send" type="submit">✳ اقتراح مساعدتي</button>
     </form>
   </div>
 </div>
@@ -993,12 +1012,14 @@ async function sendChispa(s, bot){
   if (bot) return;                                        // trampa para robots: una persona nunca rellena ese campo
   const row = {nombre: s.name.slice(0, 30), idea: s.idea.slice(0, 140), porque: (s.why || '').slice(0, 140) || null,
     necesita: (s.need || '').slice(0, 80) || null, idioma: document.documentElement.lang.slice(0, 8), consentimiento: true};
+  const mixNext = NEXT_MIX; if (mixNext && mixNext.lugar) row.lugar = mixNext.lugar;
   try {
     const r = await realFetch('?select=id', {method: 'POST', headers: {Prefer: 'return=representation'}, body: JSON.stringify(row)});
     if (!r.ok) throw new Error(r.status);
     const out = await r.json().catch(() => []);
     s.sent = true; s.pending = true; s.dbId = out && out[0] && out[0].id;
     if (s.dbId) setMyIds(myIds().concat([s.dbId]));
+    if (s.dbId && mixNext && mixNext.needs.length) mixAfterSend(s, mixNext.needs);
     setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.sent)}`, RS.sentWhy), 5200);
   } catch (e) {
     setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.fail)}`, ''), 5200);
@@ -1182,7 +1203,326 @@ function updateLegend(){ legendMine.lastChild.textContent = roots.filter(n => n.
   const _sub = sparkForm.onsubmit;
   sparkForm.onsubmit = e => { _sub(e); updateLegend(); };
 }
-startAuth().then(loadRealStars).then(markOwn).then(updateLegend);
+
+// ───────── The Mix : «Il manque…», «J'apporte…», l'IA rapproche, le créateur accepte, «C'est fait»
+// Tout est dans Supabase (supabase/mix.sql). L'IA (Claude) propose seulement : la personne choisit d'aider, le créateur accepte.
+const MXT = {"needTitle": "ينقصنا…", "types": {"manos": "أيادٍ", "objeto": "غرض", "saber": "مهارة", "dinero": "مال", "otro": "شيء آخر"}, "addNeed": "+ حاجة أخرى", "needPh2": "مثلًا: سُلَّم، شخص يجيد الرسم", "place": "مدينتك", "placeOpt": "(اختياري، وليس عنوانك أبدًا)", "placePh": "مثلًا: الرباط، أو «عن بُعد»", "bring": "أساهم", "bringOther": "أساهم بشيء آخر", "bringTitle": "أساهم بـ…", "bringFor": "لأجل: {x}", "bringName": "اسمك", "bringNameOpt": "(أي اسم تشاء)", "bringText": "بماذا تساهم", "bringPh": "مثلًا: آتي يوم السبت ومعي سُلَّمي", "bringSend": "اقتراح مساعدتي", "bringSent": "شكرًا! سيرى {name} اقتراحك في مساحته وسيردّ عليك.", "bringFail": "تعذّر إرسال اقتراحك. حاول مرة أخرى بعد لحظة.", "loginToBring": "لتقديم مساعدتك، سجّل دخولك", "helpers": "يساهمون بالفعل", "st": {"propuesto": "⏳ مُقترَحة", "aceptado": "🤝 مقبولة", "rechazado": "شكرًا، ليس هذه المرة", "hecho": "✳ تمّ", "retirado": "لن يتمكّن من الحضور", "ausente": "أُبلِغ عن غياب"}, "covered": "✓ متوفّر", "accept": "قبول", "decline": "ليس هذه المرة", "done": "تمّ! ✳", "absent": "لم يحضر", "cantCome": "لن أتمكّن من الحضور", "cantComeConfirm": "هل تُعلِم أنك لن تتمكّن من الحضور؟ سيُحرَّر مكانك، مع الشكر.", "cantComeThanks": "شكرًا لأنك أعلمتنا: تحتفظ بكامل ثقة الآخرين. الذكاء الاصطناعي يبحث عن شخص آخر.", "absentConfirm": "هل تُخبر الذكاء الاصطناعي أن هذا الشخص لم يحضر دون أن يُعلِم؟ الأمر خاص: سيُبلَّغ ويمكنه أن يشرح.", "absentNote": "أبلغ صاحب المشروع أنك لم تحضر. الأمر خاص. يمكنك أن تشرح في رسالة: النسيان لمرة واحدة لا يُحتسَب.", "doneLog": "ساهم {helper} في {idea}: تمّ! ✳", "doneWhy": "نجمة من يعطي تضيء أكثر.", "msgs": "💬 الرسائل", "msgPh": "اكتب رسالة…", "msgSend": "إرسال", "you": "أنت", "coverBtn": "متوفّر", "reopenBtn": "إعادة فتح", "needDel": "إزالة", "needAdd": "إضافة", "needAddPh": "حاجة أخرى…", "received": "الاقتراحات الواردة", "mineAportes": "ما أساهم به", "offers": "ما يمكنني المساهمة به", "offersWhy": "قل ما تجيده أو ما يمكنك إعارته: سيقترح عليك الذكاء الاصطناعي المشاريع التي تحتاج إليه.", "offerPh": "مثلًا: أجيد الطلاء، لديّ مثقاب", "placeShort": "المدينة (اختياري)", "offerAdd": "إضافة", "aiSuggests": "الذكاء الاصطناعي يقترح عليك", "aiJournal": "قرّب {need} (مشروع {idea}) ممّا يقدّمه {name}.", "project": "المشروع: ", "manage": "أدِر كل شيء من ✳ مساحتي", "close": "إغلاق", "actFail": "لم ينجح ذلك. حاول مرة أخرى بعد لحظة.", "none": "لا شيء حتى الآن."};
+const REST = REAL.url.replace('/chispas', '/');
+async function api(path, opt){
+  const t = await freshToken();
+  const o = Object.assign({}, opt || {}); o.headers = Object.assign({apikey: REAL.key, 'Content-Type': 'application/json'}, t ? {Authorization: 'Bearer ' + t} : {}, (opt && opt.headers) || {});
+  return fetch(REST + path, o);
+}
+const getJ = async p => { try { const r = await api(p); return r.ok ? await r.json() : null; } catch (e) { return null; } };
+const rpc = (name, body) => api('rpc/' + name, {method: 'POST', body: JSON.stringify(body || {})});
+const fill = (tpl, map) => esc(tpl).replace(/\{(\w+)\}/g, (_, k) => map[k] != null ? map[k] : '');
+const MIX = {needs: [], aportes: [], sugs: [], ofertas: [], msgs: [], mine: new Set(), ready: false};
+const trNeed = n => (n.traducciones && n.traducciones[LANG2]) || n.texto;
+const starOf = cid => roots.find(r => r.dbId === cid);
+const isMineStar = s => !!s && (s.kind === 'mine' || !!s.own);
+const READ_KEY = 'hlv_leidos', SEEN_KEY = 'hlv_vistos', NAME_KEY = 'hlv_nombre', PEND_APORTE = 'hlv_aporte_pendiente', NEEDS_DRAFT = 'hlv_necesidades_borrador';
+const TYPES = ['manos', 'objeto', 'saber', 'dinero', 'otro'];
+const helpStars = new Map(), loggedSugs = new Set(), openThreads = new Set();
+let NEXT_MIX = null;
+
+async function loadMix(first){
+  const [needs, aportes, sugs] = await Promise.all([
+    getJ('necesidades?select=id,creado,chispa_id,texto,tipo,estado,traducciones&order=id'),
+    getJ('aportes?select=id,creado,actualizado,chispa_id,necesidad_id,nombre,texto,estado,explicado&order=id'),
+    getJ('sugerencias?select=id,creado,necesidad_id,oferta_id,nombre,texto,porque&order=id.desc&limit=60')]);
+  MIX.needs = needs || []; MIX.aportes = aportes || []; MIX.sugs = sugs || [];
+  if (session){
+    const [mine, ofertas, msgs] = await Promise.all([
+      (async () => { try { const r = await rpc('mis_aportes'); return r.ok ? await r.json() : []; } catch (e) { return []; } })(),
+      getJ('ofertas?select=id,creado,nombre,texto,tipo,lugar&order=id'),
+      getJ('mensajes?select=id,creado,aporte_id,del_creador,texto&order=id')]);
+    MIX.mine = new Set((mine || []).map(x => typeof x === 'object' ? x.id : x)); MIX.ofertas = ofertas || []; MIX.msgs = msgs || [];
+  } else { MIX.mine = new Set(); MIX.ofertas = []; MIX.msgs = []; }
+  MIX.ready = true;
+  for (const s of roots) if (s.dbId){ const ns = MIX.needs.filter(n => n.chispa_id === s.dbId); s.mixNeeds = ns; if (ns.length) s.need = ''; }
+  // L'aide confirmée allume une étoile ; plus on donne, plus elle brille
+  const given = {}; for (const a of MIX.aportes) if (a.estado === 'hecho') given[a.nombre] = (given[a.nombre] || 0) + 1;
+  const fresh = MIX.aportes.filter(a => a.estado === 'hecho' && !helpStars.has(a.id));
+  fresh.forEach((a, i) => {
+    const p = starOf(a.chispa_id); if (!p) return;
+    const h = addStar('help', {name: a.nombre, title: a.texto, forIdea: p, real: true, wr: 0.011 + 0.003 * Math.min(given[a.nombre], 5), when: new Date(a.actualizado)});
+    p.links.push(h); helpStars.set(a.id, h);
+    if (!first || i >= fresh.length - 3) log(fill(MXT.doneLog, {helper: who(h), idea: idea(p)}), esc(MXT.doneWhy));
+  });
+  for (const h of helpStars.values()) if (given[h.name]) h.wr = 0.011 + 0.003 * Math.min(given[h.name], 5);
+  // Le journal de l'IA : ses rapprochements, avec leur pourquoi (Visibilité)
+  const news = MIX.sugs.filter(g => !loggedSugs.has(g.id)).slice(0, first ? 5 : 10).reverse();
+  for (const g of MIX.sugs) loggedSugs.add(g.id);
+  for (const g of news){
+    const n = MIX.needs.find(x => x.id === g.necesidad_id), p = n && starOf(n.chispa_id); if (!p) continue;
+    const why = g.porque && (g.porque[LANG2] || g.porque.es || '');
+    log(`<span class="who">IA</span> ` + fill(MXT.aiJournal, {need: `<b>“${esc(trNeed(n))}”</b>`, idea: idea(p), name: `<b>${esc(g.nombre)}</b>`}), why ? esc(why) : '');
+  }
+  updateBadge();
+  if ($('account-menu').classList.contains('open')) renderSpace();
+  if (cardNode && $('card').classList.contains('open')) showCard(cardNode);
+}
+
+// ───── Le petit chiffre sur « Mon espace » : messages non lus et nouvelles propositions
+const readObj = () => read(READ_KEY) || {};
+const amCreatorOf = a => !MIX.mine.has(a.id);
+const otherMsgs = a => MIX.msgs.filter(m => m.aporte_id === a.id && m.del_creador !== amCreatorOf(a));
+const unreadFor = a => Math.max(0, otherMsgs(a).length - (readObj()[a.id] || 0));
+const involved = a => MIX.mine.has(a.id) || isMineStar(starOf(a.chispa_id));
+function updateBadge(){
+  if (!session || !MIX.ready) return;
+  const seen = new Set(read(SEEN_KEY) || []); let n = 0;
+  for (const a of MIX.aportes){
+    if (!involved(a)) continue;
+    n += unreadFor(a);
+    if (!MIX.mine.has(a.id) && a.estado === 'propuesto' && !seen.has(a.id)) n++;
+  }
+  $('account').textContent = SP.space + (n ? ` · ${n}` : '');
+}
+{ const _sa = showAccount; showAccount = function(){ _sa(); updateBadge(); }; }
+
+// ───── Le formulaire de la chispa : plusieurs besoins, et la ville (facultative)
+const typeSel = v => `<select class="need-type" aria-label="${esc(MXT.needTitle)}">${TYPES.map(t => `<option value="${t}"${t === v ? ' selected' : ''}>${esc(MXT.types[t])}</option>`).join('')}</select>`;
+function addNeedRow(text, type){
+  const box = $('f-needs-extra'); if (box.children.length >= 4) return null;
+  const d = document.createElement('div'); d.className = 'need-row';
+  d.innerHTML = typeSel(type || 'otro') + `<input maxlength="80" placeholder="${esc(MXT.needPh2)}" aria-label="${esc(MXT.needTitle)}">`;
+  d.querySelector('input').value = text || ''; box.append(d);
+  $('f-add-need').hidden = box.children.length >= 4; return d;
+}
+$('f-add-need').onclick = () => { const d = addNeedRow(); if (d) d.querySelector('input').focus(); };
+function collectNeeds(){
+  const out = [], first = $('f-need').value.trim();
+  if (first) out.push({texto: first.slice(0, 80), tipo: $('f-need-type').value});
+  $('f-needs-extra').querySelectorAll('.need-row').forEach(r => { const t = r.querySelector('input').value.trim(); if (t) out.push({texto: t.slice(0, 80), tipo: r.querySelector('select').value}); });
+  return out.slice(0, 8);
+}
+const saveNeedsDraft = () => store(NEEDS_DRAFT, {x: [...$('f-needs-extra').querySelectorAll('.need-row')].map(r => [r.querySelector('input').value, r.querySelector('select').value]),
+  t0: $('f-need-type').value, p: $('f-place').value, t: Date.now()});
+sparkForm.addEventListener('input', saveNeedsDraft); sparkForm.addEventListener('change', saveNeedsDraft);
+{
+  const _s = sparkForm.onsubmit;
+  sparkForm.onsubmit = e => {
+    NEXT_MIX = {needs: collectNeeds(), lugar: $('f-place').value.trim().slice(0, 40)};
+    _s(e);
+    if (session){ $('f-needs-extra').innerHTML = ''; $('f-add-need').hidden = false; store(NEEDS_DRAFT); }
+  };
+}
+async function mixAfterSend(s, needs){
+  try {
+    const r = await api('necesidades?select=id,creado,chispa_id,texto,tipo,estado,traducciones', {method: 'POST', headers: {Prefer: 'return=representation'},
+      body: JSON.stringify(needs.map(n => ({chispa_id: s.dbId, texto: n.texto, tipo: n.tipo})))});
+    if (!r.ok) return;
+    const rows = await r.json(); MIX.needs.push(...rows); s.mixNeeds = rows; s.need = '';
+  } catch (e) {}
+}
+
+// ───── La fiche d'une étoile : « Il manque… », « J'apporte », ceux qui aident déjà
+{
+  const _c = showCard;
+  showCard = function(n){
+    _c(n);
+    const c = $('card'); c.querySelectorAll('.card-mix').forEach(x => x.remove());
+    if (!n || !n.dbId || !MIX.ready) return;
+    const mineS = isMineStar(n), canBring = n.real && !mineS;
+    const needs = MIX.needs.filter(x => x.chispa_id === n.dbId);
+    const help = MIX.aportes.filter(a => a.chispa_id === n.dbId && (a.estado === 'aceptado' || a.estado === 'hecho'));
+    if (!needs.length && !help.length && !canBring && !mineS) return;
+    let h = '';
+    if (needs.length) h += `<h4>${esc(MXT.needTitle)}</h4><ul>` + needs.map(x => `<li><span class="tp">${esc(MXT.types[x.tipo] || '')}</span>${esc(trNeed(x))}` +
+      (x.estado === 'cubierta' ? `<em>${esc(MXT.covered)}</em>` : canBring ? `<button type="button" class="bring" data-need="${x.id}">${esc(MXT.bring)}</button>` : '') + '</li>').join('') + '</ul>';
+    if (help.length) h += `<h4>${esc(MXT.helpers)}</h4><ul>` + help.map(a => `<li><b>${esc(a.nombre)}</b> · ${esc(a.texto)}<em>${esc(MXT.st[a.estado])}</em></li>`).join('') + '</ul>';
+    if (canBring) h += `<button type="button" class="bring other">${esc(MXT.bringOther)}</button>`;
+    if (mineS && session) h += `<button type="button" class="manage">${esc(MXT.manage)}</button>`;
+    if (!h) return;
+    const box = document.createElement('div'); box.className = 'card-mix'; box.innerHTML = h;
+    box.querySelectorAll('.bring').forEach(b => b.onclick = () => openBring(n, b.dataset.need ? needs.find(x => x.id === +b.dataset.need) : null));
+    const mg = box.querySelector('.manage'); if (mg) mg.onclick = () => { closeCard(); openSpace(); };
+    $('card-links').before(box);
+  };
+}
+
+// ───── « J'apporte… »
+const mxModal = $('mix-modal'); let bringCtx = null;
+const AUTH_TITLE = $('auth-title').textContent;
+{ const _o = $('open').onclick; $('open').onclick = () => { _o(); $('auth-title').textContent = AUTH_TITLE; }; }
+function openBring(s, need){
+  if (!session){
+    store(PEND_APORTE, {c: s.dbId, n: need ? need.id : null, t: Date.now()});
+    $('open').onclick(); showAuth(true); $('auth-title').textContent = MXT.loginToBring; return;
+  }
+  bringCtx = {s, need};
+  $('account-menu').classList.remove('open');
+  $('mx-for').textContent = MXT.bringFor.replace('{x}', need ? `“${trNeed(need)}” · “${s.idea}”` : `“${s.idea}”`);
+  $('mx-name').value = read(NAME_KEY) || ''; $('mx-text').value = '';
+  mxModal.classList.add('open'); ($('mx-name').value ? $('mx-text') : $('mx-name')).focus();
+}
+const closeBring = () => mxModal.classList.remove('open');
+mxModal.querySelector('.close').onclick = closeBring;
+mxModal.onclick = e => { if (e.target === mxModal) closeBring(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape'){ closeBring(); $('account-menu').classList.remove('open'); } });
+$('mx-form').onsubmit = async e => {
+  e.preventDefault(); if (!bringCtx) return;
+  const name = $('mx-name').value.trim().slice(0, 30), text = $('mx-text').value.trim().slice(0, 200); if (!name || !text) return;
+  store(NAME_KEY, name); const {s, need} = bringCtx; closeBring();
+  try {
+    const r = await api('aportes?select=id', {method: 'POST', headers: {Prefer: 'return=representation'},
+      body: JSON.stringify({chispa_id: s.dbId, necesidad_id: need ? need.id : null, nombre: name, texto: text})});
+    if (!r.ok) throw 0;
+    log(`<span class="who">IA</span> ${esc(MXT.bringSent.replace('{name}', s.name))}`, '');
+    await loadMix();
+  } catch (err) { log(`<span class="who">IA</span> ${esc(MXT.bringFail)}`, ''); }
+};
+
+// ───── « Mon espace » devient le vrai espace du créateur
+function openSpace(){
+  if (!session){ $('account').onclick(); return; }
+  $('account-menu').classList.add('open'); $('account').setAttribute('aria-expanded', 'true'); renderSpace(); loadMix();
+}
+$('space-x').onclick = () => { $('account-menu').classList.remove('open'); $('account').setAttribute('aria-expanded', 'false'); $('account').focus(); };
+{ const _ac = $('account').onclick; $('account').onclick = () => { _ac(); if (session && $('account-menu').classList.contains('open')) loadMix(); }; }
+{ const _lo = $('account-logout').onclick; $('account-logout').onclick = async () => { await _lo(); await loadMix(); }; }
+setInterval(() => { if (session && $('account-menu').classList.contains('open') && !document.hidden) loadMix(); }, 45000);
+
+const mxStatus = t => { const el = $('mx-status'); if (el) el.textContent = t || ''; };
+async function act(promise, okText){
+  try { const r = await promise; if (!r.ok) throw 0; mxStatus(okText || ''); await loadMix(); }
+  catch (e) { mxStatus(MXT.actFail); }
+}
+const el = (tag, cls, html) => { const x = document.createElement(tag); if (cls) x.className = cls; if (html != null) x.innerHTML = html; return x; };
+const btn = (label, fn, cls) => { const b = el('button', cls || '', esc(label)); b.type = 'button'; b.onclick = fn; return b; };
+const tag = a => `<span class="tag">${esc(MXT.st[a.estado] || a.estado)}</span>`;
+
+function threadFor(a, box){
+  const amC = amCreatorOf(a), other = amC ? a.nombre : ((starOf(a.chispa_id) || {}).name || '…');
+  const unread = unreadFor(a);
+  const toggle = btn(MXT.msgs + (unread ? ` (${unread})` : ''), () => { openThreads.has(a.id) ? openThreads.delete(a.id) : openThreads.add(a.id); renderSpace(); });
+  box.append(toggle);
+  if (!openThreads.has(a.id)) return;
+  const t = el('div', 'thread');
+  for (const m of MIX.msgs.filter(m => m.aporte_id === a.id)){
+    const me = m.del_creador === amC;
+    t.append(el('p', me ? 'me' : '', `<b>${esc(me ? MXT.you : other)}</b>${esc(m.texto)}`));
+  }
+  const f = el('form', 'mx-row', `<input maxlength="1000" placeholder="${esc(MXT.msgPh)}" aria-label="${esc(MXT.msgPh)}"><button type="submit">${esc(MXT.msgSend)}</button>`);
+  f.onsubmit = async e => {
+    e.preventDefault(); const v = f.querySelector('input').value.trim(); if (!v) return;
+    await act(api('mensajes', {method: 'POST', body: JSON.stringify({aporte_id: a.id, texto: v.slice(0, 1000)})}));
+  };
+  t.append(f); box.parentNode.insertBefore(t, box.nextSibling);
+  const o = readObj(); o[a.id] = otherMsgs(a).length; store(READ_KEY, o); updateBadge();
+  setTimeout(() => { const i = t.querySelector('input'); if (i && document.activeElement === document.body) i.focus(); }, 0);
+}
+function needsBlock(n){
+  const d = el('div', 'mx-sub', `<h5>${esc(MXT.needTitle)}</h5>`);
+  for (const x of MIX.needs.filter(x => x.chispa_id === n.dbId)){
+    const row = el('div', '', `<span class="tag">${esc(MXT.types[x.tipo] || '')}</span>${esc(trNeed(x))}${x.estado === 'cubierta' ? ` <span class="tag">${esc(MXT.covered)}</span>` : ''}`);
+    const r = el('div', 'mx-row');
+    r.append(btn(x.estado === 'cubierta' ? MXT.reopenBtn : MXT.coverBtn, () => act(rpc('cambiar_necesidad', {p_id: x.id, p_estado: x.estado === 'cubierta' ? 'abierta' : 'cubierta'}))),
+      btn(MXT.needDel, () => act(api(`necesidades?id=eq.${x.id}`, {method: 'DELETE'})), 'danger'));
+    row.append(r); d.append(row);
+  }
+  const f = el('form', 'mx-row', typeSel('otro') + `<input maxlength="80" placeholder="${esc(MXT.needAddPh)}" aria-label="${esc(MXT.needAddPh)}"><button type="submit">${esc(MXT.needAdd)}</button>`);
+  f.onsubmit = e => { e.preventDefault(); const v = f.querySelector('input').value.trim(); if (!v) return;
+    act(api('necesidades', {method: 'POST', body: JSON.stringify({chispa_id: n.dbId, texto: v.slice(0, 80), tipo: f.querySelector('select').value})})); };
+  d.append(f); return d;
+}
+function receivedBlock(n){
+  const list = MIX.aportes.filter(a => a.chispa_id === n.dbId && !MIX.mine.has(a.id));
+  const d = el('div', 'mx-sub', `<h5>${esc(MXT.received)}</h5>`);
+  if (!list.length){ d.append(el('div', '', `<small>${esc(MXT.none)}</small>`)); return d; }
+  for (const a of list.slice().reverse()){
+    const need = MIX.needs.find(x => x.id === a.necesidad_id);
+    const row = el('div', 'mx-item', `${tag(a)}<b>${esc(a.nombre)}</b> · ${esc(a.texto)}${need ? `<small>${esc(MXT.needTitle)} ${esc(trNeed(need))}</small>` : ''}`);
+    const r = el('div', 'mx-row');
+    if (a.estado === 'propuesto') r.append(btn(MXT.accept, () => act(rpc('cambiar_aporte', {p_id: a.id, p_estado: 'aceptado'}))), btn(MXT.decline, () => act(rpc('cambiar_aporte', {p_id: a.id, p_estado: 'rechazado'}))));
+    if (a.estado === 'aceptado') r.append(btn(MXT.done, () => act(rpc('cambiar_aporte', {p_id: a.id, p_estado: 'hecho'}))),
+      btn(MXT.absent, () => { if (confirm(MXT.absentConfirm)) act(rpc('cambiar_aporte', {p_id: a.id, p_estado: 'ausente'})); }, 'danger'));
+    if (a.estado === 'ausente') r.append(btn(MXT.done, () => act(rpc('cambiar_aporte', {p_id: a.id, p_estado: 'hecho'}))));
+    row.append(r);
+    if (a.estado !== 'rechazado') threadFor(a, r);
+    d.append(row);
+  }
+  const seen = new Set(read(SEEN_KEY) || []); list.forEach(a => seen.add(a.id)); store(SEEN_KEY, [...seen].slice(-500));
+  return d;
+}
+renderSpace = function(){
+  const ul = $('space-list'); ul.innerHTML = '';
+  const list = myStars();
+  if (!list.length) ul.innerHTML = `<li class="empty">${esc(SP.none)}</li>`;
+  for (const n of list.slice().reverse()){
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="tag">${esc(n.pending ? SP.pendingTag : SP.acceptedTag)}</span>${esc(n.idea)}<div class="acts"><button type="button" class="see">${esc(SP.see)}</button><button type="button" class="danger del">${esc(SP.delOne)}</button></div>`;
+    li.querySelector('.see').onclick = () => { $('account-menu').classList.remove('open'); focusStar(n); };
+    li.querySelector('.del').onclick = () => deleteOne(n);
+    if (MIX.ready && n.dbId && session){ li.append(needsBlock(n)); if (n.real) li.append(receivedBlock(n)); }
+    ul.append(li);
+  }
+  renderMixSpace(); updateBadge();
+};
+function renderMixSpace(){
+  const box = $('mix-space'); box.innerHTML = '';
+  if (!session || !MIX.ready) return;
+  box.append(el('p', 'mx-status', '')); box.lastChild.id = 'mx-status';
+  // Ce que j'apporte
+  const mine = MIX.aportes.filter(a => MIX.mine.has(a.id));
+  const s1 = el('section', 'mx-sec', `<h4>${esc(MXT.mineAportes)}</h4>`);
+  if (!mine.length) s1.append(el('p', '', esc(MXT.none)));
+  for (const a of mine.slice().reverse()){
+    const p = starOf(a.chispa_id), need = MIX.needs.find(x => x.id === a.necesidad_id);
+    const row = el('div', 'mx-item', `${tag(a)}${esc(a.texto)}<small>${esc(MXT.project)}${p ? `“${esc(p.idea)}”` : '…'}${need ? ` · ${esc(trNeed(need))}` : ''}</small>` +
+      (a.estado === 'ausente' && !a.explicado ? `<span class="note">${esc(MXT.absentNote)}</span>` : ''));
+    const r = el('div', 'mx-row');
+    if (a.estado === 'propuesto' || a.estado === 'aceptado') r.append(btn(MXT.cantCome, () => { if (confirm(MXT.cantComeConfirm)) act(rpc('cambiar_aporte', {p_id: a.id, p_estado: 'retirado'}), MXT.cantComeThanks); }, 'danger'));
+    row.append(r);
+    if (a.estado !== 'rechazado' && a.estado !== 'retirado') threadFor(a, r);
+    s1.append(row);
+  }
+  box.append(s1);
+  // L'IA te propose
+  const myOffers = new Set(MIX.ofertas.map(o => o.id));
+  const sugs = MIX.sugs.filter(g => myOffers.has(g.oferta_id)).map(g => ({g, need: MIX.needs.find(x => x.id === g.necesidad_id)}))
+    .filter(({need}) => need && need.estado === 'abierta' && starOf(need.chispa_id) && !isMineStar(starOf(need.chispa_id))
+      && !MIX.aportes.some(a => MIX.mine.has(a.id) && a.necesidad_id === need.id));
+  if (sugs.length){
+    const s2 = el('section', 'mx-sec', `<h4>${esc(MXT.aiSuggests)}</h4>`);
+    for (const {g, need} of sugs){
+      const p = starOf(need.chispa_id), why = g.porque && (g.porque[LANG2] || g.porque.es || '');
+      const row = el('div', 'mx-item', `<b>${esc(trNeed(need))}</b><small>${esc(MXT.project)}“${esc(p.idea)}”</small>${why ? `<small>${esc(why)}</small>` : ''}`);
+      const r = el('div', 'mx-row'); r.append(btn(MXT.bring, () => openBring(p, need))); row.append(r); s2.append(row);
+    }
+    box.append(s2);
+  }
+  // Ce que je peux apporter
+  const s3 = el('section', 'mx-sec', `<h4>${esc(MXT.offers)}</h4><p>${esc(MXT.offersWhy)}</p>`);
+  for (const o of MIX.ofertas){
+    const row = el('div', 'mx-item', `<span class="tag">${esc(MXT.types[o.tipo] || '')}</span>${esc(o.texto)}${o.lugar ? `<small>${esc(o.lugar)}</small>` : ''}`);
+    const r = el('div', 'mx-row'); r.append(btn(MXT.needDel, () => act(api(`ofertas?id=eq.${o.id}`, {method: 'DELETE'})), 'danger')); row.append(r); s3.append(row);
+  }
+  const f = el('form', 'mx-row', `<input class="o-text" maxlength="140" required placeholder="${esc(MXT.offerPh)}" aria-label="${esc(MXT.offers)}">` + typeSel('saber') +
+    `<input class="o-place" maxlength="40" placeholder="${esc(MXT.placeShort)}" aria-label="${esc(MXT.placeShort)}"><button type="submit">${esc(MXT.offerAdd)}</button>`);
+  f.onsubmit = e => { e.preventDefault(); const v = f.querySelector('.o-text').value.trim(); if (!v) return;
+    const name = read(NAME_KEY) || (myStars()[0] || {}).name || (session.user && session.user.email ? session.user.email.split('@')[0] : '✳');
+    act(api('ofertas', {method: 'POST', body: JSON.stringify({nombre: String(name).slice(0, 30), texto: v.slice(0, 140), tipo: f.querySelector('select').value, lugar: f.querySelector('.o-place').value.trim().slice(0, 40) || null})})); };
+  s3.append(f); box.append(s3);
+}
+
+// ───── Au chargement : The Mix, le brouillon des besoins, et l'aide promise avant de se connecter
+async function startMix(){
+  await loadMix(true);
+  const d = read(NEEDS_DRAFT);
+  if (d && $('modal').classList.contains('open') && Date.now() - d.t < 864e5){
+    $('f-needs-extra').innerHTML = ''; (d.x || []).forEach(([t, ty]) => addNeedRow(t, ty));
+    $('f-need-type').value = d.t0 || 'otro'; $('f-place').value = d.p || '';
+  }
+  const pa = read(PEND_APORTE);
+  if (session && pa && Date.now() - pa.t < 864e5){
+    store(PEND_APORTE);
+    const s = starOf(pa.c);
+    if (s){ focusStar(s); setTimeout(() => openBring(s, MIX.needs.find(x => x.id === pa.n) || null), calm ? 0 : 900); }
+  }
+}
+startAuth().then(loadRealStars).then(markOwn).then(updateLegend).then(startMix);
 </script>
 </body>
 </html>
