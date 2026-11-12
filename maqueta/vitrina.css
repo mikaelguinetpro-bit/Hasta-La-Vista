@@ -212,6 +212,11 @@
   .dialog .label{color:#55574f}
   .dialog label{display:block;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;margin:18px 0 6px}
   .dialog label span{text-transform:none;letter-spacing:0;color:#55574f}
+  .dialog label.consent{display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font:14px/1.5 var(--sans);color:#55574f;margin:18px 0 0;cursor:pointer}
+  .dialog label.consent input{width:20px;height:20px;flex:none;margin:2px 0 0;padding:0;accent-color:var(--navy)}
+  .dialog label.consent a{color:var(--navy)}
+  .dialog .hp{position:absolute;top:0;inset-inline-start:0;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);opacity:0;pointer-events:none}
+  .card .real{display:inline-block;margin:0 6px 8px 0;padding:3px 9px;border:1px solid #ebaf12;border-radius:99px;font:500 11px var(--mono);color:#ebaf12;letter-spacing:.04em}
   .dialog input,.dialog textarea{width:100%;padding:12px;border:1px solid #9d9686;background:#fff;font:15px var(--sans);color:#171917;resize:vertical}
   .send{margin-top:20px;background:#171917;color:#fff;border:0;border-radius:99px;padding:14px 20px;font:600 14px var(--sans);cursor:pointer}
   .close{position:absolute;right:8px;top:6px;width:44px;height:44px;border:0;background:none;font-size:28px;cursor:pointer;color:#171917}

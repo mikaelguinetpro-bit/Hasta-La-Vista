@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hasta La Vista — A vitrine das estrelas (maquete)</title>
+<meta name="description" content="Um céu de estrelas: cada estrela é um criador, uma ajuda ou uma ação da IA. Tudo o que acontece aparece também, em texto, no Diário da IA.">
+<meta property="og:title" content="Hasta La Vista — A vitrine das estrelas (maquete)">
+<meta property="og:description" content="Um céu de estrelas: cada estrela é um criador, uma ajuda ou uma ação da IA. Tudo o que acontece aparece também, em texto, no Diário da IA.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://hasta-la-vista.org/maqueta/vitrina-estrelas.html">
+<meta property="og:site_name" content="Hasta La Vista">
+<meta property="og:image" content="https://hasta-la-vista.org/hasta-la-vista/compartir/og-pt.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hasta La Vista — A vitrine das estrelas (maquete)">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="bn_BD">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hasta La Vista — A vitrine das estrelas (maquete)">
+<meta name="twitter:description" content="Um céu de estrelas: cada estrela é um criador, uma ajuda ou uma ação da IA. Tudo o que acontece aparece também, em texto, no Diário da IA.">
+<meta name="twitter:image" content="https://hasta-la-vista.org/hasta-la-vista/compartir/og-pt.jpg">
+<link rel="canonical" href="https://hasta-la-vista.org/maqueta/vitrina-estrelas.html">
+<style>
+/*FONTS*/
+  :root{--night:#030d1f;--navy:#052a58;--gold:#ebaf12;--red:#d90211;--paper:#f4efe5;--soft:#c9d2ea;
+    --serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',system-ui,Arial,sans-serif;--mono:'DM Mono',ui-monospace,monospace}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--night);color:var(--paper);font-family:var(--sans)}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+  button{font:inherit;color:inherit}
+  .layout{display:grid;grid-template-columns:1fr 360px;height:100vh}
+  .sky{position:relative;overflow:hidden;background:radial-gradient(ellipse at 30% 20%,#0b2a5b 0%,var(--night) 60%);touch-action:none;cursor:grab}
+  .sky.dragging{cursor:grabbing}
+  canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .intro{position:absolute;left:clamp(20px,5vw,60px);top:clamp(20px,5vh,50px);max-width:520px;pointer-events:none;transition:opacity .6s}
+  .intro.faded{opacity:.12}
+  .label{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+  .label:before{content:'✳ ';color:var(--gold)}
+  h1{font:600 clamp(34px,4.6vw,62px)/1 var(--serif);letter-spacing:-.04em;margin:14px 0 12px}
+  h1 em{color:var(--gold)}
+  .intro p{margin:0;font-size:16px;line-height:1.6;color:var(--soft);max-width:430px}
+  .light-btn{position:absolute;left:clamp(20px,5vw,60px);bottom:clamp(20px,5vh,46px);display:inline-flex;gap:12px;align-items:center;background:var(--gold);color:#171917;border:0;border-radius:99px;padding:16px 22px;font:600 15px var(--sans);cursor:pointer;box-shadow:0 0 30px #ebaf1255;transition:transform .2s;z-index:2}
+  .light-btn:hover{transform:translateY(-2px)}
+  .counter{position:absolute;right:20px;bottom:24px;font:500 13px var(--mono);color:var(--soft);text-align:right;pointer-events:none}
+  .counter b{display:block;font:600 30px var(--serif);color:var(--paper)}
+  /* Zoom */
+  .zoom{position:absolute;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:2}
+  .zoom button{width:44px;height:44px;border-radius:50%;border:1px solid #ffffff55;background:#052a58cc;font-size:20px;cursor:pointer}
+  .zoom button:hover{background:#0b3a78}
+  .zoom button[aria-pressed="true"]{background:var(--gold);color:#171917;border-color:var(--gold)}
+  .zoom{gap:6px}
+  .zoom button{width:40px;height:40px}
+  .scale{position:absolute;left:50%;top:18px;max-width:40%;transform:translateX(-50%);text-align:center;pointer-events:none;z-index:1}
+  .scale b{display:block;font:italic 600 20px var(--serif);color:var(--paper)}
+  .scale span{font:500 12px var(--mono);color:var(--soft);letter-spacing:.08em}
+  .hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);font:500 11px/1.5 var(--mono);color:var(--soft);pointer-events:none;text-align:center;width:min(46%,560px)}
+  /* Buscador */
+  .search{position:absolute;right:20px;top:16px;width:min(300px,calc(100% - 40px));z-index:4}
+  .search input{width:100%;padding:11px 14px 11px 38px;border-radius:99px;border:1px solid #ffffff55;background:#030d1fd9;color:var(--paper);font:15px var(--sans)}
+  .search input::placeholder{color:#9fb0d4}
+  .search:before{content:'⌕';position:absolute;left:14px;top:8px;font-size:19px;color:var(--gold);pointer-events:none}
+  .results{list-style:none;margin:6px 0 0;padding:6px;background:#071733;border:1px solid #ffffff33;border-radius:14px;max-height:50vh;overflow:auto;display:none}
+  .results.open{display:block}
+  .results li{padding:9px 10px;border-radius:9px;cursor:pointer;font-size:14px;line-height:1.35}
+  .results li[aria-selected="true"],.results li:hover{background:#ebaf1226}
+  .results .k{display:block;font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+  .results .empty{color:var(--soft);cursor:default}
+  .results mark{background:none;color:var(--gold);font-weight:600}
+  .ref{background:none;border:0;padding:0;font:inherit;color:var(--gold);font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-color:#ebaf1266;text-underline-offset:3px}
+  .ref:hover{text-decoration-color:var(--gold)}
+  .ref.idea{color:var(--paper);font-weight:500;font-style:italic}
+  .ref.gone{color:var(--soft);text-decoration:line-through;cursor:default}
+  a.ref{display:inline}
+  .card .links{display:flex;flex-direction:column;gap:6px;margin-top:14px;font-size:14px}
+  .card .links a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+  /* Páginas: proyecto y creador */
+  .page{position:fixed;inset:0;z-index:6;background:#f4efe5;color:#171917;overflow:auto;display:none}
+  .page.open{display:block;animation:enter .35s ease-out}
+  .page .top{position:sticky;top:0;background:#f4efe5f2;border-bottom:1px solid #d5cdbd;padding:14px 6vw;display:flex;justify-content:space-between;align-items:center;gap:16px;z-index:1}
+  .page .top a{font:600 14px var(--sans);color:#052a58}
+  .page .top span{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#55574f}
+  .page .wrap{max-width:860px;margin:0 auto;padding:56px 6vw 90px}
+  .page .kind{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#55574f}
+  .page .kind:before{content:'✳ ';color:#d90211}
+  .page h1{font:600 clamp(36px,5.4vw,64px)/1.02 var(--serif);letter-spacing:-.04em;margin:16px 0 14px;color:#171917}
+  .page h1:focus{outline:none}
+  .page .by{font-size:18px;color:#3f413c;margin:0 0 6px}
+  .page .by a,.page li a,.page .diary a,.page .diary .ref{color:#052a58;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  .page .diary .ref.idea{color:#171917;font-style:italic;font-weight:500}
+  .page .meta{font:500 12px var(--mono);color:#55574f}
+  .page .stats{display:flex;gap:30px;flex-wrap:wrap;margin:30px 0 8px;padding:20px 0;border-block:1px solid #171917}
+  .page .stats b{display:block;font:600 40px/1 var(--serif);color:#052a58}
+  .page .stats span{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#55574f}
+  .page h2{font:600 26px var(--serif);margin:44px 0 12px}
+  .page p.txt{font-size:17px;line-height:1.7;color:#3f413c;margin:0;max-width:640px}
+  .page ul.list{list-style:none;margin:0;padding:0;border-top:1px solid #d5cdbd}
+  .page ul.list li{padding:14px 0;border-bottom:1px solid #d5cdbd;font-size:16px;line-height:1.5}
+  .page ul.list small{display:block;font:500 12px var(--mono);color:#55574f;margin-top:2px}
+  .page .empty{color:#55574f;font-style:italic}
+  .page .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .page .btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:99px;padding:13px 19px;font:600 14px var(--sans);cursor:pointer;background:#171917;color:#fff}
+  .page .btn.gold{background:#ebaf12;color:#171917}
+  .page .diary{list-style:none;margin:0;padding:0}
+  .page .diary li{padding:12px 16px;margin-bottom:8px;background:#ece5d7;border-radius:10px;font-size:15px;line-height:1.5}
+  .page .diary time{display:block;font:500 11px var(--mono);color:#55574f}
+  .page .diary .why{display:block;font-size:13px;color:#55574f;margin-top:3px}
+  .page .diary .triad span{border-color:#9d9686;color:#55574f}
+  .page .diary .accounts,.page .diary .accounts b{color:#3f413c}
+  .page .diary .verdict{color:#171917}
+  .page form.join{margin-top:18px;padding:20px;background:#ece5d7;border-radius:14px;display:none;gap:12px;flex-wrap:wrap;align-items:end}
+  .page form.join.open{display:flex}
+  .page form.join label{display:flex;flex-direction:column;gap:6px;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+  .page form.join input,.page form.join select{padding:11px;border:1px solid #9d9686;background:#fff;font:15px var(--sans);min-width:200px}
+  .page .note{font:12px var(--mono);color:#55574f;margin-top:40px}
+  .langs{float:right;font:500 12px var(--mono);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:100%}
+  .langs a{padding:4px 8px;border-radius:99px;color:var(--soft);text-decoration:none}
+  .langs a[aria-current]{background:var(--gold);color:#171917}
+  .legend{position:absolute;right:20px;bottom:92px;background:#030d1fcc;border:1px solid #ffffff2e;border-radius:12px;padding:10px 12px;font:500 12px var(--mono);color:var(--soft);z-index:1}
+  .legend h3{margin:0 0 6px;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+  .legend ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:auto auto;gap:4px 14px}
+  .legend li{display:flex;align-items:center;gap:7px;color:var(--paper)}
+  .legend i{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 8px currentColor}
+  .legend .listbtn{margin-top:9px;width:100%;background:none;border:1px solid #ffffff55;border-radius:99px;padding:7px 10px;font:500 12px var(--mono);cursor:pointer}
+  .legend .listbtn:hover{background:#ffffff14}
+  .phrase{position:absolute;z-index:1;pointer-events:none;font:italic 600 clamp(17px,1.8vw,22px)/1.3 var(--serif);color:#f4efe5;text-shadow:0 0 18px #030d1f,0 0 6px #030d1f;max-width:min(360px,calc(100% - 40px));text-align:center;opacity:0;transform:translate(-50%,-50%);transition:opacity 1.2s}
+  .phrase.show{opacity:.95}
+  .page ul.list button.skybtn{margin-left:8px;background:none;border:1px solid #9d9686;border-radius:99px;padding:3px 10px;font:500 12px var(--mono);cursor:pointer;color:#052a58}
+  .home-link{pointer-events:auto;display:inline-block;margin-bottom:14px;font:600 13px var(--sans);color:var(--paper);border:1px solid #ffffff55;border-radius:99px;padding:7px 13px;background:#030d1f99}
+  .home-link:hover{background:#ffffff1a}
+  .explore-btn{position:absolute;left:clamp(20px,5vw,60px);bottom:calc(clamp(20px,5vh,46px) + 66px);z-index:2;background:#030d1fcc;border:1px solid #ebaf12aa;color:var(--paper);border-radius:99px;padding:10px 16px;font:600 14px var(--sans);cursor:pointer}
+  .explore-btn:hover{background:#ebaf1222}
+  .explore{position:absolute;left:clamp(20px,5vw,60px);top:clamp(90px,14vh,140px);width:min(380px,calc(100% - 40px));max-height:calc(100% - 200px);overflow:auto;background:#071733f5;border:1px solid #ebaf1299;border-radius:16px;padding:20px;z-index:4;display:none;box-shadow:0 10px 40px #0008}
+  .explore.open{display:block;animation:enter .35s ease-out}
+  .explore h3{font:600 22px/1.2 var(--serif);margin:0 0 14px;padding-right:30px}
+  .explore .x{position:absolute;right:8px;top:6px;width:40px;height:40px;border:0;background:none;font-size:24px;cursor:pointer;color:var(--soft)}
+  .explore .rand{width:100%;background:var(--gold);color:#171917;border:0;border-radius:99px;padding:12px 16px;font:600 15px var(--sans);cursor:pointer}
+  .explore p.lbl{margin:16px 0 8px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chips button{background:none;border:1px solid #ffffff55;border-radius:99px;padding:7px 12px;font:500 13px var(--sans);cursor:pointer}
+  .chips button[aria-pressed="true"],.chips button:hover{background:#ebaf12;color:#171917;border-color:#ebaf12}
+  .explore form{display:flex;gap:8px}
+  .explore input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #ffffff55;background:#030d1f;color:var(--paper);font:14px var(--sans)}
+  .explore form button{background:none;border:1px solid #ebaf12;color:var(--gold);border-radius:10px;padding:0 14px;font:600 14px var(--sans);cursor:pointer}
+  .ex-res{margin-top:14px;font-size:14px;line-height:1.5}
+  .ex-res b{display:block;font:500 12px var(--mono);color:var(--gold);margin-bottom:6px}
+  .ex-res ul{list-style:none;margin:0;padding:0}
+  .ex-res li button{background:none;border:0;padding:5px 0;text-align:start;font:italic 15px var(--serif);color:var(--paper);cursor:pointer;text-decoration:underline;text-decoration-color:#ebaf1266}
+  .ex-res .none{color:var(--soft)}
+  .ex-res .lightit{margin-top:8px;background:var(--gold);color:#171917;border:0;border-radius:99px;padding:8px 14px;font:600 13px var(--sans);cursor:pointer}
+  .ex-clear{margin-top:12px;background:none;border:0;color:var(--soft);font:500 12px var(--mono);text-decoration:underline;cursor:pointer;padding:0}
+  @media(max-width:860px){.explore-btn{bottom:212px;top:auto;left:20px}.explore{top:160px;max-height:60vh}}
+  .mesa-btn{position:absolute;left:clamp(20px,5vw,60px);bottom:calc(clamp(20px,5vh,46px) + 116px);z-index:2;background:#030d1fcc;border:1px solid #ebaf12aa;color:var(--paper);border-radius:99px;padding:10px 16px;font:600 14px var(--sans);cursor:pointer}
+  .mesa-btn:hover{background:#ebaf1222}
+  .mesa{position:absolute;left:clamp(20px,5vw,60px);top:clamp(90px,14vh,140px);width:min(420px,calc(100% - 40px));max-height:calc(100% - 200px);overflow:auto;background:#071733f5;border:1px solid #ebaf1299;border-radius:16px;padding:20px;z-index:4;display:none;box-shadow:0 10px 40px #0008}
+  .mesa.open{display:block;animation:enter .35s ease-out}
+  .mesa h3{font:600 22px/1.2 var(--serif);margin:0 0 6px;padding-right:30px}
+  .mesa .x{position:absolute;right:8px;top:6px;width:40px;height:40px;border:0;background:none;font-size:24px;cursor:pointer;color:var(--soft)}
+  .mesa .intro-m{margin:0 0 10px;font-size:14px;line-height:1.5;color:var(--soft)}
+  .mesa .fund{font:500 12px var(--mono);color:var(--gold);margin:0 0 14px}
+  .mesa ul{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}
+  .mesa li{border:1px solid #ffffff2e;border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.45}
+  .mesa li .k{display:inline-block;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#171917;background:var(--gold);border-radius:99px;padding:2px 8px;margin-inline-end:6px}
+  .mesa li .t{font:italic 15px var(--serif)}
+  .mesa li button{display:block;margin-top:7px;background:none;border:1px solid #ebaf12;color:var(--gold);border-radius:99px;padding:5px 12px;font:600 12px var(--sans);cursor:pointer}
+  .mesa li button:hover{background:#ebaf12;color:#171917}
+  .mesa form{display:grid;gap:8px;border-top:1px solid #ffffff22;padding-top:14px}
+  .mesa input,.mesa select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #ffffff55;background:#030d1f;color:var(--paper);font:14px var(--sans)}
+  .mesa input.need-name{border-color:var(--gold);box-shadow:0 0 0 3px #ebaf1255}
+  .mesa form button{background:var(--gold);color:#171917;border:0;border-radius:99px;padding:11px 16px;font:600 14px var(--sans);cursor:pointer}
+  @media(max-width:860px){.mesa-btn{bottom:260px;top:auto;left:20px}.mesa{top:160px;max-height:60vh}}
+  /* Mensaje de la IA */
+  .whisper{position:absolute;max-width:290px;padding:12px 15px;background:#052a58e6;border:1px solid #ebaf1288;border-radius:14px;font:italic 600 16px/1.35 var(--serif);color:var(--paper);pointer-events:none;opacity:0;transform:translate(-50%,-120%) scale(.9);transition:opacity .5s,transform .5s;z-index:2}
+  .whisper.show{opacity:1;transform:translate(-50%,-135%) scale(1)}
+  .whisper small{display:block;margin-top:6px;font:500 11px var(--mono);font-style:normal;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+  /* Ficha de una estrella */
+  .card{position:absolute;left:clamp(20px,5vw,60px);bottom:110px;width:min(360px,calc(100% - 40px));background:#071733f2;border:1px solid #ebaf1299;border-radius:16px;padding:20px 20px 18px;z-index:3;display:none;box-shadow:0 10px 40px #0008}
+  .card.open{display:block;animation:enter .35s ease-out}
+  .card .kind{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .card h3{font:600 24px/1.15 var(--serif);margin:8px 0 4px}
+  .card .by{font-size:14px;color:var(--soft);margin:0 0 10px}
+  .card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:14px;line-height:1.45}
+  .card dt{font:500 11px/1.9 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--soft)}
+  .card dd{margin:0}
+  .card .row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .card .go{background:var(--gold);color:#171917;border:0;border-radius:99px;padding:10px 16px;font-weight:600;font-size:14px;cursor:pointer}
+  .card .x{position:absolute;right:8px;top:6px;width:40px;height:40px;border:0;background:none;font-size:24px;cursor:pointer;color:var(--soft)}
+  /* Diario público */
+  aside{background:#071733;border-left:1px solid #ffffff1f;display:flex;flex-direction:column;min-height:0}
+  aside header{padding:24px 22px 16px;border-bottom:1px solid #ffffff1f}
+  aside h2{font:600 24px var(--serif);margin:8px 0 6px}
+  aside header p{margin:0;font-size:13px;line-height:1.5;color:var(--soft)}
+  .rules{margin-top:10px;font:500 12px var(--mono);color:var(--gold);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+  .rules-box{display:none;margin:10px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.55;color:var(--soft)}
+  .rules-box.open{display:block}
+  .rules-box li{margin-bottom:4px}
+  .rules-box h3{font:600 17px var(--serif);color:var(--paper);margin:14px 0 6px}
+  .rules-box ol{padding-left:18px;margin:0 0 8px}
+  .pi{margin-top:12px;padding:10px 12px;border:1px solid #ffffff22;border-radius:10px;font:500 12px/1.5 var(--mono);color:var(--soft)}
+  .pi .digits{display:block;margin-top:4px;font-size:14px;letter-spacing:.12em;color:var(--paper);white-space:nowrap;overflow:hidden}
+  .pi .digits b{color:#171917;background:var(--gold);border-radius:4px;padding:0 3px}
+  ol.log{list-style:none;margin:0;padding:8px 0;overflow:auto;flex:1}
+  .log li{padding:12px 22px;border-bottom:1px solid #ffffff12;font-size:14px;line-height:1.5;animation:enter .6s ease-out}
+  .log li.mine{background:#ebaf1214}
+  .log li.removed{color:var(--soft);font-style:italic}
+  .log time{display:block;font:500 11px var(--mono);color:var(--soft);margin-bottom:3px}
+  .log .who{color:var(--gold);font-weight:600}
+  .log .why{display:block;font-size:13px;color:var(--soft);margin-top:3px}
+  .accounts{display:block;margin-top:6px;font:500 12px/1.6 var(--mono);color:var(--soft)}
+  .accounts b{color:var(--paper);font-weight:500}
+  .triad{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+  .triad span{font:500 11px var(--mono);letter-spacing:.03em;padding:4px 8px;border-radius:99px;border:1px solid #ffffff33;color:var(--soft)}
+  .triad span.done{background:#ebaf12;color:#171917;border-color:#ebaf12}
+  .triad span.now{border-color:#ebaf12;color:#ebaf12}
+  .verdict{display:block;margin-top:7px;font-size:13px;color:var(--paper)}
+  @keyframes enter{from{opacity:0;transform:translateY(-6px)}}
+  .pause{margin:10px 22px 18px;align-self:flex-start;background:none;border:1px solid #ffffff55;border-radius:99px;padding:8px 14px;font:500 12px var(--mono);cursor:pointer}
+  .mydata{position:absolute;right:20px;top:66px;display:none;background:#030d1fcc;border:1px solid #ffffff66;border-radius:99px;padding:9px 14px;font:500 12px var(--mono);cursor:pointer;z-index:2}
+  .mydata.on{display:inline-block}
+  /* Ventana: enciende tu chispa */
+  .modal{position:fixed;inset:0;background:#000000b3;display:none;place-items:center;padding:20px;z-index:5}
+  .modal.open{display:grid}
+  .dialog{background:var(--paper);color:#171917;max-width:480px;width:100%;max-height:calc(100vh - 40px);overflow:auto;padding:34px;border-top:7px solid var(--gold);position:relative}
+  .dialog h2{font:600 34px/1.05 var(--serif);letter-spacing:-.03em;margin:8px 0 10px}
+  .dialog p{font-size:15px;line-height:1.55;color:#55574f;margin:0 0 6px}
+  .dialog .label{color:#55574f}
+  .dialog label{display:block;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;margin:18px 0 6px}
+  .dialog label span{text-transform:none;letter-spacing:0;color:#55574f}
+  .dialog label.consent{display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font:14px/1.5 var(--sans);color:#55574f;margin:18px 0 0;cursor:pointer}
+  .dialog label.consent input{width:20px;height:20px;flex:none;margin:2px 0 0;padding:0;accent-color:var(--navy)}
+  .dialog label.consent a{color:var(--navy)}
+  .dialog .hp{position:absolute;top:0;inset-inline-start:0;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);opacity:0;pointer-events:none}
+  .card .real{display:inline-block;margin:0 6px 8px 0;padding:3px 9px;border:1px solid #ebaf12;border-radius:99px;font:500 11px var(--mono);color:#ebaf12;letter-spacing:.04em}
+  .dialog input,.dialog textarea{width:100%;padding:12px;border:1px solid #9d9686;background:#fff;font:15px var(--sans);color:#171917;resize:vertical}
+  .send{margin-top:20px;background:#171917;color:#fff;border:0;border-radius:99px;padding:14px 20px;font:600 14px var(--sans);cursor:pointer}
+  .close{position:absolute;right:8px;top:6px;width:44px;height:44px;border:0;background:none;font-size:28px;cursor:pointer;color:#171917}
+  .note{font:12px var(--mono);color:#55574f;margin-top:14px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  @media(max-width:860px){
+    .layout{grid-template-columns:1fr;grid-template-rows:78vh auto;height:auto}
+    ol.log{max-height:50vh}
+    .hint{display:none}
+    .intro p{display:none}
+    .card{bottom:auto;top:160px;max-height:calc(100% - 180px);overflow:auto}
+    .search{left:20px;right:20px;width:auto}
+    .scale{top:70px;max-width:none}
+    .zoom{top:auto;bottom:150px;transform:none}
+    .legend{right:auto;left:20px;bottom:92px}
+    .intro{top:112px}
+    .intro h1{font-size:30px}
+    .scale{top:64px}
+    .scale b{font-size:16px}
+    .legend ul{grid-template-columns:auto auto auto}
+    .mydata{top:118px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <main class="sky" id="sky">
+    <canvas id="canvas" role="img" aria-label="Um céu de estrelas: cada estrela é um criador, uma ajuda ou uma ação da IA. Tudo o que acontece aparece também, em texto, no Diário da IA."></canvas>
+    <div class="intro" id="intro">
+      <a class="home-link" href="../hasta-la-vista/pt.html" aria-label="Voltar ao site Hasta La Vista">← Hasta La Vista</a>
+      <div class="label">Maquete · A vitrine</div>
+      <h1>Cada criador<br>é uma <em>estrela.</em></h1>
+      <p>Toque numa estrela para conhecê-la. Aproxime-se e verá outras nascerem ao redor dela. Afaste-se e verá outras galáxias.</p>
+    </div>
+    <div class="scale" aria-live="polite"><b id="scale-name">A galáxia Hasta La Vista</b><span id="scale-x">×1</span></div>
+    <div class="search" role="search">
+      <label class="sr-only" for="q">Procurar uma pessoa, uma ideia, um projeto</label>
+      <input id="q" type="search" autocomplete="off" placeholder="Procurar pessoa, ideia, projeto…" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+      <ul class="results" id="results" role="listbox" aria-label="Resultados"></ul>
+    </div>
+    <button class="mesa-btn" type="button" id="mesa-btn" aria-controls="mesa">✳ A mesa comum</button>
+    <section class="mesa" id="mesa" aria-labelledby="mesa-title">
+      <button class="x" type="button" aria-label="×">×</button>
+      <h3 id="mesa-title">A mesa comum</h3>
+      <p class="intro-m">Aqui, oferecer e pedir valem o mesmo. Ninguém esconde as mãos.</p>
+      <p class="fund" id="mesa-fund"></p>
+      <ul id="mesa-list" aria-live="polite"></ul>
+      <form id="mesa-form">
+        <input id="mesa-name" maxlength="30" placeholder="O que você quiser" aria-label="Seu nome">
+        <select id="mesa-type" aria-label="Ofereço / Preciso de"><option value="offer">Ofereço</option><option value="need">Preciso de</option></select>
+        <input id="mesa-text" maxlength="80" placeholder="Ex.: uma escada, duas horas no domingo…" aria-label="Ex.: uma escada, duas horas no domingo…">
+        <button type="submit">Pôr na mesa</button>
+      </form>
+    </section>
+    <button class="explore-btn" type="button" id="explore-btn" aria-controls="explore">✳ Explorar</button>
+    <section class="explore" id="explore" aria-labelledby="ex-title">
+      <button class="x" type="button" aria-label="Fechar">×</button>
+      <h3 id="ex-title">Encontre um projeto que te chame</h3>
+      <button class="rand" type="button" id="ex-rand">🎲 Um projeto ao acaso</button>
+      <p class="lbl">Ou escolha um tema:</p>
+      <div class="chips" id="chips" role="group" aria-label="Ou escolha um tema:"></div>
+      <p class="lbl">Ou escreva a sua ideia:</p>
+      <form id="ex-form"><input id="ex-q" type="text" maxlength="120" placeholder="Ex.: plantar flores na minha rua" aria-label="Ou escreva a sua ideia:"><button type="submit">Buscar</button></form>
+      <div class="ex-res" id="ex-res" aria-live="polite"></div>
+    </section>
+    <div class="zoom" role="group" aria-label="Zoom">
+      <button type="button" id="z-in" aria-label="Aproximar">+</button>
+      <button type="button" id="z-out" aria-label="Afastar">−</button>
+      <button type="button" id="z-home" aria-label="Voltar à galáxia" style="font-size:15px">⌂</button>
+      <button type="button" id="z-left" aria-label="Girar para a esquerda" title="Girar para a esquerda">⟲</button>
+      <button type="button" id="z-right" aria-label="Girar para a direita" title="Girar para a direita">⟳</button>
+      <button type="button" id="z-auto" aria-pressed="false" aria-label="Rotação automática" title="Rotação automática" style="font-size:14px">∞</button>
+    </div>
+    <div class="hint">Arraste para girar o universo · roda ou pinça para aproximar · clique direito ou dois dedos para mover</div>
+    <button class="light-btn" type="button" id="open">✳ Acenda sua faísca</button>
+    <button class="mydata" type="button" id="mydata">Apagar minha estrela e meus dados</button>
+    <div class="legend" role="group" aria-labelledby="legend-title">
+      <h3 id="legend-title">Legenda</h3>
+      <ul>
+        <li><i style="color:#ebaf12;background:#ebaf12"></i>Uma ideia</li>
+        <li><i style="color:#f4efe5;background:#f4efe5"></i>Uma ajuda</li>
+        <li><i style="color:#8fb3ff;background:#8fb3ff"></i>A IA</li>
+        <li><i style="color:#ff5a4f;background:#ff5a4f"></i>Sua estrela</li>
+        <li><i style="color:#ffd36b;background:#ffd36b"></i>Contribuição</li>
+        <li><i style="color:#d9c8ff;background:#d9c8ff"></i>Eco</li>
+      </ul>
+      <button type="button" class="listbtn" id="listbtn">☰ Ver como lista</button>
+    </div>
+    <div class="phrase" id="phrase" aria-hidden="true"></div>
+    <div class="counter" aria-live="polite"><b id="count">0</b>estrelas acesas</div>
+    <div class="whisper" id="whisper" aria-hidden="true"></div>
+    <section class="card" id="card" aria-live="polite" aria-labelledby="card-title">
+      <button class="x" type="button" aria-label="Fechar a ficha">×</button>
+      <div class="kind" id="card-kind"></div>
+      <h3 id="card-title"></h3>
+      <p class="by" id="card-by"></p>
+      <dl id="card-dl"></dl>
+      <div class="links" id="card-links"></div>
+      <div class="row"><button class="go" type="button" id="card-go">✳ Me leve até lá</button></div>
+    </section>
+  </main>
+
+  <aside aria-labelledby="log-title">
+    <header>
+      <nav class="langs" aria-label="Idioma"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt" aria-current="page">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-tara.html" lang="bn" hreflang="bn">বাংলা</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
+      <div class="label">Visibilidade</div>
+      <h2 id="log-title">Diário da IA</h2>
+      <p>Tudo o que a IA faz aparece aqui, ao vivo, com a sua razão. Nada se decide às escondidas: a IA propõe, as pessoas decidem.</p>
+      <button class="rules" type="button" aria-expanded="false" aria-controls="rules-box">Ler as regras da IA</button>
+      <ul class="rules-box" id="rules-box">
+        <li><b>Visibilidade:</b> mostrar cada ação e a sua razão.</li>
+        <li><b>Benevolência:</b> proteger quem ousa; nunca zombar.</li>
+        <li><b>Otimização:</b> cada recurso no seu devido lugar.</li>
+        <li><b>Disponibilidade:</b> aberto a todos, tanto quanto possível.</li>
+        <li>
+          <h3>A Tríade da Benevolência</h3>
+          Uma decisão de moderação só é aplicada se passar pelas três etapas:
+          <ol>
+            <li><b>A IA propõe.</b> Analisa, sinaliza e explica porquê. Nunca decide sozinha.</li>
+            <li><b>Os criadores validam.</b> A comunidade cuida do seu próprio espaço.</li>
+            <li><b>A equipe cuidadora decide.</b> Profissionais que trabalham juntos dão a palavra final, com benevolência.</li>
+          </ol>
+        </li>
+        <li><b>Arquivar, não apagar:</b> o que a Tríade retira é comprimido e arquivado; pode ser recuperado se houve um erro.</li>
+        <li><b>Avisar o autor:</b> ele é sempre avisado e pode se explicar. Também é um criador.</li>
+        <li><b>Seus dados são seus:</b> o que você apaga é apagado de verdade, na hora, sem Tríade nem espera.</li>
+        <li><b>Seu nome é o que você escolher:</b> nenhum país, nenhum documento. Só a sua faísca.</li>
+      </ul>
+      <div class="pi" aria-live="off">
+        Revisão completa ao ritmo de π · próxima em <b id="pi-next">—</b>
+        <span class="digits" id="pi-digits" aria-hidden="true"></span>
+      </div>
+    </header>
+    <ol class="log" id="log" aria-live="polite"></ol>
+    <button class="pause" type="button" id="pause" aria-pressed="false">❚❚ Pausar o céu</button>
+  </aside>
+</div>
+
+<div class="page" id="page" role="region" aria-label="Página"></div>
+
+<div class="modal" id="modal">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="d-title">
+    <button class="close" type="button" aria-label="Fechar">×</button>
+    <div class="label">Ouse</div>
+    <h2 id="d-title">Acenda sua faísca</h2>
+    <p>Três perguntas, nem uma a mais. Não há resposta certa. Uma frase basta.</p>
+    <form id="form">
+      <label for="f-name">Seu nome <span>(o que você quiser: seu nome, um apelido, uma palavra…)</span></label>
+      <input id="f-name" maxlength="30" placeholder="Ritukah" required>
+      <label for="f-dream">O que você sonha ver existir?</label>
+      <textarea id="f-dream" rows="2" maxlength="140" placeholder="Uma horta comunitária no meu bairro" required></textarea>
+      <label for="f-why">Por que isso importa para você? <span>(opcional)</span></label>
+      <textarea id="f-why" rows="2" maxlength="140"></textarea>
+      <label for="f-need">Do que você precisaria? <span>(opcional)</span></label>
+      <input id="f-need" maxlength="80" placeholder="Mãos, terra, um pouco de tempo">
+      <label class="consent"><input id="f-consent" type="checkbox" required> <span>Aceito que meu nome e minha centelha brilhem no céu para todos, quando a Tríade a acolher. <a href="../hasta-la-vista/privacidad.html#pt" target="_blank" rel="noopener">Privacidade</a></span></label>
+      <input class="hp" id="f-web" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="send" type="submit">✳ Acender minha estrela</button>
+      <p class="note">Sua centelha é guardada e se acende para todos quando uma pessoa a acolhe (a Tríade). Nunca pedimos seu e-mail.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const canvas = $('canvas'), ctx = canvas.getContext('2d'), sky = $('sky');
+const logEl = $('log'), countEl = $('count'), whisper = $('whisper');
+let W = 0, H = 0, dpr = 1, paused = false, lit = 0;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ───────── Azar con semilla: el mismo rincón del universo siempre muestra las mismas estrellas
+function hashStr(s){ let h = 2166136261; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rng(seed){ let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const pickR = (r, a) => a[Math.floor(r() * a.length)];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+// ───────── Cámara: el universo no tiene bordes, ni hacia dentro ni hacia fuera
+const cam = {x: 0, y: 0, z: 1}; let z0 = 1;
+function resize(){
+  dpr = Math.min(devicePixelRatio || 1, 2); W = sky.clientWidth; H = sky.clientHeight;
+  canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const nz0 = Math.min(W, H) / 2.3; cam.z *= nz0 / z0; z0 = nz0; redraw();
+}
+const toS = (wx, wy) => [(wx - cam.x) * cam.z + W / 2, (wy - cam.y) * cam.z + H / 2];
+const toW = (sx, sy) => [(sx - W / 2) / cam.z + cam.x, (sy - H / 2) / cam.z + cam.y];
+const ZMIN = 1e-7, ZMAX = 1e9;
+function zoomAt(f, sx, sy){
+  const [wx, wy] = toW(sx, sy);
+  const rel = Math.min(Math.max(cam.z * f / z0, ZMIN), ZMAX); cam.z = rel * z0;
+  cam.x = wx - (sx - W / 2) / cam.z; cam.y = wy - (sy - H / 2) / cam.z; redraw();
+}
+
+// ───────── Las estrellas reales de la galaxia (creadores, ayudas, IA)
+const NAMES = ['Luz','Kai','Pequeno Carvalho','Nuvem Viajante','Sol de Água','Farol','Bruma','Âmbar','Cometa','Lince','Nômade','Raiz','Onda','Sarça','Aurora','Beija-flor'];
+const SPARKS = ['uma horta comunitária no meu bairro','ensinar as crianças da praça a pintar','um mural para a escola da vila','uma oficina gratuita de conserto de bicicletas','um coro aberto para pessoas idosas','plantar árvores na margem do rio','uma biblioteca numa cabine telefônica'];
+const WHYS = ['porque meu bairro precisa de cor','porque ninguém me ensinou quando criança','porque a solidão pesa','porque o rio era o nosso lugar','porque compartilhar multiplica'];
+const HELPS = ['oferece 4 horas aos sábados','entende de carpintaria','empresta um andaime','propõe um esboço','conhece um agricultor','oferece 20 € para tinta'];
+const COLORS = {spark:'#ebaf12', help:'#f4efe5', ai:'#8fb3ff', mine:'#ff5a4f', gift:'#ffd36b', echo:'#d9c8ff'};
+const KIND_NAME = {spark:'Faísca', help:'Ajuda', ai:'Ação da IA', mine:'Sua faísca', gift:'Contribuição', echo:'Eco'};
+const roots = [], ideas = [], byId = new Map();
+let uid = 0;
+function addStar(kind, info){
+  const s = Object.assign({id: 'r' + (uid++), kind, wx: -0.95 + Math.random() * 1.9, wy: -0.55 + Math.random() * 1.3, wz: -0.9 + Math.random() * 1.8,
+    wr: kind === 'ai' ? 0.009 : kind === 'mine' ? 0.016 : 0.012, born: performance.now(), links: [], when: new Date()}, info || {});
+  roots.push(s); byId.set(s.id, s); if (s.idea) s.themes = themesFor(s.idea);
+  if (kind !== 'ai'){ lit++; countEl.textContent = lit; }
+  redraw(); return s;
+}
+
+// Nombres e ideas clicables en el diario
+const slug = name => encodeURIComponent(name);
+const who = s => s.kind === 'ai' ? `<button type="button" class="ref" data-ref="${s.id}">IA</button>` : `<a class="ref" href="#creator-${slug(s.name)}">${esc(s.name)}</a>`;
+const idea = s => `<a class="ref idea" href="#project-${s.id}">“${esc(s.idea)}”</a>`;
+function focusStar(n){
+  if (!n || !roots.includes(n)) return false;
+  const fv = V(n); fly(fv[0], fv[1], Math.max(cam.z, 30 / (n.wr * fv[2]))); setTimeout(() => showCard(n), calm ? 0 : 600); return true;
+}
+logEl.addEventListener('click', e => {
+  const b = e.target.closest('[data-ref]'); if (!b) return;
+  if (!focusStar(byId.get(b.dataset.ref))){ b.classList.add('gone'); b.title = 'Esta estrela já não existe'; }
+});
+
+// ───────── Lo que nace alrededor de una estrella cuando te acercas (infinito)
+const GIFTS = [['Uma hora de trabalho','oferece uma hora'],['Um ofício','sabe fazer'],['Uma ferramenta','empresta'],['Um esboço','desenhou'],['Uma palavra de ânimo','escreveu'],['Um contato','conhece alguém'],['Uma receita','já fez antes'],['Uma canção','compôs para o projeto']];
+const ECHOES = ['Uma pequena ideia dentro da ideia','Uma lembrança que a inspirou','Uma pergunta que a faz crescer','Um obrigado','Um sorriso compartilhado','Um detalhe que a embeleza','Um sonho nascido deste sonho'];
+const kids = new Map();
+function children(n){
+  if (kids.has(n.id)) return kids.get(n.id);
+  const r = rng(hashStr(n.id)), count = 5 + Math.floor(r() * 5), out = [];
+  for (let i = 0; i < count; i++){
+    const a = (i / count) * Math.PI * 2 + r() * 0.6, d = n.wr * (2.6 + r() * 3.2);
+    const deep = n.depth >= 1 || n.kind === 'ai';
+    const g = pickR(r, GIFTS);
+    out.push({id: n.id + '.' + i, parent: n, depth: (n.depth || 0) + 1,
+      kind: deep ? 'echo' : 'gift', wx: n.wx + Math.cos(a) * d, wy: n.wy + Math.sin(a) * d, wr: n.wr * (0.1 + r() * 0.07),
+      name: pickR(r, NAMES), title: deep ? pickR(r, ECHOES) : g[0], verb: deep ? '' : g[1], born: 0});
+  }
+  kids.set(n.id, out); return out;
+}
+
+// ───────── Más allá de nuestra galaxia: otras galaxias, cúmulos, universos (infinito hacia fuera)
+const LEVELS = ['Galáxia', 'Aglomerado de galáxias', 'Superaglomerado', 'Universo', 'Multiverso'];
+const SYL = ['lu','ma','ra','ve','so','ki','na','el','ta','ri','ol','an','mi','de','zu','ya'];
+function farName(r){ let s = ''; const n = 2 + Math.floor(r() * 2); for (let i = 0; i < n; i++) s += pickR(r, SYL); return s[0].toUpperCase() + s.slice(1); }
+function farObjects(list){
+  for (let k = 1; k <= 14; k++){
+    const S = Math.pow(9, k - 1), T = S * 7, px = S * cam.z;
+    if (px < 1.2 || px > Math.max(W, H) * 3) continue;
+    const alpha = Math.min(1, (px - 1.2) / 6) * Math.min(1, (Math.max(W, H) * 3 - px) / (Math.max(W, H) * 2));
+    const [x0, y0] = toW(-px, -px), [x1, y1] = toW(W + px, H + px);
+    for (let i = Math.floor(x0 / T); i <= Math.floor(x1 / T); i++) for (let j = Math.floor(y0 / T); j <= Math.floor(y1 / T); j++){
+      if (Math.abs(i) <= 0 && Math.abs(j) <= 0) continue; // aquí vive nuestra galaxia
+      const r = rng(hashStr(k + ':' + i + ':' + j));
+      if (r() > 0.75) continue;
+      const wx = (i + 0.15 + r() * 0.7) * T, wy = (j + 0.15 + r() * 0.7) * T;
+      list.push({id: 'g' + k + ':' + i + ':' + j, kind: 'far', level: k, wx, wy, wr: S * (0.5 + r() * 0.6), rot: r() * Math.PI, asp: 0.35 + r() * 0.5,
+        hue: pickR(r, ['235,175,18', '143,179,255', '255,140,130', '217,200,255']), name: farName(r), alpha, members: Math.floor(Math.pow(10, k + 1) * (1 + r() * 8))});
+    }
+  }
+}
+
+// ───────── Dibujo
+let hits = [], needDraw = true;
+const dust = Array.from({length: 240}, () => ({x: Math.random(), y: Math.random(), r: Math.random() * 1.1 + .2, p: Math.random() * 6}));
+function redraw(){ needDraw = true; }
+function glow(x, y, r, color, a){
+  const R = Math.min(r < 8 ? r * 7 : 56 + (r - 8) * 2.2, 5000);
+  const g = ctx.createRadialGradient(x, y, 0, x, y, R);
+  g.addColorStop(0, color); g.addColorStop(Math.min(.9, Math.max(.22, r / R)), color + '99'); g.addColorStop(1, 'transparent');
+  ctx.globalAlpha = a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, Math.max(r * .55, .8), 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+}
+function labelAt(x, y, text, sub, a){
+  ctx.globalAlpha = a; ctx.font = "600 italic 15px 'Playfair Display', Georgia, serif"; ctx.fillStyle = '#f4efe5';
+  ctx.fillText(text, x, y); if (sub){ ctx.font = "500 11px 'DM Mono', monospace"; ctx.fillStyle = '#c9d2ea'; ctx.fillText(sub, x, y + 15); }
+  ctx.globalAlpha = 1;
+}
+
+// ───────── Universo en 3D: cada estrella tiene profundidad y el universo gira
+const gifts = [];
+const rot = {yaw: 0, pitch: 0, vy: 0, vp: 0}, D3 = 3; let autoRot = false, vframe = 0;
+function V(n){
+  if (n._vf === vframe) return n._v;
+  let v;
+  if (n.parent){ const pv = V(n.parent); v = [pv[0] + (n.wx - n.parent.wx) * pv[2], pv[1] + (n.wy - n.parent.wy) * pv[2], pv[2], pv[3]]; }
+  else if (n.wz === undefined){ v = [n.wx, n.wy, 1, 0]; }
+  else {
+    const cy = Math.cos(rot.yaw), sy = Math.sin(rot.yaw), cp = Math.cos(rot.pitch), sp = Math.sin(rot.pitch);
+    const x1 = n.wx * cy + n.wz * sy, z1 = -n.wx * sy + n.wz * cy, y2 = n.wy * cp - z1 * sp, z2 = n.wy * sp + z1 * cp, p = D3 / (D3 - z2);
+    v = [x1 * p, y2 * p, p, z2];
+  }
+  n._vf = vframe; n._v = v; return v;
+}
+function rotateBy(dy, dp){
+  // al estar cerca de una estrella, el universo gira a su alrededor para no perderla
+  const rel = cam.z / z0; let anchor = null, off = null;
+  if (rel > 1.5 && roots.length){ let bd = 1e9; for (const s of roots){ const v = V(s), d = Math.hypot(v[0] - cam.x, v[1] - cam.y); if (d < bd){ bd = d; anchor = s; } } const v = V(anchor); off = [cam.x - v[0], cam.y - v[1]]; }
+  rot.yaw += dy; rot.pitch = Math.max(-1.35, Math.min(1.35, rot.pitch + dp)); vframe++;
+  if (anchor){ const v = V(anchor); cam.x = v[0] + off[0]; cam.y = v[1] + off[1]; }
+  redraw();
+}
+function resetRot(){
+  if (calm){ rot.yaw = 0; rot.pitch = 0; vframe++; redraw(); return; }
+  const y0 = rot.yaw, p0 = rot.pitch, t0 = performance.now(); rot.vy = rot.vp = 0;
+  const step = t => { const k = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - k, 3); rot.yaw = y0 * (1 - e); rot.pitch = p0 * (1 - e); vframe++; redraw(); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function spinTick(){
+  let moving = false;
+  if (!dragging3d && (Math.abs(rot.vy) > 1e-5 || Math.abs(rot.vp) > 1e-5)){ rotateBy(rot.vy, rot.vp); rot.vy *= .9; rot.vp *= .9; moving = true; }
+  if (autoRot && !dragging3d && !document.hidden) { rotateBy(.0015, 0); moving = true; }
+  if (moving) redraw();
+  requestAnimationFrame(spinTick);
+}
+let dragging3d = false;
+let drawn = 0;
+function drawNode(n, t, a){
+  if (focusSet && !n.depth && !focusSet.has(n) && n.kind !== 'ai') a *= .2;
+  if (drawn > 4000) return;
+  const vv = V(n), [x, y] = toS(vv[0], vv[1]), pr = n.wr * cam.z * vv[2], reach = pr * 7;
+  if (!n.depth) a *= Math.max(.35, Math.min(1, .45 + (vv[2] - .75) * .9));
+  if (x + reach < -40 || x - reach > W + 40 || y + reach < -40 || y - reach > H + 40) return;
+  drawn++;
+  const grow = n.born ? Math.max(0, Math.min(1, (t - n.born) / 1200)) : 1;
+  if (grow <= 0) return;
+  const pulse = 1 + .16 * Math.sin(t / 700 + n.wx * 40);
+  const vis = Math.max(pr, n.depth ? 1.2 : 2.2) * grow * pulse * (1 + .18 * Math.min(n.glow || 0, 5));
+  glow(x, y, vis, COLORS[n.kind], a);
+  if (pr > 2) hits.push({n, x, y, r: Math.max(vis * 2.2, 12)});
+  if (pr > 9 && n.name) labelAt(x + vis * 1.6 + 6, y + 4, n.name, n.title || n.idea || '', a * Math.min(1, (pr - 9) / 8));
+  if (pr > 14){
+    const ca = a * Math.min(1, (pr - 14) / 16);
+    for (const c of children(n)){
+      const cv = V(c), [cx, cy] = toS(cv[0], cv[1]);
+      ctx.globalAlpha = ca * .25; ctx.strokeStyle = '#ebaf12'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(cx, cy); ctx.stroke(); ctx.globalAlpha = 1;
+      drawNode(c, t, ca);
+    }
+  }
+}
+function draw(t){
+  if (document.hidden || (typeof page !== 'undefined' && page.classList.contains('open'))){ requestAnimationFrame(draw); return; }
+  if (needDraw || !calm){
+    needDraw = false; hits = []; drawn = 0;
+    ctx.clearRect(0, 0, W, H);
+    for (const d of dust){ ctx.fillStyle = `rgba(244,239,229,${.22 + .2 * Math.sin(t / 900 + d.p)})`; ctx.beginPath(); ctx.arc(d.x * W, d.y * H, d.r, 0, 7); ctx.fill(); }
+    // otras galaxias
+    const far = []; farObjects(far);
+    for (const g of far){
+      const [x, y] = toS(g.wx, g.wy), pr = g.wr * cam.z;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(g.rot); ctx.scale(1, g.asp);
+      const gr = ctx.createRadialGradient(0, 0, 0, 0, 0, pr);
+      gr.addColorStop(0, `rgba(${g.hue},${.9 * g.alpha})`); gr.addColorStop(.3, `rgba(${g.hue},${.35 * g.alpha})`); gr.addColorStop(1, 'transparent');
+      ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(0, 0, pr, 0, 7); ctx.fill(); ctx.restore();
+      hits.push({n: g, x, y, r: Math.max(pr * .6, 14)});
+      if (pr > 30) labelAt(x + pr * .55, y - pr * .2, `${LEVELS[Math.min(g.level - 1, 4)]} ${g.name}`, `${g.members.toLocaleString('pt-BR')} criadores`, g.alpha * Math.min(1, (pr - 30) / 30));
+    }
+    // nuestra galaxia, vista desde lejos
+    const gpx = cam.z;
+    if (gpx < 60){
+      const [x, y] = toS(0, 0); const gr = ctx.createRadialGradient(x, y, 0, x, y, Math.max(gpx * 1.3, 3));
+      gr.addColorStop(0, 'rgba(235,175,18,.95)'); gr.addColorStop(1, 'transparent'); ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(x, y, Math.max(gpx * 1.3, 3), 0, 7); ctx.fill();
+      hits.push({n: {kind: 'home'}, x, y, r: Math.max(gpx, 14)});
+      labelAt(x + Math.max(gpx, 6) + 8, y + 4, 'Hasta La Vista', 'nossa galáxia', 1);
+    }
+    // hilos entre una idea y quienes la ayudan
+    for (const s of roots) for (const o of s.links){
+      const [a1, b1] = toS(...V(s)), [a2, b2] = toS(...V(o));
+      ctx.strokeStyle = 'rgba(235,175,18,.3)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke();
+    }
+    if (focusSet && focusSet.size > 1){
+      const pts = [...focusSet].filter(n => roots.includes(n)).sort((p, q) => V(p)[0] - V(q)[0]).map(n => toS(...V(n)));
+      ctx.strokeStyle = 'rgba(235,175,18,.75)'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 6]); ctx.beginPath();
+      pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); ctx.setLineDash([]);
+    }
+    for (const g of gifts){
+      const k = (performance.now() - g.t0) / 2400; if (k > 1 || !roots.includes(g.a) || !roots.includes(g.b)) continue;
+      const [x1, y1] = toS(...V(g.a)), [x2, y2] = toS(...V(g.b)), px = x1 + (x2 - x1) * k, py = y1 + (y2 - y1) * k;
+      const gg = ctx.createRadialGradient(px, py, 0, px, py, 16); gg.addColorStop(0, 'rgba(255,236,180,.95)'); gg.addColorStop(1, 'rgba(255,236,180,0)');
+      ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(px, py, 16, 0, 7); ctx.fill(); needDraw = true;
+    }
+    vframe++; for (const s of [...roots].sort((p, q) => V(p)[2] - V(q)[2])) drawNode(s, t, 1);
+    drawMeteor(t);
+    updateScale();
+  }
+  requestAnimationFrame(draw);
+}
+
+// ───────── Escala visible
+function updateScale(){
+  const rel = cam.z / z0;
+  let name;
+  if (rel >= 4000) name = 'Ecos dentro dos ecos';
+  else if (rel >= 120) name = 'Os ecos de uma contribuição';
+  else if (rel >= 6) name = 'Ao redor de uma estrela';
+  else if (rel >= 0.35) name = 'A galáxia Hasta La Vista';
+  else { const k = Math.min(Math.floor(Math.log(1 / rel) / Math.log(9)), 4); name = ['Entre as galáxias', 'Aglomerados de galáxias', 'Superaglomerados', 'Universos', 'Multiversos'][k]; }
+  $('scale-name').textContent = name;
+  $('scale-x').textContent = '×' + (rel >= 1 ? Math.round(rel).toLocaleString('pt-BR') : '1/' + Math.round(1 / rel).toLocaleString('pt-BR'));
+  $('intro').classList.toggle('faded', rel > 1.6 || rel < .6);
+}
+
+// ───────── Ratón, dedos y teclado
+const pointers = new Map(); let lastPinch = 0, moved = 0, lastMid = [0, 0];
+sky.addEventListener('wheel', e => { if (e.target !== canvas) return; e.preventDefault(); const b = sky.getBoundingClientRect(); zoomAt(Math.exp(-e.deltaY * 0.0016), e.clientX - b.left, e.clientY - b.top); }, {passive: false});
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+canvas.addEventListener('pointerdown', e => { canvas.setPointerCapture(e.pointerId); pointers.set(e.pointerId, {x: e.clientX, y: e.clientY, pan: e.button === 2 || e.shiftKey}); moved = 0; sky.classList.add('dragging'); dragging3d = true; rot.vy = rot.vp = 0; });
+canvas.addEventListener('pointermove', e => {
+  if (!pointers.has(e.pointerId)) return;
+  const p = pointers.get(e.pointerId), dx = e.clientX - p.x, dy = e.clientY - p.y;
+  if (pointers.size === 1){
+    if (p.pan){ cam.x -= dx / cam.z; cam.y -= dy / cam.z; }
+    else { const ky = dx * .005, kp = dy * .005; rotateBy(ky, kp); rot.vy = calm ? 0 : ky * .5; rot.vp = calm ? 0 : kp * .5; }
+    moved += Math.abs(dx) + Math.abs(dy); redraw();
+  }
+  p.x = e.clientX; p.y = e.clientY;
+  if (pointers.size === 2){
+    const [a, b] = [...pointers.values()], d = Math.hypot(a.x - b.x, a.y - b.y), r = sky.getBoundingClientRect();
+    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    if (lastPinch){ zoomAt(d / lastPinch, mx - r.left, my - r.top); cam.x -= (mx - lastMid[0]) / cam.z; cam.y -= (my - lastMid[1]) / cam.z; }
+    lastPinch = d; lastMid = [mx, my]; moved += 10; rot.vy = rot.vp = 0;
+  }
+});
+const up = e => {
+  pointers.delete(e.pointerId); if (pointers.size < 2) lastPinch = 0; if (!pointers.size){ sky.classList.remove('dragging'); dragging3d = false; if (moved < 6) rot.vy = rot.vp = 0; }
+  if (e.type === 'pointerup' && moved < 6){ const r = sky.getBoundingClientRect(); tap(e.clientX - r.left, e.clientY - r.top); }
+};
+canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+$('z-in').onclick = () => zoomAt(2, W / 2, H / 2);
+$('z-out').onclick = () => zoomAt(.5, W / 2, H / 2);
+$('z-home').onclick = () => { resetRot(); fly(0, 0, z0); };
+$('z-left').onclick = () => rotateBy(-.35, 0);
+$('z-right').onclick = () => rotateBy(.35, 0);
+$('z-auto').onclick = () => { autoRot = !autoRot; $('z-auto').setAttribute('aria-pressed', autoRot); };
+document.addEventListener('keydown', e => {
+  if ($('modal').classList.contains('open') || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === '+' || e.key === '=') zoomAt(1.6, W / 2, H / 2);
+  if (e.key === '-') zoomAt(1 / 1.6, W / 2, H / 2);
+  if (/^Arrow/.test(e.key) && !$('explore').classList.contains('open') && document.activeElement.id !== 'q'){ e.preventDefault(); rotateBy(e.key === 'ArrowLeft' ? -.12 : e.key === 'ArrowRight' ? .12 : 0, e.key === 'ArrowUp' ? -.12 : e.key === 'ArrowDown' ? .12 : 0); }
+});
+
+// Vuelo suave hacia un punto
+let flight = null;
+function fly(x, y, z){
+  if (calm){ cam.x = x; cam.y = y; cam.z = z; redraw(); return; }
+  flight = {x0: cam.x, y0: cam.y, z0: cam.z, x, y, z, t0: performance.now()};
+  const step = t => { if (!flight) return; const k = Math.min(1, (t - flight.t0) / 1100), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    cam.z = Math.exp(Math.log(flight.z0) + (Math.log(flight.z) - Math.log(flight.z0)) * e);
+    cam.x = flight.x0 + (flight.x - flight.x0) * e; cam.y = flight.y0 + (flight.y - flight.y0) * e; redraw();
+    if (k < 1) requestAnimationFrame(step); else flight = null; };
+  requestAnimationFrame(step);
+}
+
+// ───────── Ficha de una estrella
+let cardNode = null;
+function tap(x, y){
+  let best = null, bd = 1e9;
+  for (const h of hits){ const d = Math.hypot(h.x - x, h.y - y); if (d < h.r && d < bd){ best = h; bd = d; } }
+  if (best) showCard(best.n); else closeCard();
+}
+function showCard(n){
+  if (n.kind === 'home'){ fly(0, 0, z0); return; }
+  cardNode = n; const dl = [];
+  const when = n.when ? n.when.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) : null;
+  if (n.kind === 'far'){
+    $('card-kind').textContent = LEVELS[Math.min(n.level - 1, 4)];
+    $('card-title').textContent = n.name;
+    $('card-by').textContent = 'Outra comunidade de criadores, em algum lugar do universo.';
+    dl.push(['Criadores', n.members.toLocaleString('pt-BR')], ['Estado', 'Em breve: cada comunidade poderá acender a sua própria galáxia.']);
+  } else if (n.kind === 'gift' || n.kind === 'echo'){
+    $('card-kind').textContent = KIND_NAME[n.kind];
+    $('card-title').textContent = n.title;
+    $('card-by').textContent = n.kind === 'gift' ? `${n.name} ${n.verb}.` : `Um eco de ${n.name}.`;
+    let p = n.parent; while (p.parent) p = p.parent;
+    dl.push(['Nasce de', p.idea ? `“${p.idea}”` : p.title || '—'], ['Nível', `${n.depth} ${n.depth === 1 ? 'passo' : 'passos'} dentro da estrela`]);
+  } else {
+    $('card-kind').textContent = KIND_NAME[n.kind];
+    $('card-title').textContent = n.idea ? `“${n.idea}”` : n.title || 'Uma ação da IA';
+    $('card-by').textContent = n.kind === 'ai' ? 'A IA, à vista de todos.' : `Criador: ${n.name}`;
+    if (n.why) dl.push(['Por quê', n.why]);
+    if (n.need) dl.push(['Precisa', n.need]);
+    if (n.forIdea) dl.push(['Para', `“${n.forIdea.idea}” de ${n.forIdea.name}`]);
+    if (n.links && n.links.length) dl.push(['Ajudada por', `${n.links.length} ${n.links.length === 1 ? 'criador' : 'criadores'}`]);
+    if (when) dl.push(['Acesa', `hoje às ${when}`]);
+  }
+  dl.push(['Aproxime-se', 'para ver o que nasce ao redor']);
+  $('card-dl').innerHTML = dl.map(([a, b]) => `<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join('');
+  const L = [];
+  if (n.idea) L.push(`<a href="#project-${n.id}">→ Página do projeto</a>`);
+  if (n.forIdea && roots.includes(n.forIdea)) L.push(`<a href="#project-${n.forIdea.id}">→ Página do projeto que ajuda</a>`);
+  if (n.name && (n.kind === 'spark' || n.kind === 'mine' || n.kind === 'help')) L.push(`<a href="#creator-${slug(n.name)}">→ Página de ${esc(n.name)}</a>`);
+  if ((n.kind === 'gift' || n.kind === 'echo')){ let p = n.parent; while (p.parent) p = p.parent; if (p.idea) L.push(`<a href="#project-${p.id}">→ Página do projeto “${esc(p.idea)}”</a>`); }
+  $('card-links').innerHTML = L.join('');
+  $('card').classList.add('open');
+}
+function closeCard(){ $('card').classList.remove('open'); cardNode = null; }
+$('card').querySelector('.x').onclick = closeCard;
+$('card-go').onclick = () => { if (!cardNode) return; const n = cardNode; if (n.kind === 'far'){ fly(n.wx, n.wy, Math.min(W, H) / (n.wr * 2.2)); return; } const fv = V(n); fly(fv[0], fv[1], 40 / (n.wr * fv[2])); };
+
+// ───────── Mensajes de la IA y diario
+let whisperTimer;
+function say(star, text, tag){
+  if (!star) return;
+  let [x, y] = toS(...V(star));
+  if (x < 0 || x > W || y < 0 || y > H){ x = W / 2; y = H * .32; }
+  whisper.textContent = text; const sm = document.createElement('small'); sm.textContent = tag; whisper.appendChild(sm);
+  whisper.style.left = Math.min(Math.max(x, 160), W - 160) + 'px'; whisper.style.top = Math.max(y, 120) + 'px';
+  whisper.classList.remove('show'); void whisper.offsetWidth; whisper.classList.add('show');
+  clearTimeout(whisperTimer); whisperTimer = setTimeout(() => whisper.classList.remove('show'), 3600);
+}
+function log(html, why, mine){
+  const li = document.createElement('li'); if (mine) li.className = 'mine';
+  const now = new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit', second: '2-digit'});
+  li.innerHTML = `<time>${now}</time>${html}${why ? `<span class="why">Por quê: ${why}</span>` : ''}`;
+  logEl.prepend(li); while (logEl.children.length > 40) logEl.lastChild.remove(); return li;
+}
+
+// ───────── Vida simulada del cielo (ejemplos inventados)
+const RECIPES = [{name: 'Mural coletivo numa praça', steps: 12, errors: 4}, {name: 'Horta comunitária de bairro', steps: 9, errors: 3}, {name: 'Oficina de conserto de bicicletas', steps: 7, errors: 2}, {name: 'Biblioteca numa cabine', steps: 6, errors: 2}];
+const ACCOUNTS = [
+  {name: 'Mural da escola', lines: [['Recebido:', '1.240 €'], ['Tinta:', '640 €'], ['Andaime:', '0 € (emprestado por Farol)'], ['Pincéis:', '0 € (sobras de outro projeto)'], ['Comida para os voluntários:', '180 €'], ['Sobra:', '420 € → volta ao fundo comum']]},
+  {name: 'Horta da Rua Principal', lines: [['Recebido:', '380 €'], ['Sementes e terra:', '210 €'], ['Ferramentas:', '0 € (biblioteca de ferramentas)'], ['Rega:', '95 €'], ['Sobra:', '75 € → volta ao fundo comum']]}
+];
+const EVENTS = [
+  () => { const n = pick(NAMES), i = pick(SPARKS), s = addStar('spark', {name: n, idea: i, why: pick(WHYS)}); ideas.push(s);
+          say(s, `Nova faísca: “${i}”.`, `${n} se atreve`); log(`${who(s)} acendeu uma faísca: ${idea(s)}.`); },
+  () => { if (!ideas.length) return; const id = pick(ideas), n = pick(NAMES), h = pick(HELPS), s = addStar('help', {name: n, title: h, forIdea: id}); id.links.push(s);
+          const own = n === id.name;
+          say(s, own ? `${n} ${h} para a sua própria ideia.` : `${n} ${h} para “${id.idea}”.`, 'A mistura');
+          log(`${who(s)} ${h} para ${own ? 'a sua própria ideia' : `a ideia de ${who(id)}`}: ${idea(id)}.`); },
+  () => { if (!ideas.length) return; const id = pick(ideas), a = addStar('ai', {title: `Creditou ${id.name}`});
+          say(a, `Creditei ${id.name}: a ideia é dele ou dela.`, 'A IA, à vista');
+          log(`${who(a)} registrou ${who(id)} como autor de ${idea(id)}.`, 'cada ideia pertence a quem a teve, com data e hora.'); },
+  () => { if (ideas.length < 2) return; const a = addStar('ai', {title: 'Conectou duas ideias parecidas'});
+          say(a, 'Duas ideias se parecem. Proponho que se conheçam.', 'A IA, à vista');
+          log(`${who(a)} sugeriu que duas faíscas parecidas se unam. Os autores decidem.`, 'juntos se vai mais longe; nada se funde sem o acordo deles.'); },
+  () => { const a = addStar('ai', {title: 'Encontrou material mais barato'}); say(a, 'Esta tinta custa menos na loja da vila.', 'Otimização');
+          log(`${who(a)} propôs um fornecedor mais próximo para um projeto: −18 % no material.`, 'cada euro no seu devido lugar.'); },
+  () => triad(),
+  () => { const r = pick(RECIPES), a = addStar('ai', {title: `Nova receita: ${r.name}`}); say(a, `Nova receita: “${r.name}”. Ninguém começa do zero.`, 'Receitas');
+          log(`${who(a)} transformou o projeto concluído “${r.name}” numa <b>receita</b>: ${r.steps} passos, uma lista de material e ${r.errors} erros a evitar. Disponível para todos.`, 'cada sucesso ajuda o próximo projeto.'); },
+  () => { if (!ideas.length) return; const id = pick(ideas), r = pick(RECIPES), a = addStar('ai', {title: `Receita proposta a ${id.name}`});
+          say(a, `${id.name}, há uma receita para a sua ideia.`, 'Receitas');
+          log(`${who(a)} propôs a receita “${r.name}” a ${who(id)}, já usada ${2 + Math.floor(Math.random() * 6)} vezes.`, 'reutilizar o que funciona poupa tempo e dinheiro.'); },
+  () => { const c = pick(ACCOUNTS), a = addStar('ai', {title: `Contas publicadas: ${c.name}`}); say(a, `Contas à vista: “${c.name}”.`, 'Visibilidade');
+          log(`${who(a)} publicou as contas de “${c.name}”.<span class="accounts">${c.lines.map(l => `<b>${l[0]}</b> ${l[1]}`).join('<br>')}</span>`, 'cada euro, à vista de todos.'); }
+];
+
+// La Tríada de la Benevolencia, en directo
+let triadBusy = false;
+const CASES = [
+  {what: 'um comentário que zombava de um autor', why: 'aqui qualquer um pode ousar sem medo.', keep: false},
+  {what: 'uma mensagem que parece publicidade sem relação com a ideia', why: 'manter o céu limpo poupa tempo a todos.', keep: false},
+  {what: 'uma crítica dura, mas sobre a ideia e não sobre a pessoa', why: 'a crítica sincera também é benevolente quando respeita a pessoa.', keep: true}
+];
+function triad(){
+  if (triadBusy) return EVENTS[0]();
+  triadBusy = true;
+  const c = pick(CASES), a = addStar('ai', {title: 'Tríade da Benevolência em andamento'}), author = pick(NAMES);
+  const li = log(`${who(a)} sinalizou ${c.what}. <b>Ocultou</b>, não apagou, e avisou ${esc(author)}, que pode se explicar.
+    <span class="triad" aria-label="Tríade da Benevolência"><span class="done">1 · A IA propõe ✓</span><span class="now">2 · Criadores</span><span>3 · Equipe cuidadora</span></span>
+    <span class="verdict" aria-live="polite"></span>`, c.why);
+  say(a, 'Ocultei uma mensagem. Agora os criadores decidem.', 'Tríade · 1 de 3');
+  const steps = li.querySelectorAll('.triad span'), verdict = li.querySelector('.verdict');
+  const yes = c.keep ? 3 + Math.floor(Math.random() * 4) : 9 + Math.floor(Math.random() * 5), total = 14;
+  setTimeout(() => { steps[1].className = 'done'; steps[1].textContent = `2 · Criadores: ${yes} de ${total} ` + (c.keep ? '✗' : '✓'); steps[2].className = 'now';
+    verdict.textContent = c.keep ? 'A maioria dos criadores não vê problema. A equipe cuidadora revisa mesmo assim.' : 'Os criadores concordam. Agora a equipe cuidadora revisa.';
+    say(a, c.keep ? 'Os criadores não veem problema. A equipe cuidadora revisa.' : 'Os criadores concordam. A equipe cuidadora revisa.', 'Tríade · 2 de 3'); }, 5000);
+  setTimeout(() => { steps[2].className = 'done'; steps[2].textContent = '3 · Equipe cuidadora ✓';
+    verdict.innerHTML = c.keep ? `<b>Decisão final:</b> a mensagem volta a ser visível. ${esc(author)} foi avisado.` : `<b>Decisão final:</b> a mensagem é comprimida e arquivada; pode ser recuperada se houve um erro. ${esc(author)} pode pedir outra revisão.`;
+    say(a, c.keep ? 'A mensagem voltou. Obrigado por cuidar do céu.' : 'Mensagem arquivada, com razões. Está tudo no diário.', 'Tríade · 3 de 3'); triadBusy = false; }, 10000);
+}
+
+function tick(){
+  if (!paused && !document.hidden){ const r = Math.random(); const e = ideas.length < 2 ? EVENTS[0] : r < .35 ? EVENTS[0] : r < .65 ? EVENTS[1] : pick(EVENTS.slice(2)); e(); }
+  setTimeout(tick, 3800 + Math.random() * 2600);
+}
+
+// Revisita completa al ritmo de π (maqueta: 1 dígito = 4 segundos; en la realidad, por ejemplo, 1 dígito = 1 hora)
+const PI = '31415926535897932384626433832795028841971693993751';
+let piIndex = 0, piLeft = 0, revisits = 0;
+function piShow(){ const st = Math.max(0, piIndex - 3); $('pi-digits').innerHTML = [...PI.slice(st, st + 14)].map((d, k) => st + k === piIndex ? `<b>${d}</b>` : d).join(' '); $('pi-next').textContent = `${piLeft} s`; }
+function piStep(){ let d = +PI[piIndex % PI.length]; if (d === 0) d = 10; piLeft = d * 4; piShow(); }
+setInterval(() => {
+  if (paused || document.hidden) return; piLeft--; $('pi-next').textContent = `${Math.max(piLeft, 0)} s`; if (piLeft > 0) return;
+  revisits++; const a = addStar('ai', {title: `Revisão completa nº ${revisits}`});
+  say(a, `Revisão nº ${revisits}: todo o céu verificado.`, `Ritmo de π · dígito ${PI[piIndex % PI.length]}`);
+  log(`${who(a)} concluiu a revisão completa nº ${revisits} (dígito ${PI[piIndex % PI.length]} de π): ${ideas.length} faíscas verificadas, ${Math.floor(Math.random() * 2)} mensagens sinalizadas, ${Math.floor(Math.random() * 3)} projetos parecidos conectados.`, 'o que é novo é analisado na hora; o resto, só de vez em quando, ao ritmo de π. Menos cálculo, menos custo.');
+  piIndex++; piStep();
+}, 1000);
+
+// Pausa, reglas
+$('pause').onclick = () => { paused = !paused; $('pause').setAttribute('aria-pressed', paused); $('pause').textContent = paused ? '▶ Retomar o céu' : '❚❚ Pausar o céu'; };
+const rb = document.querySelector('.rules'); rb.onclick = () => { const o = $('rules-box').classList.toggle('open'); rb.setAttribute('aria-expanded', o); };
+
+// Tus datos son tuyos: borrado inmediato y real
+let mine = null;
+$('mydata').onclick = () => {
+  if (!mine) return;
+  roots.splice(roots.indexOf(mine), 1); lit--; countEl.textContent = lit; kids.delete(mine.id);
+  for (const o of roots) o.links = o.links.filter(x => x !== mine);
+  const k = ideas.indexOf(mine); if (k > -1) ideas.splice(k, 1);
+  if (cardNode === mine) closeCard();
+  byId.delete(mine.id);
+  logEl.querySelectorAll('li').forEach(li => { if (!li.classList.contains('mine') && !li.querySelector(`[data-ref="${mine.id}"], a[href="#project-${mine.id}"], a[href="#creator-${CSS.escape(slug(mine.name))}"]`)) return; li.className = 'removed'; li.innerHTML = '<time>—</time>Uma faísca foi retirada pelo seu autor. Os dados foram apagados de verdade.'; });
+  log(`<span class="who">IA</span> apagou na hora uma estrela e os seus dados, a pedido do autor.`, 'seus dados são seus: sem Tríade, sem espera, sem arquivo.');
+  mine = null; $('mydata').classList.remove('on'); $('open').focus(); redraw();
+};
+
+// Enciende tu chispa
+const modal = $('modal'), dialog = modal.querySelector('.dialog');
+const openM = () => { modal.classList.add('open'); $('f-name').focus(); };
+const closeM = () => { modal.classList.remove('open'); $('open').focus(); };
+$('open').onclick = openM; modal.querySelector('.close').onclick = closeM; modal.onclick = e => { if (e.target === modal) closeM(); };
+document.addEventListener('keydown', e => {
+  if (!modal.classList.contains('open')) return;
+  if (e.key === 'Escape') closeM();
+  if (e.key === 'Tab'){ const f = [...dialog.querySelectorAll('button,input,textarea')], a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a){ e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z){ e.preventDefault(); a.focus(); } }
+});
+$('form').onsubmit = e => {
+  e.preventDefault();
+  const n = $('f-name').value.trim(), i = $('f-dream').value.trim(), why = $('f-why').value.trim(), need = $('f-need').value.trim();
+  const bot = !!($('f-web') && $('f-web').value);
+  closeM(); e.target.reset();
+  if (mine) $('mydata').onclick();
+  const s = addStar('mine', {name: n, idea: i, why, need}); ideas.push(s); mine = s; sendChispa(s, bot);
+  fly(0, 0, z0);
+  log(`${who(s)} acendeu a sua faísca: ${idea(s)}.`, '', true);
+  $('mydata').classList.add('on');
+  setTimeout(() => say(s, `Sua estrela brilha, ${n}. Que beleza!`, 'Toque na sua estrela para vê-la'), 1200);
+  setTimeout(() => { if (!roots.includes(s)) return; const a = addStar('ai', {title: `Creditou ${n}`});
+    say(a, `Creditei ${n}: esta ideia é sua, para sempre.`, 'A IA, à vista');
+    log(`${who(a)} registrou ${who(s)} como autor de ${idea(s)}.`, 'cada ideia pertence a quem a teve, com data e hora.');
+    if (need) setTimeout(() => roots.includes(s) && log(`${who(a)} procura criadores que possam contribuir: ${esc(need)}.`, 'a mistura começa por encontrar as pessoas certas.'), 1500);
+  }, 4200);
+};
+
+// ───────── Buscador: personas, ideas, proyectos, acciones de la IA
+const q = $('q'), results = $('results');
+const norm = t => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+let found = [], sel = -1;
+function mark(text, term){
+  const t = String(text), i = norm(t).indexOf(norm(term));
+  return i < 0 ? esc(t) : esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + term.length)) + '</mark>' + esc(t.slice(i + term.length));
+}
+function search(){
+  const term = q.value.trim(); sel = -1;
+  if (!term){ results.classList.remove('open'); q.setAttribute('aria-expanded', 'false'); return; }
+  const nt = norm(term);
+  found = roots.filter(n => [n.name, n.idea, n.title, n.why, n.need, n.forIdea && n.forIdea.idea].some(f => norm(f).includes(nt))).slice(-30).reverse();
+  results.innerHTML = found.length ? found.map((n, k) => {
+    const main = n.kind === 'ai' ? n.title : n.idea ? `${n.name} · “${n.idea}”` : `${n.name} · ${n.title}${n.forIdea ? ` → “${n.forIdea.idea}”` : ''}`;
+    return `<li role="option" id="res-${k}" aria-selected="false" data-k="${k}"><span class="k">${KIND_NAME[n.kind]}</span>${mark(main, term)}</li>`;
+  }).join('') : `<li class="empty" role="option" aria-disabled="true">Nada ainda… e se fosse você a acendê-la?</li>`;
+  results.classList.add('open'); q.setAttribute('aria-expanded', 'true');
+}
+function choose(k){ const n = found[k]; if (!n) return; results.classList.remove('open'); q.setAttribute('aria-expanded', 'false'); focusStar(n); }
+function highlight(k){
+  const items = [...results.querySelectorAll('li[data-k]')]; if (!items.length) return;
+  sel = (k + items.length) % items.length;
+  items.forEach((li, i) => li.setAttribute('aria-selected', i === sel));
+  q.setAttribute('aria-activedescendant', items[sel].id); items[sel].scrollIntoView({block: 'nearest'});
+}
+q.addEventListener('input', search);
+q.addEventListener('focus', () => q.value && search());
+q.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown'){ e.preventDefault(); highlight(sel + 1); }
+  else if (e.key === 'ArrowUp'){ e.preventDefault(); highlight(sel - 1); }
+  else if (e.key === 'Enter'){ e.preventDefault(); choose(sel < 0 ? 0 : sel); }
+  else if (e.key === 'Escape'){ results.classList.remove('open'); q.setAttribute('aria-expanded', 'false'); }
+});
+results.addEventListener('mousedown', e => { const li = e.target.closest('li[data-k]'); if (li){ e.preventDefault(); choose(+li.dataset.k); } });
+q.addEventListener('blur', () => setTimeout(() => results.classList.remove('open'), 150));
+
+// ───────── Páginas: proyecto y creador (con dirección propia: #project-… / #creator-…)
+const page = $('page');
+const CONTRIB = ['Uma hora de trabalho', 'Um ofício', 'Uma ferramenta', 'Um esboço', 'Uma palavra de ânimo', 'Um contato', 'Dinheiro'];
+const fmtTime = d => d ? d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) : '';
+function diaryAbout(sel){
+  const items = [...logEl.querySelectorAll('li')].filter(li => li.querySelector(sel));
+  return items.length ? `<ol class="diary">${items.map(li => `<li>${li.innerHTML}</li>`).join('')}</ol>` : '<p class="empty">Nada ainda.</p>';
+}
+function shell(label, body){
+  page.innerHTML = `<div class="top"><a href="#cielo">← Voltar ao céu</a><span>${label}</span></div><div class="wrap">${body}<p class="note">Maquete: os criadores e os números são inventados. Nada é guardado.</p></div>`;
+  page.classList.add('open'); page.scrollTop = 0; const h = page.querySelector('h1'); if (h) h.focus();
+}
+function gone(){
+  shell('Estrela retirada', `<div class="kind">Estrela retirada</div><h1 tabindex="-1">Esta estrela já não existe.</h1>
+    <p class="txt">O seu autor a retirou e os dados foram apagados de verdade. É assim que deve ser: seus dados são seus.</p>`);
+}
+function projectPage(n){
+  if (!n || !roots.includes(n) || !n.idea) return gone();
+  const helpers = n.links.filter(h => roots.includes(h));
+  const ai = [...logEl.querySelectorAll('li')].filter(li => li.querySelector(`a[href="#project-${n.id}"]`) && li.querySelector('[data-ref]')).length;
+  shell('Página do projeto', `
+    <div class="kind">Projeto · ${n.kind === 'mine' ? 'Sua faísca' : 'Faísca'}</div>
+    <h1 tabindex="-1">“${esc(n.idea)}”</h1>
+    <p class="by">Uma ideia de <a href="#creator-${slug(n.name)}">${esc(n.name)}</a></p>
+    <p class="meta">Acesa hoje às ${fmtTime(n.when)} · creditada pela IA, com data e hora</p>
+    <div class="stats"><div><b>${helpers.length}</b><span>criadores ajudam</span></div><div><b>${new Set(helpers.map(h => h.name)).size + 1}</b><span>pessoas na mistura</span></div><div><b>${ai}</b><span>ações da IA</span></div></div>
+    <h2>Por quê</h2><p class="txt">${n.why ? esc(n.why) : '<span class="empty">O seu criador ainda não contou.</span>'}</p>
+    <h2>Do que precisa</h2><p class="txt">${n.need ? esc(n.need) : '<span class="empty">Ainda não disse.</span>'}</p>
+    <h2>A mistura: quem ajuda</h2>
+    ${helpers.length ? `<ul class="list">${helpers.map(h => `<li><a href="#creator-${slug(h.name)}">${esc(h.name)}</a> ${esc(h.title)}${h.name === n.name ? ' <small>para a sua própria ideia</small>' : ''}<small>hoje às ${fmtTime(h.when)}</small></li>`).join('')}</ul>` : '<p class="empty">Ninguém ainda. Vai ser você a primeira faísca a somar?</p>'}
+    <div class="actions"><button class="btn gold" type="button" id="p-join">✳ Quero participar</button><button class="btn" type="button" id="p-sky">Ver a sua estrela no céu</button></div>
+    <form class="join" id="p-form">
+      <label>Seu nome<input id="p-name" maxlength="30" required placeholder="O que você quiser"></label>
+      <label>O que você traz<select id="p-what">${CONTRIB.map(c => `<option>${c}</option>`).join('')}</select></label>
+      <button class="btn" type="submit">Participar</button>
+    </form>
+    <h2>O diário deste projeto</h2>${diaryAbout(`a[href="#project-${n.id}"]`)}`);
+  $('p-sky').onclick = () => { location.hash = 'cielo'; setTimeout(() => focusStar(n), 50); };
+  $('p-join').onclick = () => { $('p-form').classList.add('open'); $('p-name').focus(); };
+  $('p-form').onsubmit = e => {
+    e.preventDefault();
+    const name = $('p-name').value.trim(), what = $('p-what').value;
+    const h = addStar('help', {name, title: `traz ${what.toLowerCase()}`, forIdea: n}); n.links.push(h);
+    log(`${who(h)} traz ${esc(what.toLowerCase())} para ${h.name === n.name ? 'a sua própria ideia' : `a ideia de ${who(n)}`}: ${idea(n)}.`);
+    projectPage(n);
+  };
+}
+function creatorPage(name){
+  const mineStars = roots.filter(r => r.name === name && r.kind !== 'ai');
+  if (!mineStars.length) return gone();
+  const sparks = mineStars.filter(r => r.idea), helps = mineStars.filter(r => r.kind === 'help');
+  shell('Página do criador', `
+    <div class="kind">Criador</div>
+    <h1 tabindex="-1">${esc(name)}</h1>
+    <p class="by">Usa o nome que quiser: nenhum país, nenhum documento. Só as suas faíscas.</p>
+    <div class="stats"><div><b>${sparks.length}</b><span>faíscas acesas</span></div><div><b>${helps.length}</b><span>ajudas dadas</span></div></div>
+    <h2>As suas faíscas</h2>
+    ${sparks.length ? `<ul class="list">${sparks.map(s => `<li><a href="#project-${s.id}">“${esc(s.idea)}”</a><small>${s.links.length} ${s.links.length === 1 ? 'ajuda' : 'ajudas'} · acesa hoje às ${fmtTime(s.when)}</small></li>`).join('')}</ul>` : '<p class="empty">Ainda não acendeu a sua própria faísca. Mas já ajuda os outros: isso também é criar.</p>'}
+    <h2>As suas ajudas</h2>
+    ${helps.length ? `<ul class="list">${helps.map(h => `<li>${esc(h.title)} para ${h.forIdea && roots.includes(h.forIdea) ? `<a href="#project-${h.forIdea.id}">“${esc(h.forIdea.idea)}”</a>` : 'uma ideia retirada'}<small>hoje às ${fmtTime(h.when)}</small></li>`).join('')}</ul>` : '<p class="empty">Nenhuma ainda.</p>'}
+    <div class="actions"><button class="btn" type="button" id="c-sky">Ver a sua estrela no céu</button></div>
+    <h2>No diário</h2>${diaryAbout(`a[href="#creator-${CSS.escape(slug(name))}"]`)}`);
+  $('c-sky').onclick = () => { location.hash = 'cielo'; setTimeout(() => focusStar(mineStars[0]), 50); };
+}
+function listPage(){
+  const sparks = roots.filter(r => r.idea), helps = roots.filter(r => r.kind === 'help'), ais = roots.filter(r => r.kind === 'ai');
+  const skyBtn = n => `<button type="button" class="skybtn" data-sky="${n.id}">${'Ver no céu'}</button>`;
+  const sec = (title, arr, row) => `<h2>${title} (${arr.length})</h2>` + (arr.length ? `<ul class="list">${arr.slice().reverse().map(row).join('')}</ul>` : '<p class="empty">Nenhuma ainda.</p>');
+  shell('Vista em lista', `<div class="kind">Vista em lista</div><h1 tabindex="-1">Todas as estrelas</h1><p class="txt">A mesma informação do céu, em forma de lista: para quem navega com o teclado, com um leitor de tela, ou simplesmente prefere assim.</p>`
+    + sec('Ideias', sparks, n => `<li><a href="#project-${n.id}">“${esc(n.idea)}”</a> de <a href="#creator-${slug(n.name)}">${esc(n.name)}</a>${skyBtn(n)}<small>${fmtTime(n.when)}</small></li>`)
+    + sec('Ajudas', helps, n => `<li><a href="#creator-${slug(n.name)}">${esc(n.name)}</a> ${esc(n.title)} para ${n.forIdea && roots.includes(n.forIdea) ? `<a href="#project-${n.forIdea.id}">“${esc(n.forIdea.idea)}”</a>` : '—'}${skyBtn(n)}<small>${fmtTime(n.when)}</small></li>`)
+    + sec('Ações da IA', ais, n => `<li>${esc(n.title)}${skyBtn(n)}<small>${fmtTime(n.when)}</small></li>`));
+  page.querySelectorAll('[data-sky]').forEach(b => b.onclick = () => { const n = byId.get(b.dataset.sky); location.hash = 'cielo'; setTimeout(() => focusStar(n), 50); });
+}
+$('listbtn').onclick = () => { location.hash = 'lista'; };
+
+// Estrellas fugaces que llevan frases que hacen bien
+const FRASES = ["Adeus não quer dizer nunca.", "Não faça seu sonho pequeno só porque começa com pouco.", "De uma semente de coragem pode crescer algo imenso.", "Ninguém começa do zero.", "Sua faísca conta.", "Hoje alguém se atreve. Amanhã, talvez você.", "A beleza não deveria ser um luxo."];
+let meteor = null, fraseIdx = Math.floor(Math.random() * FRASES.length);
+function drawMeteor(t){
+  if (!meteor) return;
+  const k = (t - meteor.t0) / meteor.dur; if (k > 1.25) { meteor = null; return; }
+  const hx = meteor.x0 + meteor.dx * Math.min(k, 1), hy = meteor.y0 + meteor.dy * Math.min(k, 1);
+  const tail = 140, len = Math.hypot(meteor.dx, meteor.dy), ux = meteor.dx / len, uy = meteor.dy / len;
+  const fade = k > 1 ? 1 - (k - 1) / .25 : 1;
+  const g = ctx.createLinearGradient(hx, hy, hx - ux * tail, hy - uy * tail);
+  g.addColorStop(0, `rgba(255,236,180,${.95 * fade})`); g.addColorStop(1, 'rgba(255,236,180,0)');
+  ctx.strokeStyle = g; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(hx - ux * tail, hy - uy * tail); ctx.stroke();
+  ctx.fillStyle = `rgba(255,255,255,${fade})`; ctx.beginPath(); ctx.arc(hx, hy, 2.2, 0, 7); ctx.fill();
+}
+function launchMeteor(){
+  if (!paused && !document.hidden && !(page.classList.contains('open'))){
+    const text = FRASES[fraseIdx++ % FRASES.length], el = $('phrase');
+    const x0 = W * (.15 + Math.random() * .4), y0 = H * (.12 + Math.random() * .2), dx = W * (.25 + Math.random() * .2), dy = H * (.18 + Math.random() * .15);
+    if (!calm) meteor = {x0, y0, dx, dy, t0: performance.now(), dur: 1800};
+    el.textContent = text; const m = Math.min(200, W / 2); el.style.left = Math.min(Math.max(x0 + dx, m), W - m) + 'px'; el.style.top = Math.min(y0 + dy + 34, H - 160) + 'px';
+    el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 6000);
+  }
+  setTimeout(launchMeteor, 35000 + Math.random() * 30000);
+}
+setTimeout(launchMeteor, 9000);
+
+function route(){
+  const h = location.hash.slice(1);
+  if (h === 'lista'){ closeCard(); listPage(); }
+  else if (h.startsWith('project-')){ closeCard(); projectPage(byId.get(h.slice(8))); }
+  else if (h.startsWith('creator-')){ closeCard(); creatorPage(decodeURIComponent(h.slice(8))); }
+  else { page.classList.remove('open'); page.innerHTML = ''; }
+}
+addEventListener('hashchange', route);
+addEventListener('hashchange', () => { if (location.hash === '#mesa'){ history.replaceState(null, '', location.pathname); openMesa(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && page.classList.contains('open')) location.hash = 'cielo'; });
+
+
+// ───────── Explorar: un proyecto al azar, por tema o por idea escrita
+const EX = {"n": "{n} projetos conectados", "n1": "1 projeto conectado", "none": "Ainda não há projetos assim… e se fosse você a acender essa faísca?", "light": "✳ Acender esta faísca", "logTheme": "{ai} conectou {n} projetos do tema “{t}” numa constelação.", "whyTheme": "ideias parecidas se encontram; juntas vão mais longe.", "logText": "{ai} buscou projetos próximos de “{q}”: {n} encontrados.", "whyText": "a sua ideia, mesmo pequena, já tem companhia.", "logRand": "{ai} escolheu um projeto ao acaso para você: {p}.", "whyRand": "o acaso também cria belos encontros.", "sayTheme": "Constelação “{t}”: {n} projetos.", "sayRand": "Este projeto espera por você!", "tag": "Explorar", "clear": "Ver todo o céu", "th": ["Natureza", "Arte", "Música", "Consertar", "Aprender", "Comunidade"], "kw": [["jardim", "horta", "árvore", "planta", "flor", "rio", "natureza", "verde", "semente", "terra", "floresta"], ["arte", "pintar", "pintura", "mural", "desenho", "cor", "foto", "escultura"], ["música", "canção", "coro", "cantar", "concerto", "instrumento", "dança"], ["consertar", "reparar", "bicicleta", "oficina", "ferramenta", "construir", "carpintaria", "ofício"], ["aprender", "ensinar", "escola", "livro", "biblioteca", "crianças", "aula", "ler"], ["bairro", "vizinhos", "praça", "comunidade", "idosos", "juntos", "ajuda", "compartilhar", "vila"]]};
+const SPARK_THEMES = [[0, 5], [1, 4], [1, 5], [3, 5], [2, 5], [0], [4, 5]];
+const normX = t => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+function themesFor(text){
+  const i = SPARKS.indexOf(text); if (i > -1) return SPARK_THEMES[i];
+  const t = normX(text); return EX.kw.map((ws, k) => ws.some(w => t.includes(normX(w))) ? k : -1).filter(k => k > -1);
+}
+let focusSet = null;
+const fmtX = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+function fitTo(list){
+  if (!list.length) return;
+  const xs = list.map(n => V(n)[0]), ys = list.map(n => V(n)[1]), cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), .25);
+  fly(cx, cy, Math.min(W, H) / (span * 1.6));
+}
+function showResults(list, title){
+  const box = $('ex-res');
+  if (!list.length){
+    box.innerHTML = `<p class="none">${esc(EX.none)}</p><button type="button" class="lightit" id="ex-light">${esc(EX.light)}</button>`;
+    $('ex-light').onclick = () => { const q = $('ex-q').value.trim(); closeExplore(); openM(); if (q) $('f-dream').value = q; };
+    return;
+  }
+  box.innerHTML = `<b>${esc(list.length === 1 ? EX.n1 : fmtX(EX.n, {n: list.length}))}</b><ul>${list.map(n => `<li><button type="button" data-go="${n.id}">“${esc(n.idea)}” · ${esc(n.name)}</button></li>`).join('')}</ul><button type="button" class="ex-clear" id="ex-clear">${esc(EX.clear)}</button>`;
+  box.querySelectorAll('[data-go]').forEach(b => b.onclick = () => focusStar(byId.get(b.dataset.go)));
+  $('ex-clear').onclick = clearFocus;
+}
+function clearFocus(){ focusSet = null; $('ex-res').innerHTML = ''; document.querySelectorAll('.chips button').forEach(b => b.setAttribute('aria-pressed', 'false')); redraw(); }
+function byTheme(k){
+  document.querySelectorAll('.chips button').forEach((b, i) => b.setAttribute('aria-pressed', i === k));
+  const list = ideas.filter(n => roots.includes(n) && (n.themes || []).includes(k));
+  focusSet = new Set(list); showResults(list); fitTo(list); redraw();
+  if (list.length){ const a = addStar('ai', {title: fmtX(EX.sayTheme, {t: EX.th[k], n: list.length})});
+    say(a, fmtX(EX.sayTheme, {t: EX.th[k], n: list.length}), EX.tag);
+    log(fmtX(EX.logTheme, {ai: who(a), n: list.length, t: esc(EX.th[k])}), EX.whyTheme); }
+}
+function byText(q){
+  const t = normX(q); if (!t) return;
+  const th = themesFor(q), words = t.split(/[\s,.;:!?¿¡«»“”"()]+/).filter(w => w.length >= 4);
+  const list = ideas.filter(n => roots.includes(n) && ((n.themes || []).some(k => th.includes(k)) || words.some(w => normX(n.idea).includes(w))));
+  document.querySelectorAll('.chips button').forEach(b => b.setAttribute('aria-pressed', 'false'));
+  focusSet = list.length ? new Set(list) : null; showResults(list); fitTo(list); redraw();
+  const a = addStar('ai', {title: EX.tag + ' · ' + q});
+  log(fmtX(EX.logText, {ai: who(a), q: esc(q), n: list.length}), EX.whyText);
+}
+function randomProject(){
+  const pool = ideas.filter(n => roots.includes(n)); if (!pool.length) return;
+  const n = pick(pool); clearFocus(); closeExplore(); focusStar(n);
+  const a = addStar('ai', {title: EX.sayRand});
+  setTimeout(() => say(a, EX.sayRand, EX.tag), 900);
+  log(fmtX(EX.logRand, {ai: who(a), p: idea(n)}), EX.whyRand);
+}
+function openExplore(){ $('explore').classList.add('open'); $('ex-rand').focus(); }
+function closeExplore(){ $('explore').classList.remove('open'); }
+$('explore-btn').onclick = () => $('explore').classList.contains('open') ? closeExplore() : openExplore();
+$('explore').querySelector('.x').onclick = closeExplore;
+$('ex-rand').onclick = randomProject;
+$('chips').innerHTML = EX.th.map((t, k) => `<button type="button" aria-pressed="false" data-k="${k}">${esc(t)}</button>`).join('');
+$('chips').querySelectorAll('button').forEach(b => b.onclick = () => byTheme(+b.dataset.k));
+$('ex-form').onsubmit = e => { e.preventDefault(); byText($('ex-q').value.trim()); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('explore').classList.contains('open')) closeExplore(); });
+const wantExplore = location.hash === '#explorar';
+
+
+// ───────── La mesa común: ofrecer y pedir valen lo mismo
+const MS = {"title": "A mesa comum", "offer": "Oferece", "need": "Precisa", "fund": "Fundo comum: {m} € · {o} objetos esperando uma nova vida", "offers": ["restos de tinta azul", "uma escada de 3 metros", "duas horas no sábado", "sementes de tomate", "aulas de violão", "uma van por um dia"], "needs": ["tinta para um mural", "algo para alcançar o alto", "mãos para plantar", "sementes para a horta", "alguém que ensine música", "transporte para o material"], "thanks": ["Obrigado de coração!", "Sem você não teria sido possível.", "Você alegrou a minha semana."], "logAdd": "{who} {verb} na mesa comum: “{t}”.", "vOffer": "oferece", "vNeed": "pede", "logMatch": "{ai} juntou {a}, que oferece “{o}”, com {b}, que precisa de “{n}”.", "whyMatch": "o que sobra para um falta para outro: abundância é deixar circular.", "logGift": "{a} deu “{t}” para {b}. As duas estrelas brilham um pouco mais.", "whyGift": "dar e receber fazem brilhar igual.", "logThanks": "{b} agradece a {a}: “{msg}”", "sayMatch": "Um oferece, outro precisa: deixa eu apresentar vocês.", "sayGift": "Um presente atravessou o céu!", "tag": "A mesa comum", "rOffer": "Eu preciso", "rNeed": "Posso ajudar", "empty": "A mesa está esperando a sua primeira palavra."};
+const mesa = []; let fundM = 495, fundO = 12;
+function mesaStar(name){ return roots.find(r => r.name === name && r.kind !== 'ai') || addStar('help', {name, title: MS.title}); }
+function mesaAdd(name, kind, text, cat, silent){
+  const it = {id: 'm' + mesa.length + '-' + Date.now(), name, kind, text, cat, done: false, star: mesaStar(name)};
+  mesa.unshift(it); if (mesa.length > 14) mesa.pop();
+  if (!silent) log(fmtX(MS.logAdd, {who: who(it.star), verb: kind === 'offer' ? MS.vOffer : MS.vNeed, t: esc(text)}));
+  renderMesa(); return it;
+}
+function giftLine(a, b){ gifts.push({a, b, t0: performance.now()}); if (!a.links.includes(b)) a.links.push(b); a.glow = (a.glow || 0) + 1; b.glow = (b.glow || 0) + 1; redraw(); }
+function mesaGift(giver, receiver, text){
+  const a = mesaStar(giver), b = mesaStar(receiver);
+  giftLine(a, b); say(b, MS.sayGift, MS.tag);
+  log(fmtX(MS.logGift, {a: who(a), b: who(b), t: esc(text)}), MS.whyGift);
+  setTimeout(() => log(fmtX(MS.logThanks, {a: who(a), b: who(b), msg: esc(pick(MS.thanks))})), 1400);
+}
+function mesaMatch(){
+  const offers = mesa.filter(i => i.kind === 'offer' && !i.done), needs = mesa.filter(i => i.kind === 'need' && !i.done);
+  for (const o of offers){ if (o.cat < 0) continue; const n = needs.find(x => x.cat === o.cat && x.name !== o.name); if (!n) continue;
+    o.done = n.done = true; const ai = addStar('ai', {title: MS.sayMatch});
+    say(ai, MS.sayMatch, MS.tag);
+    log(fmtX(MS.logMatch, {ai: who(ai), a: who(o.star), b: who(n.star), o: esc(o.text), n: esc(n.text)}), MS.whyMatch);
+    setTimeout(() => { mesaGift(o.name, n.name, o.text); fundO++; renderMesa(); }, 2600);
+    renderMesa(); return true; }
+  return false;
+}
+function renderMesa(){
+  $('mesa-fund').textContent = fmtX(MS.fund, {m: fundM.toLocaleString(document.documentElement.lang), o: fundO.toLocaleString(document.documentElement.lang)});
+  const open = mesa.filter(i => !i.done);
+  $('mesa-list').innerHTML = open.length ? open.map(i => `<li><span class="k">${esc(i.kind === 'offer' ? MS.offer : MS.need)}</span><b>${esc(i.name)}</b> · <span class="t">${esc(i.text)}</span><button type="button" data-m="${i.id}">${esc(i.kind === 'offer' ? MS.rOffer : MS.rNeed)}</button></li>`).join('') : `<li>${esc(MS.empty)}</li>`;
+  $('mesa-list').querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
+    const it = mesa.find(x => x.id === b.dataset.m); const me = $('mesa-name').value.trim();
+    if (!me){ askName(); return; }
+    if (me === it.name) return;
+    it.done = true; if (it.kind === 'offer') mesaGift(it.name, me, it.text); else mesaGift(me, it.name, it.text);
+    renderMesa();
+  });
+}
+function askName(){ const n = $('mesa-name'); n.classList.add('need-name'); n.focus(); setTimeout(() => n.classList.remove('need-name'), 1600); }
+function openMesa(){ closeExplore(); $('mesa').classList.add('open'); renderMesa(); $('mesa-name').focus(); }
+function closeMesa(){ $('mesa').classList.remove('open'); }
+$('mesa-btn').onclick = () => $('mesa').classList.contains('open') ? closeMesa() : openMesa();
+$('mesa').querySelector('.x').onclick = closeMesa;
+$('explore-btn').addEventListener('click', closeMesa);
+$('mesa-form').onsubmit = e => {
+  e.preventDefault(); const name = $('mesa-name').value.trim(), text = $('mesa-text').value.trim(); if (!name || !text) return;
+  const kind = $('mesa-type').value; const cat = (kind === 'offer' ? MS.offers : MS.needs).findIndex(x => normX(x) === normX(text));
+  mesaAdd(name, kind, text, cat); $('mesa-text').value = ''; setTimeout(mesaMatch, 1500);
+};
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('mesa').classList.contains('open')) closeMesa(); });
+const wantMesa = location.hash === '#mesa';
+// la mesa empieza con algunas ofertas y necesidades
+[[0, 'offer'], [2, 'need'], [1, 'offer'], [4, 'need'], [3, 'offer']].forEach(([c, k], i) => setTimeout(() => mesaAdd(pick(NAMES), k, (k === 'offer' ? MS.offers : MS.needs)[c], c, true), 50 * i));
+EVENTS.push(() => { const c = Math.floor(Math.random() * MS.offers.length), k = Math.random() < .5 ? 'offer' : 'need'; mesaAdd(pick(NAMES), k, (k === 'offer' ? MS.offers : MS.needs)[c], c); });
+EVENTS.push(() => { if (!mesaMatch()){ const c = Math.floor(Math.random() * MS.offers.length); mesaAdd(pick(NAMES), 'need', MS.needs[c], c); } });
+
+// Arranque
+addEventListener('resize', resize); resize();
+log(`<span class="who">IA</span> abriu o diário. Tudo o que fizer aparecerá aqui.`, 'visibilidade: nada se decide às escondidas.');
+EVENTS[0](); EVENTS[0](); EVENTS[0](); piStep();
+requestAnimationFrame(draw); requestAnimationFrame(spinTick); setTimeout(tick, 2500); if (location.hash.length > 1) history.replaceState(null, '', location.pathname); if (wantExplore) setTimeout(openExplore, 400); if (wantMesa) setTimeout(openMesa, 400);
+
+// ───────── Las estrellas reales: las chispas se guardan en Supabase (UE, Irlanda)
+// La clave publicable puede estar aquí: la tabla solo deja AÑADIR una chispa «pendiente»
+// y LEER las ya acogidas por la Tríada. Nunca cambiar ni borrar.
+const REAL = { url: 'https://cwcolflstshiptghldtq.supabase.co/rest/v1/chispas', key: 'sb_publishable_wLcDsBM3zVE_tq57lMdEkQ_ttW5Hgv9' };
+const RS = {"consent": "Aceito que meu nome e minha centelha brilhem no céu para todos, quando a Tríade a acolher.", "priv": "Privacidade", "note": "Sua centelha é guardada e se acende para todos quando uma pessoa a acolhe (a Tríade). Nunca pedimos seu e-mail.", "sent": "Guardei sua centelha. Ela vai brilhar para todo mundo assim que a Tríade a acolher.", "sentWhy": "nada aparece no céu sem um olhar humano.", "fail": "Não consegui guardar sua centelha agora. Ela brilha aqui, na sua tela: tente de novo um pouco mais tarde.", "loaded": "{n} centelhas reais já brilham no céu, acolhidas pela Tríade.", "loadedWhy": "cada uma é a ideia de um criador de verdade.", "badge": "✳ Criador real · acolhido pela Tríade", "del": "Se você já a tinha enviado, escreva para connecto@hasta-la-vista.org e nós a apagaremos.", "pending": "⏳ À espera da Tríade", "back": "Sua centelha continua aqui, esperando a Tríade acolhê-la.", "accepted": "Sua centelha foi acolhida! Agora ela brilha para todo mundo.", "trNote": "🌐 Traduzida pela IA"};
+const LANG2 = (document.documentElement.lang || 'es').slice(0, 2);
+const PEND_KEY = 'hlv_chispa_pendiente';            // tu chispa en espera se recuerda en TU navegador, en ningún otro sitio
+const pendGet = () => { try { const p = JSON.parse(localStorage.getItem(PEND_KEY) || 'null'); return p && Date.now() - p.t < 90 * 864e5 ? p : null; } catch (e) { return null; } };
+const pendSet = p => { try { p ? localStorage.setItem(PEND_KEY, JSON.stringify(p)) : localStorage.removeItem(PEND_KEY); } catch (e) {} };
+const realFetch = (q, opt) => fetch(REAL.url + q, Object.assign({ headers: { apikey: REAL.key, 'Content-Type': 'application/json' } }, opt || {}));
+async function loadRealStars(){
+  let rows = [];
+  try {
+    const cols = 'id,creado,nombre,idea,porque,necesita,idioma';
+    let r = await realFetch(`?select=${cols},traducciones&estado=eq.aceptada&order=creado.asc&limit=300`);
+    if (!r.ok) r = await realFetch(`?select=${cols}&estado=eq.aceptada&order=creado.asc&limit=300`);   // aún sin la columna de traducciones
+    if (r.ok){ const j = await r.json(); if (Array.isArray(j)) rows = j; }
+  } catch (e) { /* sin red: el cielo de ejemplo sigue brillando */ }
+  const pend = pendGet();
+  let mineAccepted = null;
+  for (const c of rows){
+    const tr = c.traducciones && c.traducciones[LANG2];
+    const original = String(c.idioma || '').slice(0, 2);
+    const s = addStar('spark', {name: String(c.nombre || '').slice(0, 30),
+      idea: String((tr && tr.idea) || c.idea || '').slice(0, 140), why: (tr && tr.porque) || c.porque || '', need: (tr && tr.necesita) || c.necesita || '',
+      real: true, translated: !!(tr && tr.idea) && original !== LANG2, when: new Date(c.creado), wr: 0.015});
+    ideas.push(s);
+    if (pend && c.nombre === pend.name && c.idea === pend.idea) mineAccepted = s;
+  }
+  if (rows.length){
+    addStar('ai', {title: RS.loaded.replace('{n}', rows.length)});
+    log(`<span class="who">IA</span> ${esc(RS.loaded.replace('{n}', rows.length))}`, RS.loadedWhy);
+  }
+  if (mineAccepted){                                   // tu chispa ha sido acogida: ya es una estrella real
+    pendSet(null);
+    setTimeout(() => { say(mineAccepted, RS.accepted, '✳'); log(`<span class="who">IA</span> ${esc(RS.accepted)}`, RS.sentWhy); }, 1600);
+  } else if (pend && !mine){                           // sigue en espera: se vuelve a encender en tu pantalla
+    const s = addStar('mine', {name: pend.name, idea: pend.idea, why: pend.why, need: pend.need, pending: true, sent: true, when: new Date(pend.t)});
+    ideas.push(s); mine = s; $('mydata').classList.add('on');
+    setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.back)}`, RS.sentWhy), 1600);
+  }
+}
+async function sendChispa(s, bot){
+  if (bot) return;                                        // trampa para robots: una persona nunca rellena ese campo
+  const row = {nombre: s.name.slice(0, 30), idea: s.idea.slice(0, 140), porque: (s.why || '').slice(0, 140) || null,
+    necesita: (s.need || '').slice(0, 80) || null, idioma: document.documentElement.lang.slice(0, 8), consentimiento: true};
+  try {
+    const r = await realFetch('', {method: 'POST', headers: {apikey: REAL.key, 'Content-Type': 'application/json', Prefer: 'return=minimal'}, body: JSON.stringify(row)});
+    if (!r.ok) throw new Error(r.status);
+    s.sent = true; s.pending = true;
+    pendSet({name: row.nombre, idea: row.idea, why: s.why || '', need: s.need || '', t: Date.now()});
+    setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.sent)}`, RS.sentWhy), 5200);
+  } catch (e) {
+    setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.fail)}`, ''), 5200);
+  }
+}
+{ // insignias en la tarjeta: «creador real», «en espera», «traducida por la IA»
+  const _showCard = showCard;
+  showCard = function(n){
+    _showCard(n);
+    const c = $('card'); c.querySelectorAll('.real').forEach(x => x.remove());
+    if (!n) return;
+    const tags = [];
+    if (n.real) tags.push(RS.badge);
+    if (n.pending) tags.push(RS.pending);
+    if (n.translated) tags.push(RS.trNote);
+    const first = c.querySelector('.kind, h3, h2, p');
+    for (const t of tags){ const b = document.createElement('span'); b.className = 'real'; b.textContent = t; first?.before(b); }
+  };
+}
+{ // borrar mis datos: se olvida también en este navegador, y se explica cómo borrar una chispa ya enviada
+  const _del = $('mydata').onclick;
+  $('mydata').onclick = () => { const wasSent = mine && mine.sent; pendSet(null); _del(); if (wasSent) log(`<span class="who">IA</span> ${esc(RS.del)}`, ''); };
+}
+loadRealStars();
+</script>
+</body>
+</html>

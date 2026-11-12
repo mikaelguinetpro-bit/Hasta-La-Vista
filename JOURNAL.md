@@ -2,6 +2,27 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-12 — Claude — claude/estrellas-reales
+- **Les premières vraies étoiles (The Spark)**, demandées par Ritukah. Dans les 9 vitrinas :
+  - « Enciende tu chispa » **enregistre maintenant la chispa** dans Supabase : nom choisi, idée, pourquoi, besoin, langue. L'état est `pendiente` ;
+  - une **case de consentement obligatoire** (« mon nom et ma chispa brilleront pour tous quand la Tríada l'aura accueillie »), avec un lien vers la confidentialité, et un champ piège pour les robots. **Aucun e-mail n'est demandé** ;
+  - au chargement, le ciel **allume les chispas accueillies** (`aceptada`) à côté des étoiles d'exemple. Leur fiche porte l'insigne « ✳ Creador real · acogido por la Tríada » ;
+  - l'IA l'écrit dans son journal (« J'ai enregistré ta chispa… », « N vraies chispas brillent déjà… »). En cas d'échec, un message doux s'affiche et l'étoile reste sur l'écran ;
+  - « Effacer mes données » rappelle, si la chispa avait déjà été envoyée, qu'on peut écrire à connecto@ pour l'effacer.
+- **La Tríada, en vrai** : c'est Ritukah qui accueille chaque chispa dans Supabase. Le site ne peut qu'ajouter des chispas en attente et lire celles qui sont accueillies, jamais modifier ni effacer (`supabase/chispas.sql`, à lancer une fois).
+- **Les sources des vitrinas sont maintenant dans le dépôt** (`maqueta/src/`, avec `build.py`). Avant, elles ne vivaient que dans l'espace de travail de Claude, et ChatGPT ne pouvait pas les modifier proprement.
+- `privacidad.html` : nouvelle section « Si tu allumes une chispa », dans les 9 langues.
+- `AGENTS.md` : règles des sources des vitrinas et de la table `chispas` (aucune IA n'accepte une chispa à la place de Ritukah).
+- Testé avec un Supabase simulé, dans les 9 langues, sur ordinateur et téléphone :
+  - chargement des chispas accueillies et insigne ;
+  - refus sans consentement, envoi correct (la clé publique seulement, jamais d'état imposé), robot arrêté, échec du serveur ;
+  - les anciens tests de la vitrina passent aussi.
+  - Le vrai premier essai est à faire par Ritukah, après avoir lancé le SQL.
+- **Ajouts du même jour, demandés par Ritukah** :
+  - **l'étoile en attente reste** : le navigateur de l'auteur se souvient de sa chispa et la rallume à chaque visite avec « ⏳ En attente de la Tríada ». Quand elle est accueillie, elle devient une vraie étoile et l'IA le lui annonce. « Effacer mes données » l'oublie aussi ;
+  - **les chispas parlent toutes les langues** : la fonction Supabase `traducir-chispa` (Gemini, gratuite pour de petits volumes) traduit chaque chispa accueillie dans les 9 langues. Le ciel montre la traduction dans la langue du visiteur, avec la mention « 🌐 Traduite par l'IA » (Visibilité). Si la colonne `traducciones` n'existe pas encore, le ciel marche quand même ;
+  - `supabase/LEEME.md` : le pas-à-pas pour Ritukah. La confidentialité le dit aussi (le navigateur se souvient, et Gemini reçoit seulement le texte, jamais le nom).
+
 ## 2026-11-08 — Claude — claude/vision-the-mix-2
 - `VISION.md`, The Mix : Ritukah a validé les deux propositions (la cagnotte de chaque projet sur un service existant pour commencer ; le bouton « Je ne pourrai pas venir »).
 - Ajout décidé par Ritukah : **celui qui attendait de l'aide peut prévenir l'IA** qu'une personne n'est pas venue sans prévenir. C'est privé, la personne peut s'expliquer, et seule la répétition sans explication compte.
