@@ -2,6 +2,10 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-08 — Claude — claude/vision-the-mix-2
+- `VISION.md`, The Mix : Ritukah a validé les deux propositions (la cagnotte de chaque projet sur un service existant pour commencer ; le bouton « Je ne pourrai pas venir »).
+- Ajout décidé par Ritukah : **celui qui attendait de l'aide peut prévenir l'IA** qu'une personne n'est pas venue sans prévenir. C'est privé, la personne peut s'expliquer, et seule la répétition sans explication compte.
+
 ## 2026-11-08 — Claude — claude/vision-the-mix
 - **The Mix décrit dans `VISION.md`**, après une discussion avec Ritukah (aucun code). Une nouvelle section « The Mix : comment une idée devient possible », qui ne retire aucun texte existant :
   - les cinq temps : il manque… → j'apporte… → l'IA rapproche → le créateur accepte → c'est fait (l'étoile brille seulement quand l'aide est confirmée) ;
