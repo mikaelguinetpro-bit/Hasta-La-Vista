@@ -48,6 +48,8 @@ Tout est gratuit. Fais les étapes dans l'ordre ; tu peux t'arrêter après l'é
    5. Passe l'app en mode **Live** (en haut de la page).
    6. Copie l'**App ID** et l'**App Secret** dans Supabase : **Authentication → Sign In / Providers → Facebook** → active → colle → **Save**.
 
+6. **Mon espace** : **SQL Editor** → colle `espacio.sql` → **Run**. Ainsi, chacun retrouve aussi ses chispas **accueillies** dans « ✳ Mon espace », sur n'importe quel appareil.
+
 Pour essayer : ouvre la vitrina, écris une chispa, clique « Encender mi estrella » → la fenêtre propose Google, Facebook ou le lien magique. Après la connexion, ta chispa revient toute seule dans le formulaire.
 
 Tant que l'étape 1 n'est pas faite, les chispas des personnes connectées ne peuvent pas s'enregistrer (le site affichera « No se ha podido guardar »).

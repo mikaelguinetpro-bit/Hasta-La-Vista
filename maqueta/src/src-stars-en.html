@@ -254,6 +254,14 @@
   .dialog.authing > p{display:none}
   .account-menu{position:absolute;right:20px;top:104px;display:none;flex-direction:column;gap:6px;background:#030d1fee;border:1px solid #ffffff44;border-radius:14px;padding:10px;z-index:3}
   .account-menu.open{display:flex}
+  .account-menu{width:min(320px,calc(100vw - 40px));max-height:min(70vh,520px);overflow:auto}
+  .account-menu h4{margin:6px 6px 2px;font:600 18px var(--serif);color:#f4efe5}
+  .space-list{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-direction:column;gap:6px}
+  .space-list li{border:1px solid #ffffff2a;border-radius:10px;padding:8px 10px;color:#f4efe5;font-size:14px;line-height:1.35}
+  .space-list li.empty{border:0;color:#c9d2ea;font-size:13px;padding:2px 6px}
+  .space-list .tag{display:block;font:500 11px var(--mono);color:var(--gold);margin-bottom:3px}
+  .space-list .acts{display:flex;gap:6px;margin-top:6px}
+  .space-list .acts button{padding:5px 10px;font-size:11px}
   .account-menu small{color:#c9d2ea;font:500 11px var(--mono);padding:2px 6px}
   .account-menu button{background:none;border:1px solid #ffffff55;color:#f4efe5;border-radius:99px;padding:8px 12px;font:500 12px var(--mono);cursor:pointer;text-align:start}
   .account-menu button.danger{border-color:#ff5a4f99;color:#ffb3ad}
@@ -335,8 +343,8 @@
     </div>
     <div class="hint">Drag to turn the universe · scroll or pinch to zoom · right-click or two fingers to move</div>
     <button class="light-btn" type="button" id="open">✳ Light your spark</button>
-    <button class="account" type="button" id="account" aria-haspopup="true" aria-expanded="false">✳ My account</button>
-    <div class="account-menu" id="account-menu"><small id="account-who"></small><button type="button" id="account-logout">Sign out</button><button type="button" class="danger" id="account-delete">Delete my account</button></div>
+    <button class="account" type="button" id="account" aria-haspopup="true" aria-expanded="false">✳ Sign in</button>
+    <div class="account-menu" id="account-menu"><small id="account-who"></small><h4>My sparks</h4><ul class="space-list" id="space-list" aria-live="polite"></ul><button type="button" id="account-logout">Sign out</button><button type="button" class="danger" id="account-delete">Delete my account</button></div>
     <button class="mydata" type="button" id="mydata">Delete my star and my data</button>
     <div class="legend" role="group" aria-labelledby="legend-title">
       <h3 id="legend-title">Key</h3>
@@ -905,7 +913,6 @@ $('form').onsubmit = e => {
   const n = $('f-name').value.trim(), i = $('f-dream').value.trim(), why = $('f-why').value.trim(), need = $('f-need').value.trim();
   const bot = !!($('f-web') && $('f-web').value);
   closeM(); e.target.reset();
-  if (mine) $('mydata').onclick();
   const s = addStar('mine', {name: n, idea: i, why, need}); ideas.push(s); mine = s; sendChispa(s, bot);
   fly(0, 0, z0);
   log(`${who(s)} has lit their spark: ${idea(s)}.`, '', true);
@@ -1280,7 +1287,7 @@ $('mydata').onclick = async () => {
     try { const r = await realFetch(`?id=eq.${m.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== m.dbId)); }
     catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
   }
-  _delLocal();
+  if (m) removeStar(m);
 };
 
 // ───────── Cuentas: mirar es libre; para participar (encender una chispa) hay que conectarse.
@@ -1309,7 +1316,7 @@ async function freshToken(){
     await saveSession(await r.json()); return session.access_token;
   } catch (e) { session = null; store(SES_KEY); showAccount(); return null; }
 }
-function showAccount(){
+let showAccount = function(){
   $('account').classList.toggle('on', !!session);
   $('account-who').textContent = session && session.user ? session.user.email.replace(/^(.).*(@.*)$/, '$1…$2') : '';
   if (!session) $('account-menu').classList.remove('open');
@@ -1351,7 +1358,7 @@ $('account-delete').onclick = async () => {
   try {
     const r = await fetch(AUTH.rpc, {method: 'POST', headers: {apikey: REAL.key, Authorization: 'Bearer ' + t, 'Content-Type': 'application/json'}, body: '{}'});
     if (!r.ok) throw 0;
-    for (const n of roots.filter(x => x.kind === 'mine')){ mine = n; _delLocal(); }
+    for (const n of myStars()) removeStar(n);
     session = null; store(SES_KEY); store(DRAFT_KEY); showAccount();
     log(`<span class="who">IA</span> ${esc(AT.deleted)}`, RS.sentWhy);
   } catch (e) { log(`<span class="who">IA</span> ${esc(AT.loginErr)}`, ''); }
@@ -1368,7 +1375,54 @@ async function startAuth(){
     log(`<span class="who">IA</span> ${esc(AT.welcome)}`, '');
   }
 }
-startAuth().then(loadRealStars);
+
+// ───────── Mi espacio: todas mis chispas (en espera o acogidas), verlas en el cielo, borrarlas, mi cuenta
+const SP = {"space": "✳ My space", "signin": "✳ Sign in", "mineTitle": "My sparks", "none": "You haven’t lit any spark yet.", "acceptedTag": "✳ Welcomed", "pendingTag": "⏳ Waiting", "see": "See", "delOne": "Delete", "confirmOne": "Really delete this spark?", "who": "Signed in as"};
+function removeStar(s){                                // quita una estrella de la pantalla sin tocar las demás
+  const prev = mine; mine = s; _delLocal();
+  if (prev && prev !== s && roots.includes(prev)){ mine = prev; $('mydata').classList.add('on'); }
+}
+async function markOwn(){                              // qué chispas acogidas son mías (desde cualquier aparato)
+  if (!session) return;
+  try {
+    const t = await freshToken(); if (!t) return;
+    const r = await fetch(REAL.url.replace('/chispas', '/rpc/mis_chispas'), {method: 'POST', headers: {apikey: REAL.key, Authorization: 'Bearer ' + t, 'Content-Type': 'application/json'}, body: '{}'});
+    if (!r.ok) return;
+    const ids = (await r.json()).map(x => typeof x === 'object' ? x.id : x);
+    for (const n of roots) if (n.real && ids.includes(n.dbId)) n.own = true;
+  } catch (e) {}
+}
+const myStars = () => roots.filter(n => n.dbId && (n.own || n.kind === 'mine'));
+function renderSpace(){
+  const ul = $('space-list'); ul.innerHTML = '';
+  const list = myStars();
+  if (!list.length){ ul.innerHTML = `<li class="empty">${esc(SP.none)}</li>`; return; }
+  for (const n of list.slice().reverse()){
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="tag">${esc(n.pending ? SP.pendingTag : SP.acceptedTag)}</span>${esc(n.idea)}<div class="acts"><button type="button" class="see">${esc(SP.see)}</button><button type="button" class="danger del">${esc(SP.delOne)}</button></div>`;
+    li.querySelector('.see').onclick = () => { $('account-menu').classList.remove('open'); focusStar(n); };
+    li.querySelector('.del').onclick = async () => {
+      if (!confirm(SP.confirmOne)) return;
+      try { const r = await realFetch(`?id=eq.${n.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== n.dbId)); }
+      catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
+      removeStar(n); renderSpace();
+    };
+    ul.append(li);
+  }
+}
+showAccount = function(){
+  const b = $('account'); b.classList.add('on');
+  b.textContent = session ? SP.space : SP.signin;
+  $('account-who').textContent = session && session.user ? `${SP.who} ${session.user.email.replace(/^(.).*(@.*)$/, '$1…$2')}` : '';
+  if (!session) $('account-menu').classList.remove('open');
+};
+$('account').onclick = () => {
+  if (!session){ $('open').onclick(); showAuth(true); return; }
+  const m = $('account-menu'), o = m.classList.toggle('open'); $('account').setAttribute('aria-expanded', o);
+  if (o) renderSpace();
+};
+showAccount();
+startAuth().then(loadRealStars).then(markOwn);
 </script>
 </body>
 </html>
