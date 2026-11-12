@@ -2,6 +2,13 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-12 — Claude — claude/borrar-una
+- Demandé par Ritukah : le gros bouton « Effacer mon étoile et mes données » était trop en vue, on pouvait cliquer par erreur. **Il disparaît du ciel.**
+- **On efface étoile par étoile** : chaque fiche d'une de ses étoiles (en attente ou accueillie) a un petit bouton « Effacer cette étoile », avec une confirmation. « ✳ Mon espace » utilise la même chose. Les étoiles des autres n'ont jamais ce bouton.
+- **La légende passe au pluriel** quand on a plusieurs étoiles (« Tes étoiles »), dans les 9 langues (en chinois, c'est le même mot).
+- `privacidad.html` : le nom du bouton, dans les 9 langues.
+- Testé dans les 9 langues, ordinateur et téléphone : annuler garde l'étoile, effacer n'en efface qu'une, légende, fiches des autres sans bouton, « Mon espace ».
+
 ## 2026-11-12 — Claude — claude/espacio
 - **Bug corrigé, trouvé par Ritukah** : allumer une deuxième chispa effaçait la première dans la base, et la nouvelle disparaissait de l'écran. Maintenant chacun peut avoir **plusieurs chispas** ; rien ne s'efface tout seul.
 - **« ✳ Mon espace »**, demandé par Ritukah, dans les 9 vitrinas : toujours visible en haut à droite (« ✳ Se connecter » sans compte). Il liste ses étincelles, en attente ou accueillies, avec « Voir » (le ciel vole jusqu'à l'étoile) et « Effacer », puis « Se déconnecter » et « Supprimer mon compte ».

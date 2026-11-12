@@ -91,7 +91,7 @@
         <li><i style="color:#ebaf12;background:#ebaf12"></i>Идея</li>
         <li><i style="color:#f4efe5;background:#f4efe5"></i>Помощь</li>
         <li><i style="color:#8fb3ff;background:#8fb3ff"></i>ИИ</li>
-        <li><i style="color:#ff5a4f;background:#ff5a4f"></i>Твоя звезда</li>
+        <li id="legend-mine"><i style="color:#ff5a4f;background:#ff5a4f"></i>Твоя звезда</li>
         <li><i style="color:#ffd36b;background:#ffd36b"></i>Вклад</li>
         <li><i style="color:#d9c8ff;background:#d9c8ff"></i>Эхо</li>
       </ul>
@@ -1140,12 +1140,7 @@ function renderSpace(){
     const li = document.createElement('li');
     li.innerHTML = `<span class="tag">${esc(n.pending ? SP.pendingTag : SP.acceptedTag)}</span>${esc(n.idea)}<div class="acts"><button type="button" class="see">${esc(SP.see)}</button><button type="button" class="danger del">${esc(SP.delOne)}</button></div>`;
     li.querySelector('.see').onclick = () => { $('account-menu').classList.remove('open'); focusStar(n); };
-    li.querySelector('.del').onclick = async () => {
-      if (!confirm(SP.confirmOne)) return;
-      try { const r = await realFetch(`?id=eq.${n.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== n.dbId)); }
-      catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
-      removeStar(n); renderSpace();
-    };
+    li.querySelector('.del').onclick = () => deleteOne(n);
     ul.append(li);
   }
 }
@@ -1161,7 +1156,33 @@ $('account').onclick = () => {
   if (o) renderSpace();
 };
 showAccount();
-startAuth().then(loadRealStars).then(markOwn);
+
+// ───────── Borrar estrella por estrella: desde su ficha o desde «Mi espacio» (ya no hay un gran botón en el cielo)
+const BS = {"del": "Удалить эту звезду", "many": "Твои звёзды"};
+async function deleteOne(n){
+  if (!confirm(SP.confirmOne)) return;
+  if (n.dbId){
+    try { const r = await realFetch(`?id=eq.${n.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== n.dbId)); }
+    catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
+  }
+  removeStar(n); updateLegend();
+  if ($('account-menu').classList.contains('open')) renderSpace();
+}
+const legendMine = $('legend-mine'), legendOne = legendMine.lastChild.textContent;
+function updateLegend(){ legendMine.lastChild.textContent = roots.filter(n => n.kind === 'mine').length > 1 ? BS.many : legendOne; }
+{
+  const _card = showCard;
+  showCard = function(n){
+    _card(n);
+    if (n && (n.kind === 'mine' || (n.own && n.dbId))){
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'card-del'; b.textContent = BS.del;
+      b.onclick = () => deleteOne(n); $('card-links').append(b);
+    }
+  };
+  const _sub = sparkForm.onsubmit;
+  sparkForm.onsubmit = e => { _sub(e); updateLegend(); };
+}
+startAuth().then(loadRealStars).then(markOwn).then(updateLegend);
 </script>
 </body>
 </html>
