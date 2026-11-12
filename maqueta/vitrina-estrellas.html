@@ -927,21 +927,43 @@ requestAnimationFrame(draw); requestAnimationFrame(spinTick); setTimeout(tick, 2
 // La clave publicable puede estar aquí: la tabla solo deja AÑADIR una chispa «pendiente»
 // y LEER las ya acogidas por la Tríada. Nunca cambiar ni borrar.
 const REAL = { url: 'https://cwcolflstshiptghldtq.supabase.co/rest/v1/chispas', key: 'sb_publishable_wLcDsBM3zVE_tq57lMdEkQ_ttW5Hgv9' };
-const RS = {"consent": "Acepto que mi nombre y mi chispa brillen en el cielo para todos, cuando la Tríada la acoja.", "priv": "Privacidad", "note": "Tu chispa se guarda y se enciende para todos cuando una persona la acoge (la Tríada). No te pedimos ningún correo.", "sent": "He guardado tu chispa. Brillará para todo el mundo en cuanto la Tríada la acoja.", "sentWhy": "nada aparece en el cielo sin una mirada humana.", "fail": "No he podido guardar tu chispa ahora mismo. Brilla aquí, en tu pantalla: inténtalo de nuevo un poco más tarde.", "loaded": "{n} chispas reales brillan ya en el cielo, acogidas por la Tríada.", "loadedWhy": "cada una es la idea de un creador de verdad.", "badge": "✳ Creador real · acogido por la Tríada", "del": "Si ya la habías enviado, escribe a connecto@hasta-la-vista.org y la borraremos."};
+const RS = {"consent": "Acepto que mi nombre y mi chispa brillen en el cielo para todos, cuando la Tríada la acoja.", "priv": "Privacidad", "note": "Tu chispa se guarda y se enciende para todos cuando una persona la acoge (la Tríada). No te pedimos ningún correo.", "sent": "He guardado tu chispa. Brillará para todo el mundo en cuanto la Tríada la acoja.", "sentWhy": "nada aparece en el cielo sin una mirada humana.", "fail": "No he podido guardar tu chispa ahora mismo. Brilla aquí, en tu pantalla: inténtalo de nuevo un poco más tarde.", "loaded": "{n} chispas reales brillan ya en el cielo, acogidas por la Tríada.", "loadedWhy": "cada una es la idea de un creador de verdad.", "badge": "✳ Creador real · acogido por la Tríada", "del": "Si ya la habías enviado, escribe a connecto@hasta-la-vista.org y la borraremos.", "pending": "⏳ En espera de la Tríada", "back": "Tu chispa sigue aquí, esperando a que la Tríada la acoja.", "accepted": "¡Tu chispa ha sido acogida! Ya brilla para todo el mundo.", "trNote": "🌐 Traducida por la IA"};
+const LANG2 = (document.documentElement.lang || 'es').slice(0, 2);
+const PEND_KEY = 'hlv_chispa_pendiente';            // tu chispa en espera se recuerda en TU navegador, en ningún otro sitio
+const pendGet = () => { try { const p = JSON.parse(localStorage.getItem(PEND_KEY) || 'null'); return p && Date.now() - p.t < 90 * 864e5 ? p : null; } catch (e) { return null; } };
+const pendSet = p => { try { p ? localStorage.setItem(PEND_KEY, JSON.stringify(p)) : localStorage.removeItem(PEND_KEY); } catch (e) {} };
 const realFetch = (q, opt) => fetch(REAL.url + q, Object.assign({ headers: { apikey: REAL.key, 'Content-Type': 'application/json' } }, opt || {}));
 async function loadRealStars(){
+  let rows = [];
   try {
-    const r = await realFetch('?select=id,creado,nombre,idea,porque,necesita&estado=eq.aceptada&order=creado.asc&limit=300');
-    if (!r.ok) return;
-    const rows = await r.json(); if (!Array.isArray(rows) || !rows.length) return;
-    for (const c of rows){
-      const s = addStar('spark', {name: String(c.nombre || '').slice(0, 30), idea: String(c.idea || '').slice(0, 140),
-        why: c.porque || '', need: c.necesita || '', real: true, when: new Date(c.creado), wr: 0.015});
-      ideas.push(s);
-    }
-    const a = addStar('ai', {title: RS.loaded.replace('{n}', rows.length)});
-    log(`<span class="who">IA</span> ${esc(RS.loaded.replace('{n}', rows.length))}`, RS.loadedWhy);
+    const cols = 'id,creado,nombre,idea,porque,necesita,idioma';
+    let r = await realFetch(`?select=${cols},traducciones&estado=eq.aceptada&order=creado.asc&limit=300`);
+    if (!r.ok) r = await realFetch(`?select=${cols}&estado=eq.aceptada&order=creado.asc&limit=300`);   // aún sin la columna de traducciones
+    if (r.ok){ const j = await r.json(); if (Array.isArray(j)) rows = j; }
   } catch (e) { /* sin red: el cielo de ejemplo sigue brillando */ }
+  const pend = pendGet();
+  let mineAccepted = null;
+  for (const c of rows){
+    const tr = c.traducciones && c.traducciones[LANG2];
+    const original = String(c.idioma || '').slice(0, 2);
+    const s = addStar('spark', {name: String(c.nombre || '').slice(0, 30),
+      idea: String((tr && tr.idea) || c.idea || '').slice(0, 140), why: (tr && tr.porque) || c.porque || '', need: (tr && tr.necesita) || c.necesita || '',
+      real: true, translated: !!(tr && tr.idea) && original !== LANG2, when: new Date(c.creado), wr: 0.015});
+    ideas.push(s);
+    if (pend && c.nombre === pend.name && c.idea === pend.idea) mineAccepted = s;
+  }
+  if (rows.length){
+    addStar('ai', {title: RS.loaded.replace('{n}', rows.length)});
+    log(`<span class="who">IA</span> ${esc(RS.loaded.replace('{n}', rows.length))}`, RS.loadedWhy);
+  }
+  if (mineAccepted){                                   // tu chispa ha sido acogida: ya es una estrella real
+    pendSet(null);
+    setTimeout(() => { say(mineAccepted, RS.accepted, '✳'); log(`<span class="who">IA</span> ${esc(RS.accepted)}`, RS.sentWhy); }, 1600);
+  } else if (pend && !mine){                           // sigue en espera: se vuelve a encender en tu pantalla
+    const s = addStar('mine', {name: pend.name, idea: pend.idea, why: pend.why, need: pend.need, pending: true, sent: true, when: new Date(pend.t)});
+    ideas.push(s); mine = s; $('mydata').classList.add('on');
+    setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.back)}`, RS.sentWhy), 1600);
+  }
 }
 async function sendChispa(s, bot){
   if (bot) return;                                        // trampa para robots: una persona nunca rellena ese campo
@@ -950,23 +972,30 @@ async function sendChispa(s, bot){
   try {
     const r = await realFetch('', {method: 'POST', headers: {apikey: REAL.key, 'Content-Type': 'application/json', Prefer: 'return=minimal'}, body: JSON.stringify(row)});
     if (!r.ok) throw new Error(r.status);
-    s.sent = true;
+    s.sent = true; s.pending = true;
+    pendSet({name: row.nombre, idea: row.idea, why: s.why || '', need: s.need || '', t: Date.now()});
     setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.sent)}`, RS.sentWhy), 5200);
   } catch (e) {
     setTimeout(() => log(`<span class="who">IA</span> ${esc(RS.fail)}`, ''), 5200);
   }
 }
-{ // insignia «creador real» en la tarjeta
+{ // insignias en la tarjeta: «creador real», «en espera», «traducida por la IA»
   const _showCard = showCard;
   showCard = function(n){
     _showCard(n);
-    const c = $('card'), old = c.querySelector('.real'); if (old) old.remove();
-    if (n && n.real){ const b = document.createElement('span'); b.className = 'real'; b.textContent = RS.badge; c.querySelector('.kind, h3, h2, p')?.before(b); }
+    const c = $('card'); c.querySelectorAll('.real').forEach(x => x.remove());
+    if (!n) return;
+    const tags = [];
+    if (n.real) tags.push(RS.badge);
+    if (n.pending) tags.push(RS.pending);
+    if (n.translated) tags.push(RS.trNote);
+    const first = c.querySelector('.kind, h3, h2, p');
+    for (const t of tags){ const b = document.createElement('span'); b.className = 'real'; b.textContent = t; first?.before(b); }
   };
 }
-{ // borrar mis datos: avisar de cómo borrar una chispa ya enviada
+{ // borrar mis datos: se olvida también en este navegador, y se explica cómo borrar una chispa ya enviada
   const _del = $('mydata').onclick;
-  $('mydata').onclick = () => { const wasSent = mine && mine.sent; _del(); if (wasSent) log(`<span class="who">IA</span> ${esc(RS.del)}`, ''); };
+  $('mydata').onclick = () => { const wasSent = mine && mine.sent; pendSet(null); _del(); if (wasSent) log(`<span class="who">IA</span> ${esc(RS.del)}`, ''); };
 }
 loadRealStars();
 </script>

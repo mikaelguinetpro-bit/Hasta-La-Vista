@@ -18,6 +18,10 @@ Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
   - refus sans consentement, envoi correct (la clé publique seulement, jamais d'état imposé), robot arrêté, échec du serveur ;
   - les anciens tests de la vitrina passent aussi.
   - Le vrai premier essai est à faire par Ritukah, après avoir lancé le SQL.
+- **Ajouts du même jour, demandés par Ritukah** :
+  - **l'étoile en attente reste** : le navigateur de l'auteur se souvient de sa chispa et la rallume à chaque visite avec « ⏳ En attente de la Tríada ». Quand elle est accueillie, elle devient une vraie étoile et l'IA le lui annonce. « Effacer mes données » l'oublie aussi ;
+  - **les chispas parlent toutes les langues** : la fonction Supabase `traducir-chispa` (Gemini, gratuite pour de petits volumes) traduit chaque chispa accueillie dans les 9 langues. Le ciel montre la traduction dans la langue du visiteur, avec la mention « 🌐 Traduite par l'IA » (Visibilité). Si la colonne `traducciones` n'existe pas encore, le ciel marche quand même ;
+  - `supabase/LEEME.md` : le pas-à-pas pour Ritukah. La confidentialité le dit aussi (le navigateur se souvient, et Gemini reçoit seulement le texte, jamais le nom).
 
 ## 2026-11-08 — Claude — claude/vision-the-mix-2
 - `VISION.md`, The Mix : Ritukah a validé les deux propositions (la cagnotte de chaque projet sur un service existant pour commencer ; le bouton « Je ne pourrai pas venir »).
