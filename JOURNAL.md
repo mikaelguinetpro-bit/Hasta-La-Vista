@@ -2,6 +2,13 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-12 — Claude — claude/espacio
+- **Bug corrigé, trouvé par Ritukah** : allumer une deuxième chispa effaçait la première dans la base, et la nouvelle disparaissait de l'écran. Maintenant chacun peut avoir **plusieurs chispas** ; rien ne s'efface tout seul.
+- **« ✳ Mon espace »**, demandé par Ritukah, dans les 9 vitrinas : toujours visible en haut à droite (« ✳ Se connecter » sans compte). Il liste ses étincelles, en attente ou accueillies, avec « Voir » (le ciel vole jusqu'à l'étoile) et « Effacer », puis « Se déconnecter » et « Supprimer mon compte ».
+- `supabase/espacio.sql` (à lancer une fois) : la fonction `mis_chispas` rend seulement les numéros des chispas de la personne connectée, pour retrouver aussi ses chispas accueillies sur n'importe quel appareil.
+- `privacidad.html` : le nom du bouton (« Mon espace ») dans les 9 langues.
+- Testé avec un Supabase simulé dans les 9 langues, ordinateur et téléphone : deux chispas qui restent, rechargement, liste, « Voir », effacement d'une seule chispa ; les tests précédents passent.
+
 ## 2026-11-12 — Claude — claude/cuentas
 - **Les comptes**, demandés par Ritukah : **regarder reste libre, participer demande un compte**. Dans les 9 vitrinas :
   - sans compte, « Encender mi estrella » ouvre une fenêtre de connexion : **Google**, **Facebook** ou **un lien magique par e-mail** (tous gratuits, via Supabase Auth, sans bibliothèque) ;

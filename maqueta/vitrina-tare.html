@@ -82,8 +82,8 @@
     </div>
     <div class="hint">ब्रह्मांड घुमाने के लिए खींचो · ज़ूम के लिए व्हील या पिंच · हिलाने के लिए राइट-क्लिक या दो उँगलियाँ</div>
     <button class="light-btn" type="button" id="open">✳ अपनी चिंगारी जलाओ</button>
-    <button class="account" type="button" id="account" aria-haspopup="true" aria-expanded="false">✳ मेरा खाता</button>
-    <div class="account-menu" id="account-menu"><small id="account-who"></small><button type="button" id="account-logout">लॉग आउट</button><button type="button" class="danger" id="account-delete">मेरा खाता मिटाओ</button></div>
+    <button class="account" type="button" id="account" aria-haspopup="true" aria-expanded="false">✳ लॉग इन</button>
+    <div class="account-menu" id="account-menu"><small id="account-who"></small><h4>मेरी चिंगारियाँ</h4><ul class="space-list" id="space-list" aria-live="polite"></ul><button type="button" id="account-logout">लॉग आउट</button><button type="button" class="danger" id="account-delete">मेरा खाता मिटाओ</button></div>
     <button class="mydata" type="button" id="mydata">मेरा तारा और मेरा डेटा मिटाएँ</button>
     <div class="legend" role="group" aria-labelledby="legend-title">
       <h3 id="legend-title">संकेत</h3>
@@ -652,7 +652,6 @@ $('form').onsubmit = e => {
   const n = $('f-name').value.trim(), i = $('f-dream').value.trim(), why = $('f-why').value.trim(), need = $('f-need').value.trim();
   const bot = !!($('f-web') && $('f-web').value);
   closeM(); e.target.reset();
-  if (mine) $('mydata').onclick();
   const s = addStar('mine', {name: n, idea: i, why, need}); ideas.push(s); mine = s; sendChispa(s, bot);
   fly(0, 0, z0);
   log(`${who(s)} ने अपनी चिंगारी जलाई: ${idea(s)}।`, '', true);
@@ -1027,7 +1026,7 @@ $('mydata').onclick = async () => {
     try { const r = await realFetch(`?id=eq.${m.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== m.dbId)); }
     catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
   }
-  _delLocal();
+  if (m) removeStar(m);
 };
 
 // ───────── Cuentas: mirar es libre; para participar (encender una chispa) hay que conectarse.
@@ -1056,7 +1055,7 @@ async function freshToken(){
     await saveSession(await r.json()); return session.access_token;
   } catch (e) { session = null; store(SES_KEY); showAccount(); return null; }
 }
-function showAccount(){
+let showAccount = function(){
   $('account').classList.toggle('on', !!session);
   $('account-who').textContent = session && session.user ? session.user.email.replace(/^(.).*(@.*)$/, '$1…$2') : '';
   if (!session) $('account-menu').classList.remove('open');
@@ -1098,7 +1097,7 @@ $('account-delete').onclick = async () => {
   try {
     const r = await fetch(AUTH.rpc, {method: 'POST', headers: {apikey: REAL.key, Authorization: 'Bearer ' + t, 'Content-Type': 'application/json'}, body: '{}'});
     if (!r.ok) throw 0;
-    for (const n of roots.filter(x => x.kind === 'mine')){ mine = n; _delLocal(); }
+    for (const n of myStars()) removeStar(n);
     session = null; store(SES_KEY); store(DRAFT_KEY); showAccount();
     log(`<span class="who">IA</span> ${esc(AT.deleted)}`, RS.sentWhy);
   } catch (e) { log(`<span class="who">IA</span> ${esc(AT.loginErr)}`, ''); }
@@ -1115,7 +1114,54 @@ async function startAuth(){
     log(`<span class="who">IA</span> ${esc(AT.welcome)}`, '');
   }
 }
-startAuth().then(loadRealStars);
+
+// ───────── Mi espacio: todas mis chispas (en espera o acogidas), verlas en el cielo, borrarlas, mi cuenta
+const SP = {"space": "✳ मेरा स्थान", "signin": "✳ लॉग इन", "mineTitle": "मेरी चिंगारियाँ", "none": "तुमने अभी तक कोई चिंगारी नहीं जलाई है।", "acceptedTag": "✳ स्वीकृत", "pendingTag": "⏳ इंतज़ार में", "see": "देखो", "delOne": "मिटाओ", "confirmOne": "क्या सचमुच यह चिंगारी मिटानी है?", "who": "लॉग इन:"};
+function removeStar(s){                                // quita una estrella de la pantalla sin tocar las demás
+  const prev = mine; mine = s; _delLocal();
+  if (prev && prev !== s && roots.includes(prev)){ mine = prev; $('mydata').classList.add('on'); }
+}
+async function markOwn(){                              // qué chispas acogidas son mías (desde cualquier aparato)
+  if (!session) return;
+  try {
+    const t = await freshToken(); if (!t) return;
+    const r = await fetch(REAL.url.replace('/chispas', '/rpc/mis_chispas'), {method: 'POST', headers: {apikey: REAL.key, Authorization: 'Bearer ' + t, 'Content-Type': 'application/json'}, body: '{}'});
+    if (!r.ok) return;
+    const ids = (await r.json()).map(x => typeof x === 'object' ? x.id : x);
+    for (const n of roots) if (n.real && ids.includes(n.dbId)) n.own = true;
+  } catch (e) {}
+}
+const myStars = () => roots.filter(n => n.dbId && (n.own || n.kind === 'mine'));
+function renderSpace(){
+  const ul = $('space-list'); ul.innerHTML = '';
+  const list = myStars();
+  if (!list.length){ ul.innerHTML = `<li class="empty">${esc(SP.none)}</li>`; return; }
+  for (const n of list.slice().reverse()){
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="tag">${esc(n.pending ? SP.pendingTag : SP.acceptedTag)}</span>${esc(n.idea)}<div class="acts"><button type="button" class="see">${esc(SP.see)}</button><button type="button" class="danger del">${esc(SP.delOne)}</button></div>`;
+    li.querySelector('.see').onclick = () => { $('account-menu').classList.remove('open'); focusStar(n); };
+    li.querySelector('.del').onclick = async () => {
+      if (!confirm(SP.confirmOne)) return;
+      try { const r = await realFetch(`?id=eq.${n.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== n.dbId)); }
+      catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
+      removeStar(n); renderSpace();
+    };
+    ul.append(li);
+  }
+}
+showAccount = function(){
+  const b = $('account'); b.classList.add('on');
+  b.textContent = session ? SP.space : SP.signin;
+  $('account-who').textContent = session && session.user ? `${SP.who} ${session.user.email.replace(/^(.).*(@.*)$/, '$1…$2')}` : '';
+  if (!session) $('account-menu').classList.remove('open');
+};
+$('account').onclick = () => {
+  if (!session){ $('open').onclick(); showAuth(true); return; }
+  const m = $('account-menu'), o = m.classList.toggle('open'); $('account').setAttribute('aria-expanded', o);
+  if (o) renderSpace();
+};
+showAccount();
+startAuth().then(loadRealStars).then(markOwn);
 </script>
 </body>
 </html>
