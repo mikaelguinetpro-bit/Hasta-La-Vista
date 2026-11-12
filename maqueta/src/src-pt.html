@@ -224,7 +224,7 @@
   @keyframes enter{from{opacity:0;transform:translateY(-6px)}}
   .pause{margin:10px 22px 18px;align-self:flex-start;background:none;border:1px solid #ffffff55;border-radius:99px;padding:8px 14px;font:500 12px var(--mono);cursor:pointer}
   .mydata{position:absolute;right:20px;top:66px;display:none;background:#030d1fcc;border:1px solid #ffffff66;border-radius:99px;padding:9px 14px;font:500 12px var(--mono);cursor:pointer;z-index:2}
-  .mydata.on{display:inline-block}
+  .mydata.on{display:none}
   /* Ventana: enciende tu chispa */
   .modal{position:fixed;inset:0;background:#000000b3;display:none;place-items:center;padding:20px;z-index:5}
   .modal.open{display:grid}
@@ -254,6 +254,8 @@
   .dialog.authing > p{display:none}
   .account-menu{position:absolute;right:20px;top:104px;display:none;flex-direction:column;gap:6px;background:#030d1fee;border:1px solid #ffffff44;border-radius:14px;padding:10px;z-index:3}
   .account-menu.open{display:flex}
+  .card .card-del{display:block;margin-top:10px;background:none;border:1px solid #ff5a4f88;color:#ffb3ad;border-radius:99px;padding:6px 12px;font:500 11px var(--mono);cursor:pointer}
+  .card .card-del:hover{background:#ff5a4f22}
   .account-menu{width:min(320px,calc(100vw - 40px));max-height:min(70vh,520px);overflow:auto}
   .account-menu h4{margin:6px 6px 2px;font:600 18px var(--serif);color:#f4efe5}
   .space-list{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-direction:column;gap:6px}
@@ -352,7 +354,7 @@
         <li><i style="color:#ebaf12;background:#ebaf12"></i>Uma ideia</li>
         <li><i style="color:#f4efe5;background:#f4efe5"></i>Uma ajuda</li>
         <li><i style="color:#8fb3ff;background:#8fb3ff"></i>A IA</li>
-        <li><i style="color:#ff5a4f;background:#ff5a4f"></i>Sua estrela</li>
+        <li id="legend-mine"><i style="color:#ff5a4f;background:#ff5a4f"></i>Sua estrela</li>
         <li><i style="color:#ffd36b;background:#ffd36b"></i>Contribuição</li>
         <li><i style="color:#d9c8ff;background:#d9c8ff"></i>Eco</li>
       </ul>
@@ -1401,12 +1403,7 @@ function renderSpace(){
     const li = document.createElement('li');
     li.innerHTML = `<span class="tag">${esc(n.pending ? SP.pendingTag : SP.acceptedTag)}</span>${esc(n.idea)}<div class="acts"><button type="button" class="see">${esc(SP.see)}</button><button type="button" class="danger del">${esc(SP.delOne)}</button></div>`;
     li.querySelector('.see').onclick = () => { $('account-menu').classList.remove('open'); focusStar(n); };
-    li.querySelector('.del').onclick = async () => {
-      if (!confirm(SP.confirmOne)) return;
-      try { const r = await realFetch(`?id=eq.${n.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== n.dbId)); }
-      catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
-      removeStar(n); renderSpace();
-    };
+    li.querySelector('.del').onclick = () => deleteOne(n);
     ul.append(li);
   }
 }
@@ -1422,7 +1419,33 @@ $('account').onclick = () => {
   if (o) renderSpace();
 };
 showAccount();
-startAuth().then(loadRealStars).then(markOwn);
+
+// ───────── Borrar estrella por estrella: desde su ficha o desde «Mi espacio» (ya no hay un gran botón en el cielo)
+const BS = {"del": "Apagar esta estrela", "many": "Suas estrelas"};
+async function deleteOne(n){
+  if (!confirm(SP.confirmOne)) return;
+  if (n.dbId){
+    try { const r = await realFetch(`?id=eq.${n.dbId}`, {method: 'DELETE'}); if (!r.ok) throw 0; setMyIds(myIds().filter(x => x !== n.dbId)); }
+    catch (e) { log(`<span class="who">IA</span> ${esc(AT.delFail)}`, ''); return; }
+  }
+  removeStar(n); updateLegend();
+  if ($('account-menu').classList.contains('open')) renderSpace();
+}
+const legendMine = $('legend-mine'), legendOne = legendMine.lastChild.textContent;
+function updateLegend(){ legendMine.lastChild.textContent = roots.filter(n => n.kind === 'mine').length > 1 ? BS.many : legendOne; }
+{
+  const _card = showCard;
+  showCard = function(n){
+    _card(n);
+    if (n && (n.kind === 'mine' || (n.own && n.dbId))){
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'card-del'; b.textContent = BS.del;
+      b.onclick = () => deleteOne(n); $('card-links').append(b);
+    }
+  };
+  const _sub = sparkForm.onsubmit;
+  sparkForm.onsubmit = e => { _sub(e); updateLegend(); };
+}
+startAuth().then(loadRealStars).then(markOwn).then(updateLegend);
 </script>
 </body>
 </html>
