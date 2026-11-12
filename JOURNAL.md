@@ -2,6 +2,19 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-12 — Claude — claude/cuentas
+- **Les comptes**, demandés par Ritukah : **regarder reste libre, participer demande un compte**. Dans les 9 vitrinas :
+  - sans compte, « Encender mi estrella » ouvre une fenêtre de connexion : **Google**, **Facebook** ou **un lien magique par e-mail** (tous gratuits, via Supabase Auth, sans bibliothèque) ;
+  - ce qu'on a écrit n'est pas perdu : au retour de la connexion, la chispa revient dans le formulaire et l'IA dit « Bienvenue ! » ;
+  - le nom reste libre ; **l'e-mail n'est jamais affiché** (seulement « r…@exemple.org » dans « Mon compte », pour soi) ;
+  - « ✳ Mon compte » : se déconnecter, ou **supprimer son compte et toutes ses chispas, vraiment** ;
+  - « Effacer mon étoile et mes données » efface maintenant **vraiment** la chispa dans la base, sans devoir écrire à connecto@ ;
+  - les chispas en attente reviennent du serveur (sur n'importe quel appareil où l'on est connecté). La chispa accueillie est toujours annoncée.
+- `supabase/cuentas.sql` (à lancer une fois) : seules les personnes connectées ajoutent une chispa, à leur nom ; chacun voit et efface les siennes ; personne ne voit à qui appartient une chispa ; fonction `borrar_mi_cuenta`.
+- `supabase/LEEME.md` : pas-à-pas pour l'adresse du site, l'e-mail d'envoi (SMTP OVH avec connecto@), Google et Facebook. Les mots de passe et secrets se tapent dans Supabase, jamais dans le dépôt ni à Claude.
+- `privacidad.html` : section « Si tu allumes une chispa » réécrite dans les 9 langues (compte, ce qu'on garde, effacement en un clic).
+- Testé avec un Supabase simulé, dans les 9 langues : fenêtre de connexion, lien magique, Google, retour avec la session, brouillon retrouvé, envoi avec le compte, chispa en attente qui revient, effacement réel, déconnexion, suppression du compte, renouvellement de la session.
+
 ## 2026-11-12 — Claude — claude/estrellas-reales
 - **Les premières vraies étoiles (The Spark)**, demandées par Ritukah. Dans les 9 vitrinas :
   - « Enciende tu chispa » **enregistre maintenant la chispa** dans Supabase : nom choisi, idée, pourquoi, besoin, langue. L'état est `pendiente` ;
