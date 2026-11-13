@@ -232,6 +232,41 @@
   .dialog.authing > p{display:none}
   .account-menu{position:absolute;right:20px;top:104px;display:none;flex-direction:column;gap:6px;background:#030d1fee;border:1px solid #ffffff44;border-radius:14px;padding:10px;z-index:3}
   .account-menu.open{display:flex}
+  .need-row{display:flex;gap:8px}
+  .need-row select{flex:none;width:auto;max-width:42%;padding:10px 8px;border:1px solid #9d9686;background:#fff;font:14px var(--sans);color:#171917}
+  #f-needs-extra .need-row{margin-top:8px}
+  .add-need{margin-top:8px;background:none;border:1px dashed #9d9686;border-radius:99px;padding:7px 14px;font:500 12px var(--mono);cursor:pointer;color:#171917}
+  #account-menu{position:fixed;top:0;right:0;bottom:0;left:auto;width:min(440px,100%);max-height:none;border-radius:0;border-width:0 0 0 1px;padding:14px 16px 40px;z-index:40;gap:8px;overflow:auto;background:#030d1ffa}
+  #account-menu .space-x{align-self:flex-end;border:0;font-size:22px;line-height:1;padding:2px 8px}
+  #mix-space{display:flex;flex-direction:column;gap:8px}
+  .mx-status{min-height:1.2em;margin:0;color:var(--gold);font-size:13px}
+  .mx-sec{border-top:1px solid #ffffff22;padding-top:10px}
+  .mx-sec > p{margin:4px 6px 8px;color:#c9d2ea;font-size:13px;line-height:1.4}
+  .mx-item{border:1px solid #ffffff2a;border-radius:10px;padding:8px 10px;margin:0 0 6px;color:#f4efe5;font-size:14px;line-height:1.4}
+  .mx-item .tag,.mx-sub .tag{display:inline-block;font:500 11px var(--mono);color:var(--gold);margin-inline-end:6px}
+  .mx-item small{display:block;color:#c9d2ea;font-size:12px;margin-top:2px}
+  .mx-item .note{display:block;margin-top:6px;color:#ffd9a8;font-size:12px}
+  .mx-sub{margin-top:8px;padding-top:6px;border-top:1px dashed #ffffff22;font-size:13px}
+  .mx-sub h5{margin:0 0 4px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#c9d2ea}
+  .mx-sub > div{margin:4px 0}
+  .mx-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .mx-row button,.mx-item .acts button,.mx-sub button{padding:5px 10px;font-size:11px}
+  .mx-row input,.mx-row select{flex:1 1 120px;min-width:0;padding:7px 9px;border-radius:8px;border:1px solid #ffffff44;background:#0b1d3d;color:#f4efe5;font:13px var(--sans)}
+  .mx-row select{flex:0 1 auto}
+  .thread{margin-top:8px;border:1px solid #ffffff22;border-radius:10px;padding:8px;background:#071733}
+  .thread p{margin:0 0 6px;font-size:13px;line-height:1.4}
+  .thread p b{color:#c9d2ea;font:500 11px var(--mono);margin-inline-end:6px}
+  .thread p.me b{color:var(--gold)}
+  .card{max-height:calc(100% - 130px);overflow:auto}
+  .card-mix{margin-top:12px;font-size:14px}
+  .card-mix h4{margin:10px 0 4px;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .card-mix ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+  .card-mix li{line-height:1.4}
+  .card-mix .tp{font:500 11px var(--mono);color:#c9d2ea;margin-inline-end:4px}
+  .card-mix em{font-style:normal;color:#9fe3b0;font-size:12px;margin-inline-start:4px}
+  .card-mix button{margin-inline-start:6px;background:var(--gold);color:#171917;border:0;border-radius:99px;padding:4px 10px;font:600 12px var(--sans);cursor:pointer}
+  .card-mix button.other,.card-mix button.manage{display:block;margin:10px 0 0}
+  .card-mix button.manage{background:none;border:1px solid #ffffff55;color:#f4efe5;font:500 12px var(--mono)}
   .card .card-del{display:block;margin-top:10px;background:none;border:1px solid #ff5a4f88;color:#ffb3ad;border-radius:99px;padding:6px 12px;font:500 11px var(--mono);cursor:pointer}
   .card .card-del:hover{background:#ff5a4f22}
   .account-menu{width:min(320px,calc(100vw - 40px));max-height:min(70vh,520px);overflow:auto}

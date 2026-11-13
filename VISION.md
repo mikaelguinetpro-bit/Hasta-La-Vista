@@ -46,6 +46,8 @@ The Spark, c'est le moment où quelqu'un ose. **The Mix, c'est tout ce qui se pa
 4. **Le créateur accepte** : chaque contribution est acceptée par le créateur de l'idée. L'humain décide.
 5. **C'est fait** : quand l'aide a vraiment eu lieu, le créateur la confirme. L'étoile de celui qui a donné brille plus fort, son nom reste attaché au projet, et le projet terminé devient une recette pour les suivants.
 
+**Construit (12 novembre 2026)** : les cinq temps existent dans la vitrina, avec la messagerie privée entre le créateur et celui qui aide. **L'IA de The Mix est Claude (Anthropic)**, choisi par Ritukah ; elle traduit les besoins et rapproche besoins et offres, et elle propose seulement. L'argent, lui, passe encore entre les personnes (voir ci-dessous).
+
 **L'argent est un outil**
 L'argent n'est pas rejeté : **c'est un outil pour avancer vers des projets concrets**, ni bon ni mauvais en soi, « utilisé par nos mains, sales ou pas » (Ritukah). Il garde sa place à côté du temps, des savoir-faire et des objets, et il reste toujours visible (comptes publics).
 - **Décidé (8 novembre 2026)** : d'abord, l'argent passe directement entre les personnes (une cagnotte du projet, ouverte par son créateur sur un service existant comme HelloAsso ou Leetchi), et la plateforme l'affiche en toute transparence sans le toucher. Plus tard, avec une structure légale (par exemple une association) et un prestataire de paiement, la plateforme pourra recevoir l'argent et gérer le fonds commun.

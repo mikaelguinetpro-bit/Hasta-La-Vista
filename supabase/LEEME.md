@@ -54,4 +54,27 @@ Pour essayer : ouvre la vitrina, écris une chispa, clique « Encender mi estrel
 
 Tant que l'étape 1 n'est pas faite, les chispas des personnes connectées ne peuvent pas s'enregistrer (le site affichera « No se ha podido guardar »).
 
+## 4. The Mix (« Il manque… », « J'apporte… », l'IA qui rapproche)
+**Ordre important : fais l'étape 1 AVANT de fusionner la pull request de The Mix.**
+
+1. **SQL Editor** → colle `mix.sql` → **Run**. Il doit afficher « Success ».
+2. **La clé Claude (payante, mais très peu chère)** :
+   1. Va sur https://console.anthropic.com et crée un compte (avec connecto@ si tu veux).
+   2. **Settings → Billing** : achète des crédits (5 $ suffisent pour commencer ; l'IA utilise le plus petit modèle, Claude Haiku).
+   3. **Settings → API Keys → Create Key** : nom `hasta-la-vista`. Copie la clé (elle commence par `sk-ant-`). Garde-la pour toi, ne me l'envoie jamais.
+3. **Edge Functions → Secrets** : ajoute `ANTHROPIC_API_KEY` = ta clé Claude. (`WEBHOOK_SECRET` existe déjà depuis les traductions : on réutilise le même.)
+4. **Edge Functions → Deploy a new function → Via Editor** : nom `mix-ia`, colle le contenu de `functions/mix-ia/index.ts`, désactive « Verify JWT », puis **Deploy**.
+5. **Database → Webhooks → Create a new hook** :
+   - nom : `mix-ia` ; table : `mix_eventos` ; événement : **Insert** ;
+   - type : **Supabase Edge Functions**, fonction `mix-ia`, méthode POST ;
+   - **HTTP Headers** → ajoute `x-webhook-secret` = le même mot de passe que `WEBHOOK_SECRET`.
+
+Ensuite, tout seul :
+- quand tu accueilles une chispa (`aceptada`), Claude traduit ses besoins dans les 9 langues et cherche qui peut aider ;
+- quand quelqu'un écrit ce qu'il peut apporter, Claude cherche les projets qui en ont besoin ;
+- quand quelqu'un clique « Je ne pourrai pas venir », le besoin se rouvre et Claude cherche quelqu'un d'autre.
+Les propositions de l'IA apparaissent dans le journal de l'IA et dans « ✳ Mon espace » de la personne concernée. **L'IA propose, elle ne décide jamais.**
+
+Pour voir ce que fait l'IA : **Edge Functions → mix-ia → Logs**. Pour voir ses propositions : **Table Editor → sugerencias**.
+
 Aucune clé secrète ne va dans GitHub : elles restent dans les « Secrets » de Supabase.

@@ -2,6 +2,20 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-12 — Claude — claude/the-mix
+- **The Mix, le deuxième temps de Hasta La Vista**, demandé par Ritukah (avec l'IA, et l'IA choisie est **Claude, d'Anthropic**). Dans les 9 vitrinas :
+  - **« Il manque… »** : en allumant sa chispa, on peut écrire jusqu'à 5 besoins (des mains, un objet, un savoir-faire, de l'argent, autre chose) et sa ville (facultatif, jamais l'adresse). On peut en ajouter, les retirer ou les marquer « Couvert » ensuite, dans « ✳ Mon espace » ;
+  - **« J'apporte… »** : la fiche d'une chispa accueillie montre ses besoins, chacun avec « J'apporte », plus « J'apporte autre chose ». Sans compte, on passe par la connexion, puis la fenêtre revient toute seule ;
+  - **le créateur accepte** (ou « Pas cette fois »), puis **« C'est fait »** : une étoile d'aide s'allume pour tous, et elle brille plus fort à mesure qu'on donne. La fiche montre « Ils apportent déjà » ;
+  - **« Je ne pourrai pas venir »** libère la place avec un merci, et l'IA cherche quelqu'un d'autre. Le créateur peut signaler une absence : c'est **privé**, la personne est prévenue et peut s'expliquer ;
+  - **la messagerie privée** : une conversation pour chaque aide, entre les deux personnes seulement. Les e-mails restent cachés. « ✳ Mon espace · 2 » indique les messages non lus et les nouvelles propositions ;
+  - **« Ce que je peux apporter »** (privé) et **« L'IA te propose »** : chacun dit ce qu'il sait faire ou peut prêter, et l'IA lui propose les besoins qui correspondent ;
+  - **le journal de l'IA** montre chaque rapprochement, avec son « pourquoi », dans la langue du visiteur.
+- `supabase/mix.sql` (à lancer **avant** de fusionner) : tables, règles d'accès, fonctions `cambiar_aporte`, `cambiar_necesidad`, `mis_aportes`, limites douces contre les abus, et le fil d'événements `mix_eventos`. Testé sur une vraie base PostgreSQL avec trois personnes : qui voit quoi, qui peut faire quoi, absence et explication, suppression du compte.
+- `supabase/functions/mix-ia` : la fonction de l'IA (Claude Haiku). Elle traduit les besoins dans les 9 langues et rapproche besoins et offres. Elle tient compte de la ville, et un peu des absences répétées sans explication, sans jamais les montrer. Elle **propose seulement**.
+- `supabase/LEEME.md` : le pas-à-pas (SQL, clé Claude, fonction, webhook). `privacidad.html` : nouvelle section « Si tu participes à The Mix », dans les 9 langues. `AGENTS.md` : règles de The Mix.
+- Testé avec un Supabase simulé, dans les 9 langues, avec deux personnes (Ritukah et Ana) : besoins et ville, journal de l'IA, fiche publique, « J'apporte » sans compte, proposition, offre, badge, acceptation, messages dans les deux sens, « L'IA te propose », « C'est fait » et étoile d'aide, propositions privées cachées. Les tests précédents passent aussi.
+
 ## 2026-11-12 — Claude — claude/borrar-una
 - Demandé par Ritukah : le gros bouton « Effacer mon étoile et mes données » était trop en vue, on pouvait cliquer par erreur. **Il disparaît du ciel.**
 - **On efface étoile par étoile** : chaque fiche d'une de ses étoiles (en attente ou accueillie) a un petit bouton « Effacer cette étoile », avec une confirmation. « ✳ Mon espace » utilise la même chose. Les étoiles des autres n'ont jamais ce bouton.
