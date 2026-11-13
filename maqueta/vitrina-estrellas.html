@@ -1224,6 +1224,7 @@ const READ_KEY = 'hlv_leidos', SEEN_KEY = 'hlv_vistos', NAME_KEY = 'hlv_nombre',
 const TYPES = ['manos', 'objeto', 'saber', 'dinero', 'otro'];
 const helpStars = new Map(), loggedSugs = new Set(), openThreads = new Set();
 let NEXT_MIX = null;
+let lastSig = '', mixBurst = 0;
 
 async function loadMix(first){
   const [needs, aportes, sugs] = await Promise.all([
@@ -1259,8 +1260,17 @@ async function loadMix(first){
     log(`<span class="who">IA</span> ` + fill(MXT.aiJournal, {need: `<b>“${esc(trNeed(n))}”</b>`, idea: idea(p), name: `<b>${esc(g.nombre)}</b>`}), why ? esc(why) : '');
   }
   updateBadge();
-  if ($('account-menu').classList.contains('open')) renderSpace();
-  if (cardNode && $('card').classList.contains('open')) showCard(cardNode);
+  // On ne redessine que si quelque chose a changé, et jamais pendant que la personne écrit
+  const sig = JSON.stringify([MIX.needs.map(n => [n.id, n.estado, !!n.traducciones]), MIX.aportes.map(a => [a.id, a.estado, a.explicado]), MIX.sugs.length, MIX.msgs.length, MIX.ofertas.length, [...MIX.mine]]);
+  if (sig === lastSig) return;
+  lastSig = sig;
+  const menu = $('account-menu'), ae = document.activeElement;
+  const busy = [...menu.querySelectorAll('input,textarea')].some(i => i.value);
+  if (menu.classList.contains('open')){
+    if (busy) lastSig = '';
+    else { const keep = ae && ae.dataset && ae.dataset.a; renderSpace(); if (keep){ const i = menu.querySelector(`input[data-a="${keep}"]`); if (i) i.focus(); } }
+  }
+  if (cardNode && $('card').classList.contains('open') && !$('card').contains(ae)) showCard(cardNode);
 }
 
 // ───── Le petit chiffre sur « Mon espace » : messages non lus et nouvelles propositions
@@ -1313,7 +1323,7 @@ async function mixAfterSend(s, needs){
     const r = await api('necesidades?select=id,creado,chispa_id,texto,tipo,estado,traducciones', {method: 'POST', headers: {Prefer: 'return=representation'},
       body: JSON.stringify(needs.map(n => ({chispa_id: s.dbId, texto: n.texto, tipo: n.tipo})))});
     if (!r.ok) return;
-    const rows = await r.json(); MIX.needs.push(...rows); s.mixNeeds = rows; s.need = '';
+    const rows = await r.json(); MIX.needs.push(...rows); s.mixNeeds = rows; s.need = ''; mixBurst = 10;
   } catch (e) {}
 }
 
@@ -1370,7 +1380,7 @@ $('mx-form').onsubmit = async e => {
       body: JSON.stringify({chispa_id: s.dbId, necesidad_id: need ? need.id : null, nombre: name, texto: text})});
     if (!r.ok) throw 0;
     log(`<span class="who">IA</span> ${esc(MXT.bringSent.replace('{name}', s.name))}`, '');
-    await loadMix();
+    mixBurst = 10; await loadMix();
   } catch (err) { log(`<span class="who">IA</span> ${esc(MXT.bringFail)}`, ''); }
 };
 
@@ -1382,11 +1392,17 @@ function openSpace(){
 $('space-x').onclick = () => { $('account-menu').classList.remove('open'); $('account').setAttribute('aria-expanded', 'false'); $('account').focus(); };
 { const _ac = $('account').onclick; $('account').onclick = () => { _ac(); if (session && $('account-menu').classList.contains('open')) loadMix(); }; }
 { const _lo = $('account-logout').onclick; $('account-logout').onclick = async () => { await _lo(); await loadMix(); }; }
-setInterval(() => { if (session && $('account-menu').classList.contains('open') && !document.hidden) loadMix(); }, 45000);
+// En direct, sans recharger : un coup d'œil toutes les 20 secondes, et toutes les 4 secondes juste après une action
+// (le temps que l'IA réponde). Rien quand l'onglet est caché.
+let mixBusy = false;
+const mixTick = async () => { if (document.hidden || mixBusy) return; mixBusy = true; try { await loadMix(); } finally { mixBusy = false; } };
+setInterval(() => { if (mixBurst > 0){ mixBurst--; mixTick(); } }, 4000);
+setInterval(() => { if (!mixBurst) mixTick(); }, 20000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) mixTick(); });
 
 const mxStatus = t => { const el = $('mx-status'); if (el) el.textContent = t || ''; };
 async function act(promise, okText){
-  try { const r = await promise; if (!r.ok) throw 0; mxStatus(okText || ''); await loadMix(); }
+  try { const r = await promise; if (!r.ok) throw 0; mxStatus(okText || ''); lastSig = ''; mixBurst = 10; await loadMix(); }
   catch (e) { mxStatus(MXT.actFail); }
 }
 const el = (tag, cls, html) => { const x = document.createElement(tag); if (cls) x.className = cls; if (html != null) x.innerHTML = html; return x; };
@@ -1404,9 +1420,9 @@ function threadFor(a, box){
     const me = m.del_creador === amC;
     t.append(el('p', me ? 'me' : '', `<b>${esc(me ? MXT.you : other)}</b>${esc(m.texto)}`));
   }
-  const f = el('form', 'mx-row', `<input maxlength="1000" placeholder="${esc(MXT.msgPh)}" aria-label="${esc(MXT.msgPh)}"><button type="submit">${esc(MXT.msgSend)}</button>`);
+  const f = el('form', 'mx-row', `<input maxlength="1000" data-a="${a.id}" placeholder="${esc(MXT.msgPh)}" aria-label="${esc(MXT.msgPh)}"><button type="submit">${esc(MXT.msgSend)}</button>`);
   f.onsubmit = async e => {
-    e.preventDefault(); const v = f.querySelector('input').value.trim(); if (!v) return;
+    e.preventDefault(); const v = f.querySelector('input').value.trim(); if (!v) return; f.querySelector('input').value = '';
     await act(api('mensajes', {method: 'POST', body: JSON.stringify({aporte_id: a.id, texto: v.slice(0, 1000)})}));
   };
   t.append(f); box.parentNode.insertBefore(t, box.nextSibling);
@@ -1423,7 +1439,7 @@ function needsBlock(n){
     row.append(r); d.append(row);
   }
   const f = el('form', 'mx-row', typeSel('otro') + `<input maxlength="80" placeholder="${esc(MXT.needAddPh)}" aria-label="${esc(MXT.needAddPh)}"><button type="submit">${esc(MXT.needAdd)}</button>`);
-  f.onsubmit = e => { e.preventDefault(); const v = f.querySelector('input').value.trim(); if (!v) return;
+  f.onsubmit = e => { e.preventDefault(); const v = f.querySelector('input').value.trim(); if (!v) return; f.querySelector('input').value = '';
     act(api('necesidades', {method: 'POST', body: JSON.stringify({chispa_id: n.dbId, texto: v.slice(0, 80), tipo: f.querySelector('select').value})})); };
   d.append(f); return d;
 }
@@ -1501,9 +1517,9 @@ function renderMixSpace(){
   }
   const f = el('form', 'mx-row', `<input class="o-text" maxlength="140" required placeholder="${esc(MXT.offerPh)}" aria-label="${esc(MXT.offers)}">` + typeSel('saber') +
     `<input class="o-place" maxlength="40" placeholder="${esc(MXT.placeShort)}" aria-label="${esc(MXT.placeShort)}"><button type="submit">${esc(MXT.offerAdd)}</button>`);
-  f.onsubmit = e => { e.preventDefault(); const v = f.querySelector('.o-text').value.trim(); if (!v) return;
+  f.onsubmit = e => { e.preventDefault(); const v = f.querySelector('.o-text').value.trim(); if (!v) return; const pl = f.querySelector('.o-place').value.trim(); f.querySelector('.o-text').value = ''; f.querySelector('.o-place').value = '';
     const name = read(NAME_KEY) || (myStars()[0] || {}).name || (session.user && session.user.email ? session.user.email.split('@')[0] : '✳');
-    act(api('ofertas', {method: 'POST', body: JSON.stringify({nombre: String(name).slice(0, 30), texto: v.slice(0, 140), tipo: f.querySelector('select').value, lugar: f.querySelector('.o-place').value.trim().slice(0, 40) || null})})); };
+    act(api('ofertas', {method: 'POST', body: JSON.stringify({nombre: String(name).slice(0, 30), texto: v.slice(0, 140), tipo: f.querySelector('select').value, lugar: pl.slice(0, 40) || null})})); };
   s3.append(f); box.append(s3);
 }
 

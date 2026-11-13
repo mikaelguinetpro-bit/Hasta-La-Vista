@@ -2,6 +2,12 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-13 — Claude — claude/mix-en-direct
+- Demandé par Ritukah : **plus besoin de recharger la page**. The Mix se met à jour tout seul : propositions de l'IA dans le journal et dans « Mon espace », nouveaux messages, nouvelles aides, « C'est fait » et étoiles d'aide, petit chiffre de « Mon espace ».
+- Un coup d'œil toutes les 20 secondes, toutes les 4 secondes pendant 40 secondes après une action (le temps que l'IA réponde), et aussitôt qu'on revient sur l'onglet. Rien quand l'onglet est caché.
+- On ne redessine que si quelque chose a changé, et jamais pendant qu'on écrit (le texte en cours n'est pas perdu ; le curseur reste dans la conversation).
+- Testé dans les 9 langues : une proposition de l'IA et un message arrivent pendant que la page est ouverte, sans recharger. Les tests précédents passent.
+
 ## 2026-11-12 — Claude — claude/the-mix
 - **The Mix, le deuxième temps de Hasta La Vista**, demandé par Ritukah (avec l'IA, et l'IA choisie est **Claude, d'Anthropic**). Dans les 9 vitrinas :
   - **« Il manque… »** : en allumant sa chispa, on peut écrire jusqu'à 5 besoins (des mains, un objet, un savoir-faire, de l'argent, autre chose) et sa ville (facultatif, jamais l'adresse). On peut en ajouter, les retirer ou les marquer « Couvert » ensuite, dans « ✳ Mon espace » ;
