@@ -51,6 +51,8 @@
   canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   .intro{position:absolute;left:clamp(20px,5vw,60px);top:clamp(20px,5vh,50px);max-width:520px;pointer-events:none;transition:opacity .6s}
   .intro.faded{opacity:.12}
+  .intro .intro-fold{pointer-events:auto;margin-inline-start:10px;vertical-align:middle}
+  .intro.folded #intro-text{display:none}
   .label{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
   .label:before{content:'✳ ';color:var(--gold)}
   h1{font:600 clamp(34px,4.6vw,62px)/1 var(--serif);letter-spacing:-.04em;margin:14px 0 12px}
@@ -354,9 +356,9 @@
     <canvas id="canvas" role="img" aria-label="Звёздное небо: каждая звезда — это создатель, помощь или действие ИИ. Всё, что происходит, также появляется текстом в Дневнике ИИ."></canvas>
     <div class="intro" id="intro">
       <a class="home-link" href="../hasta-la-vista/ru.html" aria-label="Вернуться на сайт Hasta La Vista">← Hasta La Vista</a>
-      <div class="label">Макет · Витрина</div>
-      <h1>Каждый создатель —<br><em>звезда.</em></h1>
-      <p>Нажми на звезду, чтобы познакомиться с ней. Приблизься — и увидишь, как вокруг неё рождаются другие. Отдались — и увидишь другие галактики.</p>
+      <div class="label">Макет · Витрина<button type="button" class="fold intro-fold" id="intro-fold" aria-expanded="true" aria-controls="intro-text"><span class="chev" aria-hidden="true">▾</span></button></div>
+      <div id="intro-text"><h1>Каждый создатель —<br><em>звезда.</em></h1>
+      <p>Нажми на звезду, чтобы познакомиться с ней. Приблизься — и увидишь, как вокруг неё рождаются другие. Отдались — и увидишь другие галактики.</p></div>
     </div>
     <div class="scale" aria-live="polite"><b id="scale-name">Галактика Hasta La Vista</b><span id="scale-x">×1</span></div>
     <div class="search" role="search">
@@ -1866,6 +1868,9 @@ async function startMix(){
   };
   const lf = $('legend-fold'), lbox = lf.closest('.legend'), jf = $('log-fold'), jbox = jf.closest('header');
   set(lf, lbox, 'folded', 'legend', !st.legend); set(jf, jbox, 'folded', 'journal', !st.journal);
+  const hf = $('intro-fold'), hbox = $('intro');
+  set(hf, hbox, 'folded', 'hero', !st.hero);
+  hf.onclick = () => set(hf, hbox, 'folded', 'hero', hf.getAttribute('aria-expanded') !== 'true');
   lf.onclick = () => set(lf, lbox, 'folded', 'legend', lf.getAttribute('aria-expanded') !== 'true');
   jf.onclick = () => set(jf, jbox, 'folded', 'journal', jf.getAttribute('aria-expanded') !== 'true');
 }

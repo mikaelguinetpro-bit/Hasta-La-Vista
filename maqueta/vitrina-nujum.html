@@ -45,9 +45,9 @@
     <canvas id="canvas" role="img" aria-label="سماء من النجوم: كل نجمة هي مبدع أو مساعدة أو فعل من أفعال الذكاء الاصطناعي. كل ما يحدث يظهر أيضًا، نصًّا، في يوميات الذكاء الاصطناعي."></canvas>
     <div class="intro" id="intro">
       <a class="home-link" href="../hasta-la-vista/ar.html" aria-label="العودة إلى موقع Hasta La Vista">← Hasta La Vista</a>
-      <div class="label">نموذج أولي · الواجهة</div>
-      <h1>كل مبدع<br>هو <em>نجمة.</em></h1>
-      <p>المس نجمة لتتعرّف عليها. اقترب وسترى نجومًا أخرى تولد حولها. ابتعد وسترى مجرّات أخرى.</p>
+      <div class="label">نموذج أولي · الواجهة<button type="button" class="fold intro-fold" id="intro-fold" aria-expanded="true" aria-controls="intro-text"><span class="chev" aria-hidden="true">▾</span></button></div>
+      <div id="intro-text"><h1>كل مبدع<br>هو <em>نجمة.</em></h1>
+      <p>المس نجمة لتتعرّف عليها. اقترب وسترى نجومًا أخرى تولد حولها. ابتعد وسترى مجرّات أخرى.</p></div>
     </div>
     <div class="scale" aria-live="polite"><b id="scale-name">مجرّة Hasta La Vista</b><span id="scale-x">×1</span></div>
     <div class="search" role="search">
@@ -1557,6 +1557,9 @@ async function startMix(){
   };
   const lf = $('legend-fold'), lbox = lf.closest('.legend'), jf = $('log-fold'), jbox = jf.closest('header');
   set(lf, lbox, 'folded', 'legend', !st.legend); set(jf, jbox, 'folded', 'journal', !st.journal);
+  const hf = $('intro-fold'), hbox = $('intro');
+  set(hf, hbox, 'folded', 'hero', !st.hero);
+  hf.onclick = () => set(hf, hbox, 'folded', 'hero', hf.getAttribute('aria-expanded') !== 'true');
   lf.onclick = () => set(lf, lbox, 'folded', 'legend', lf.getAttribute('aria-expanded') !== 'true');
   jf.onclick = () => set(jf, jbox, 'folded', 'journal', jf.getAttribute('aria-expanded') !== 'true');
 }

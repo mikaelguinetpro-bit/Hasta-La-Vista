@@ -2,6 +2,9 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-17 — Claude — claude/replier-titre
+- Demandé par Ritukah : le **grand texte** du ciel (« Chaque créateur est une étoile » et sa phrase) se replie aussi d'un clic, avec la petite flèche à côté de « Maquette · La vitrine ». Le lien « ← Hasta La Vista » reste. Le choix est gardé sur l'appareil, comme pour le journal et la légende. Testé sur ordinateur et téléphone, en français et en arabe.
+
 ## 2026-11-17 — Claude — claude/replier
 - Demandé par Ritukah, pour faire de la place dans les 9 vitrinas : **le haut du journal de l'IA** (son explication, les règles, la revisite de π) et **la légende** se replient d'un clic sur leur titre, et se rouvrent de même. Une petite flèche ▾ indique l'état. Le titre « Journal de l'IA » et le mot « Légende » restent visibles.
 - Le choix est gardé sur l'appareil (`hlv_pliage`). Testé sur ordinateur et téléphone, en français, en arabe et en chinois.
