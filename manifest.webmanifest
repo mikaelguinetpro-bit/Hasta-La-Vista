@@ -1,0 +1,22 @@
+{
+  "name": "Hasta La Vista — Hagamos que algo bello ocurra",
+  "short_name": "Hasta La Vista",
+  "description": "Every creator is a star. Light your spark, bring what's missing, and let something beautiful happen.",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#f4efe5",
+  "theme_color": "#f4efe5",
+  "dir": "auto",
+  "categories": ["social", "lifestyle", "education"],
+  "icons": [
+    { "src": "/hasta-la-vista/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/hasta-la-vista/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/hasta-la-vista/icone-masquable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/hasta-la-vista/icone-masquable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "prefer_related_applications": false
+}
