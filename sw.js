@@ -2,7 +2,7 @@
    - Les pages, le style et le code : réseau d'abord (toujours la dernière version), sinon la copie gardée.
    - Les polices, les icônes et les images : copie gardée d'abord (elles ne changent presque jamais).
    - Jamais touchés : Supabase (les chispas, les comptes, The Mix) et tous les autres sites. */
-const VERSION = "hlv-v1-2026-11-17";
+const VERSION = "hlv-v2-2026-11-17";
 const CACHE = "hlv-" + VERSION;
 const LANGS = ["index", "en", "fr", "pt", "ru", "ar", "hi", "bn", "zh"];
 const VITRINAS = ["estrellas", "stars", "etoiles", "estrelas", "zvezdy", "nujum", "tare", "tara", "xingxing"];
@@ -48,7 +48,8 @@ self.addEventListener("fetch", e => {
     return;
   }
 
-  e.respondWith(fetch(r).then(rep => {
+  // « no-cache » : on demande toujours au serveur si la page a changé (sinon le navigateur garde l'ancienne jusqu'à 10 minutes)
+  e.respondWith((r.mode === "navigate" ? fetch(r.url, { cache: "no-cache", credentials: "same-origin" }) : fetch(r, { cache: "no-cache" })).then(rep => {
     if (rep.ok && !rep.redirected) { const copie = rep.clone(); caches.open(CACHE).then(c => c.put(r, copie)); }
     return rep;
   }).catch(() => caches.match(r, { ignoreSearch: true })
