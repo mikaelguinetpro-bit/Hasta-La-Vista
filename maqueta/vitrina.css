@@ -109,6 +109,17 @@
   .legend i{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 8px currentColor}
   .legend .listbtn{margin-top:9px;width:100%;background:none;border:1px solid #ffffff55;border-radius:99px;padding:7px 10px;font:500 12px var(--mono);cursor:pointer}
   .legend .listbtn:hover{background:#ffffff14}
+  .fold{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border-radius:6px}
+  .fold:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .fold .chev{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid #ffffff44;font:500 12px/1 var(--mono);color:var(--soft);transition:transform .25s}
+  .fold:hover .chev{border-color:var(--gold);color:var(--gold)}
+  .fold[aria-expanded="false"] .chev{transform:rotate(-90deg)}
+  [dir="rtl"] .fold[aria-expanded="false"] .chev{transform:rotate(90deg)}
+  .legend.folded{padding:7px 10px}
+  .legend.folded h3{margin:0}
+  .legend.folded ul,.legend.folded .listbtn{display:none}
+  aside header.folded .label,aside header.folded > p,aside header.folded .rules,aside header.folded .rules-box,aside header.folded .pi{display:none}
+  aside header.folded h2{margin:4px 0 0}
   .phrase{position:absolute;z-index:1;pointer-events:none;font:italic 600 clamp(17px,1.8vw,22px)/1.3 var(--serif);color:#f4efe5;text-shadow:0 0 18px #030d1f,0 0 6px #030d1f;max-width:min(360px,calc(100% - 40px));text-align:center;opacity:0;transform:translate(-50%,-50%);transition:opacity 1.2s}
   .phrase.show{opacity:.95}
   .page ul.list button.skybtn{margin-left:8px;background:none;border:1px solid #9d9686;border-radius:99px;padding:3px 10px;font:500 12px var(--mono);cursor:pointer;color:#052a58}
