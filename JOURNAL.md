@@ -2,6 +2,14 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-17 — Claude — claude/installable
+- Hasta La Vista s'installe comme une application, comme Typ-1, Nebula, Atlas.sea et BNM1 : `manifest.webmanifest`, `sw.js` (à la racine), icônes 192 et 512, icônes « masquables » (l'arbre sur le papier crème) et icône iPhone.
+- Une petite pastille « Installer » en bas à droite des pages d'accueil (à gauche en arabe), discrète : installer reste un choix. La croix la réduit au petit logo rond ; un clic la rouvre. Sur iPhone, la toucher explique le geste dans Safari. Traduite dans les 9 langues.
+- Les 9 vitrinas sont aussi installables (manifeste, icônes, couleur du ciel), sans pastille pour ne rien ajouter au ciel.
+- Sans réseau, les pages d'accueil et le ciel s'ouvrent quand même. Les vraies chispas, les comptes et The Mix ont besoin du réseau ; le service worker ne touche jamais Supabase.
+- Testé dans Chrome : manifeste sans erreur, aucune erreur d'installation, service worker actif, hors ligne, pastille (réduire, rouvrir, installer), iPhone en arabe.
+- Pourquoi : demandé par Ritukah (« fais comme sur Typ-1 »).
+
 ## 2026-11-13 — Claude — claude/mix-en-direct
 - Demandé par Ritukah : **plus besoin de recharger la page**. The Mix se met à jour tout seul : propositions de l'IA dans le journal et dans « Mon espace », nouveaux messages, nouvelles aides, « C'est fait » et étoiles d'aide, petit chiffre de « Mon espace ».
 - Un coup d'œil toutes les 20 secondes, toutes les 4 secondes pendant 40 secondes après une action (le temps que l'IA réponde), et aussitôt qu'on revient sur l'onglet. Rien quand l'onglet est caché.

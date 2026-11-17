@@ -236,3 +236,57 @@ eggStar.addEventListener('click', () => {
 eggEl.querySelector('.egg-back').addEventListener('click', eggClose);
 eggEl.addEventListener('click', e => { if (e.target === eggEl || e.target.id === 'egg-canvas') eggClose(); });
 document.addEventListener('keydown', e => { if (!eggEl.hidden && (e.key === 'Escape' || e.key === 'Tab')){ if (e.key === 'Escape') eggClose(); else { e.preventDefault(); eggEl.querySelector('.egg-back').focus(); } } });
+
+// ───────── Installer Hasta La Vista comme une application (comme Typ-1, Nebula, Atlas.sea et BNM1)
+// Une petite pastille discrète en bas : installer reste un choix, elle ne cache rien.
+// Chrome, Edge et Android proposent l'installation ; sur iPhone, on explique le geste dans Safari.
+// La croix réduit la pastille au petit logo rond ; un clic sur le logo la rouvre (choix gardé sur l'appareil).
+// Rien ne s'affiche dans un aperçu (iframe) ni si le site est déjà installé.
+(() => {
+  const INST = {
+    es: ['Instalar Hasta La Vista', 'Instalar', 'Lleva el cielo en tu pantalla de inicio: un icono, como una aplicación.', 'En iPhone, toca Compartir abajo en Safari y luego «Añadir a pantalla de inicio».', 'Reducir'],
+    en: ['Install Hasta La Vista', 'Install', 'Keep the sky on your home screen: one icon, like an app.', 'On iPhone, tap Share at the bottom of Safari, then “Add to Home Screen”.', 'Minimise'],
+    fr: ['Installer Hasta La Vista', 'Installer', 'Garde le ciel sur ton écran d’accueil : une icône, comme une application.', 'Sur iPhone, touche Partager en bas de Safari, puis « Sur l’écran d’accueil ».', 'Réduire'],
+    pt: ['Instalar Hasta La Vista', 'Instalar', 'Leve o céu para sua tela inicial: um ícone, como um aplicativo.', 'No iPhone, toque em Compartilhar na parte de baixo do Safari e depois em «Adicionar à Tela de Início».', 'Reduzir'],
+    ru: ['Установить Hasta La Vista', 'Установить', 'Держи небо на главном экране: одна иконка, как приложение.', 'На iPhone нажми «Поделиться» внизу Safari, затем «На экран „Домой“».', 'Свернуть'],
+    ar: ['تثبيت Hasta La Vista', 'تثبيت', 'احتفظ بالسماء على شاشتك الرئيسية: أيقونة واحدة، مثل تطبيق.', 'على iPhone، اضغط «مشاركة» أسفل Safari، ثم «إضافة إلى الشاشة الرئيسية».', 'تصغير'],
+    hi: ['Hasta La Vista इंस्टॉल करो', 'इंस्टॉल करो', 'आसमान को अपनी होम स्क्रीन पर रखो: एक आइकन, ऐप की तरह।', 'iPhone पर Safari में नीचे «शेयर» दबाओ, फिर «होम स्क्रीन में जोड़ें»।', 'छोटा करो'],
+    bn: ['Hasta La Vista ইনস্টল করো', 'ইনস্টল করো', 'আকাশটা তোমার হোম স্ক্রিনে রাখো: একটি আইকন, অ্যাপের মতো।', 'iPhone-এ Safari-র নিচে «শেয়ার» চাপো, তারপর «হোম স্ক্রিনে যোগ করুন»।', 'ছোট করো'],
+    zh: ['安装 Hasta La Vista', '安装', '把星空放在主屏幕上：一个图标，就像应用一样。', '在 iPhone 上，点按 Safari 底部的“分享”，再选“添加到主屏幕”。', '收起']
+  };
+  const [aria, label, why, ios, reduce] = INST[document.documentElement.lang.slice(0, 2)] || INST.es;
+  const dansCadre = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+  if ('serviceWorker' in navigator && !dansCadre && location.protocol !== 'file:') navigator.serviceWorker.register('/sw.js').catch(() => {});
+  const installe = () => matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches || navigator.standalone === true;
+  const surIPhone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const REDUIT = 'hlv_installer_reduit';
+  const box = document.createElement('div');
+  box.className = 'installer'; box.id = 'installer'; box.setAttribute('role', 'region'); box.setAttribute('aria-label', aria); box.hidden = true;
+  box.innerHTML = `<p id="installer-texte" hidden></p><div class="ligne"><button type="button" class="oui" id="installer-oui" title=""><img src="icono.png" alt=""><span></span></button><button type="button" class="non" id="installer-non">✕</button></div>`;
+  box.querySelector('#installer-texte').textContent = ios;
+  const oui = box.querySelector('.oui'), non = box.querySelector('.non');
+  oui.querySelector('span').textContent = label; oui.title = why; oui.setAttribute('aria-label', label); non.setAttribute('aria-label', reduce);
+  document.body.append(box);
+  let invitation = null;
+  const reduire = on => {
+    box.classList.toggle('reduit', on);
+    if (on) box.querySelector('#installer-texte').hidden = true;
+    try { localStorage.setItem(REDUIT, on ? '1' : '0'); } catch (e) {}
+  };
+  const montrer = () => {
+    if (installe() || dansCadre) return;
+    let dejaReduit = false; try { dejaReduit = localStorage.getItem(REDUIT) === '1'; } catch (e) {}
+    box.classList.toggle('reduit', dejaReduit); box.hidden = false;
+  };
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); invitation = e; setTimeout(montrer, 3500); });
+  if (surIPhone && !installe()) setTimeout(montrer, 6000);
+  window.addEventListener('appinstalled', () => { box.hidden = true; invitation = null; });
+  oui.addEventListener('click', async () => {
+    if (box.classList.contains('reduit')) { reduire(false); return; }   // le logo seul : on rouvre la pastille
+    if (!invitation) { const aide = box.querySelector('#installer-texte'); aide.hidden = !aide.hidden; return; }   // iPhone
+    invitation.prompt();
+    try { await invitation.userChoice; } catch (e) {}
+    invitation = null; box.hidden = true;
+  });
+  non.addEventListener('click', () => reduire(true));
+})();

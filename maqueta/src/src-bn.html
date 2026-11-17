@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#030d1f">
+<link rel="icon" type="image/png" href="../hasta-la-vista/icono.png">
+<link rel="apple-touch-icon" href="../hasta-la-vista/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hasta La Vista">
 <title>Hasta La Vista — তারার জানালা (নমুনা)</title>
 <meta name="description" content="তারায় ভরা আকাশ: প্রতিটি তারা একজন স্রষ্টা, একটি সাহায্যের হাত অথবা AI-এর একটি কাজ। যা কিছু ঘটে, তা AI-এর দিনলিপিতে লেখা হিসেবেও দেখা যায়।">
 <meta property="og:title" content="Hasta La Vista — তারার জানালা (নমুনা)">
@@ -1840,6 +1848,8 @@ async function startMix(){
   }
 }
 startAuth().then(loadRealStars).then(markOwn).then(updateLegend).then(startMix);
+// Installable comme une application (le service worker est à la racine du site, comme pour les pages d'accueil)
+if ('serviceWorker' in navigator && location.protocol !== 'file:' && window.self === window.top) navigator.serviceWorker.register('/sw.js').catch(() => {});
 </script>
 </body>
 </html>
