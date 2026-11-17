@@ -2,6 +2,11 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-17 — Claude — claude/journal-glisse
+- Demandé par Ritukah, pour bien voir la galaxie se former : **le journal de l'IA glisse sur le côté** d'un clic sur la petite languette au bord du ciel (› / ‹). Il est à droite, et à gauche en arabe. La galaxie prend alors toute la largeur et suit le mouvement. Un clic sur la languette ramène le journal.
+- Le choix est gardé sur l'appareil (`hlv_pliage`). Sur téléphone, le journal est déjà sous le ciel : pas de languette.
+- Testé sur ordinateur (français, arabe) et sur téléphone, dans les 9 vitrinas.
+
 ## 2026-11-17 — Claude — claude/maj-immediate
 - Ritukah avait fusionné, mais ne voyait pas la mise à jour. GitHub Pages demande aux navigateurs de garder les pages jusqu'à 10 minutes, et le service worker suivait cette règle. Maintenant, il demande toujours au serveur si une page, le style ou le code ont changé (`cache: "no-cache"`). Les mises à jour arrivent dès que GitHub Pages a fini de publier, en une à deux minutes. Version du cache : v2.
 

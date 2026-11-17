@@ -141,6 +141,14 @@
   .legend i{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 8px currentColor}
   .legend .listbtn{margin-top:9px;width:100%;background:none;border:1px solid #ffffff55;border-radius:99px;padding:7px 10px;font:500 12px var(--mono);cursor:pointer}
   .legend .listbtn:hover{background:#ffffff14}
+  .layout{transition:grid-template-columns .45s ease}
+  .layout.sans-journal{grid-template-columns:1fr 0px}
+  .layout.sans-journal > aside{visibility:hidden;border:0}
+  aside{overflow:hidden}
+  .journal-toggle{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:3;width:22px;height:84px;border:1px solid #ffffff33;border-right:0;border-radius:12px 0 0 12px;background:#071733e6;color:var(--soft);font:600 16px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+  .journal-toggle:hover{color:var(--gold);border-color:var(--gold)}
+  .journal-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  [dir="rtl"] .journal-toggle{right:auto;left:0;border-right:1px solid #ffffff33;border-left:0;border-radius:0 12px 12px 0}
   .fold{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border-radius:6px}
   .fold:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   .fold .chev{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid #ffffff44;font:500 12px/1 var(--mono);color:var(--soft);transition:transform .25s}
@@ -330,6 +338,9 @@
   .note{font:12px var(--mono);color:#55574f;margin-top:14px}
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
   @media(max-width:860px){
+    .journal-toggle{display:none}
+    .layout.sans-journal{grid-template-columns:1fr}
+    .layout.sans-journal > aside{visibility:visible}
     .layout{grid-template-columns:1fr;grid-template-rows:78vh auto;height:auto}
     ol.log{max-height:50vh}
     .hint{display:none}
@@ -391,6 +402,7 @@
       <form id="ex-form"><input id="ex-q" type="text" maxlength="120" placeholder="Напр.: посадить цветы на моей улице" aria-label="Или напиши свою идею:"><button type="submit">Найти</button></form>
       <div class="ex-res" id="ex-res" aria-live="polite"></div>
     </section>
+    <button type="button" class="journal-toggle" id="journal-toggle" aria-controls="log-aside" aria-expanded="true">›</button>
     <div class="zoom" role="group" aria-label="Zoom">
       <button type="button" id="z-in" aria-label="Приблизить">+</button>
       <button type="button" id="z-out" aria-label="Отдалить">−</button>
@@ -430,7 +442,7 @@
     </section>
   </main>
 
-  <aside aria-labelledby="log-title">
+  <aside id="log-aside" aria-labelledby="log-title">
     <header>
       <nav class="langs" aria-label="Язык"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru" aria-current="page">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-tara.html" lang="bn" hreflang="bn">বাংলা</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
       <div class="label">Видимость</div>
@@ -1873,6 +1885,22 @@ async function startMix(){
   hf.onclick = () => set(hf, hbox, 'folded', 'hero', hf.getAttribute('aria-expanded') !== 'true');
   lf.onclick = () => set(lf, lbox, 'folded', 'legend', lf.getAttribute('aria-expanded') !== 'true');
   jf.onclick = () => set(jf, jbox, 'folded', 'journal', jf.getAttribute('aria-expanded') !== 'true');
+}
+
+// ───────── Le journal glisse sur le côté pour laisser toute la place à la galaxie ; un clic sur la languette le ramène
+{
+  const JT = ["Скрыть журнал ИИ", "Показать журнал ИИ"], KEY = 'hlv_pliage', lay = document.querySelector('.layout'), b = $('journal-toggle');
+  let st = {}; try { st = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  const rtl = document.documentElement.dir === 'rtl';
+  const show = open => {
+    lay.classList.toggle('sans-journal', !open); b.setAttribute('aria-expanded', open);
+    b.textContent = (open !== rtl) ? '›' : '‹'; b.title = open ? JT[0] : JT[1]; b.setAttribute('aria-label', b.title);
+    st.aside = !open; try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {}
+  };
+  show(!st.aside);
+  b.onclick = () => show(b.getAttribute('aria-expanded') !== 'true');
+  // la galaxie suit la largeur pendant que le journal glisse
+  if ('ResizeObserver' in window) new ResizeObserver(() => resize()).observe(sky);
 }
 startAuth().then(loadRealStars).then(markOwn).then(updateLegend).then(startMix);
 // Installable comme une application (le service worker est à la racine du site, comme pour les pages d'accueil)
