@@ -139,6 +139,17 @@
   .legend i{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 8px currentColor}
   .legend .listbtn{margin-top:9px;width:100%;background:none;border:1px solid #ffffff55;border-radius:99px;padding:7px 10px;font:500 12px var(--mono);cursor:pointer}
   .legend .listbtn:hover{background:#ffffff14}
+  .fold{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border-radius:6px}
+  .fold:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .fold .chev{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid #ffffff44;font:500 12px/1 var(--mono);color:var(--soft);transition:transform .25s}
+  .fold:hover .chev{border-color:var(--gold);color:var(--gold)}
+  .fold[aria-expanded="false"] .chev{transform:rotate(-90deg)}
+  [dir="rtl"] .fold[aria-expanded="false"] .chev{transform:rotate(90deg)}
+  .legend.folded{padding:7px 10px}
+  .legend.folded h3{margin:0}
+  .legend.folded ul,.legend.folded .listbtn{display:none}
+  aside header.folded .label,aside header.folded > p,aside header.folded .rules,aside header.folded .rules-box,aside header.folded .pi{display:none}
+  aside header.folded h2{margin:4px 0 0}
   .phrase{position:absolute;z-index:1;pointer-events:none;font:italic 600 clamp(17px,1.8vw,22px)/1.3 var(--serif);color:#f4efe5;text-shadow:0 0 18px #030d1f,0 0 6px #030d1f;max-width:min(360px,calc(100% - 40px));text-align:center;opacity:0;transform:translate(-50%,-50%);transition:opacity 1.2s}
   .phrase.show{opacity:.95}
   .page ul.list button.skybtn{margin-left:8px;background:none;border:1px solid #9d9686;border-radius:99px;padding:3px 10px;font:500 12px var(--mono);cursor:pointer;color:#052a58}
@@ -395,8 +406,8 @@
     <div class="account-menu" id="account-menu"><button type="button" class="space-x" id="space-x" aria-label="إغلاق">×</button><small id="account-who"></small><h4>شراراتي</h4><ul class="space-list" id="space-list" aria-live="polite"></ul><div id="mix-space"></div><button type="button" id="account-logout">تسجيل الخروج</button><button type="button" class="danger" id="account-delete">حذف حسابي</button></div>
     <button class="mydata" type="button" id="mydata">احذف نجمتي وبياناتي</button>
     <div class="legend" role="group" aria-labelledby="legend-title">
-      <h3 id="legend-title">دليل الألوان</h3>
-      <ul>
+      <h3 id="legend-title"><button type="button" class="fold" id="legend-fold" aria-expanded="true" aria-controls="legend-list">دليل الألوان<span class="chev" aria-hidden="true">▾</span></button></h3>
+      <ul id="legend-list">
         <li><i style="color:#ebaf12;background:#ebaf12"></i>فكرة</li>
         <li><i style="color:#f4efe5;background:#f4efe5"></i>مساعدة</li>
         <li><i style="color:#8fb3ff;background:#8fb3ff"></i>الذكاء الاصطناعي</li>
@@ -424,7 +435,7 @@
     <header>
       <nav class="langs" aria-label="اللغة"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar" aria-current="page">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-tara.html" lang="bn" hreflang="bn">বাংলা</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
       <div class="label">الشفافية</div>
-      <h2 id="log-title">يوميات الذكاء الاصطناعي</h2>
+      <h2 id="log-title"><button type="button" class="fold" id="log-fold" aria-expanded="true">يوميات الذكاء الاصطناعي<span class="chev" aria-hidden="true">▾</span></button></h2>
       <p>كل ما يفعله الذكاء الاصطناعي يظهر هنا مباشرةً، مع سببه. لا شيء يُقرَّر في الظل: الذكاء الاصطناعي يقترح، والناس يقرّرون.</p>
       <button class="rules" type="button" aria-expanded="false" aria-controls="rules-box">اقرأ قواعد الذكاء الاصطناعي</button>
       <ul class="rules-box" id="rules-box">
@@ -1846,6 +1857,20 @@ async function startMix(){
     const s = starOf(pa.c);
     if (s){ focusStar(s); setTimeout(() => openBring(s, MIX.needs.find(x => x.id === pa.n) || null), calm ? 0 : 900); }
   }
+}
+
+// ───────── Faire de la place : le journal (son explication) et la légende se replient et se rouvrent d'un clic
+{
+  const FOLD = ["طيّ", "إظهار"], KEY = 'hlv_pliage';
+  let st = {}; try { st = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  const set = (btn, box, cls, k, open) => {
+    box.classList.toggle(cls, !open); btn.setAttribute('aria-expanded', open); btn.title = open ? FOLD[0] : FOLD[1];
+    st[k] = !open; try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {}
+  };
+  const lf = $('legend-fold'), lbox = lf.closest('.legend'), jf = $('log-fold'), jbox = jf.closest('header');
+  set(lf, lbox, 'folded', 'legend', !st.legend); set(jf, jbox, 'folded', 'journal', !st.journal);
+  lf.onclick = () => set(lf, lbox, 'folded', 'legend', lf.getAttribute('aria-expanded') !== 'true');
+  jf.onclick = () => set(jf, jbox, 'folded', 'journal', jf.getAttribute('aria-expanded') !== 'true');
 }
 startAuth().then(loadRealStars).then(markOwn).then(updateLegend).then(startMix);
 // Installable comme une application (le service worker est à la racine du site, comme pour les pages d'accueil)

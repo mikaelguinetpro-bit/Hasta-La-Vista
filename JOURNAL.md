@@ -2,6 +2,10 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-17 — Claude — claude/replier
+- Demandé par Ritukah, pour faire de la place dans les 9 vitrinas : **le haut du journal de l'IA** (son explication, les règles, la revisite de π) et **la légende** se replient d'un clic sur leur titre, et se rouvrent de même. Une petite flèche ▾ indique l'état. Le titre « Journal de l'IA » et le mot « Légende » restent visibles.
+- Le choix est gardé sur l'appareil (`hlv_pliage`). Testé sur ordinateur et téléphone, en français, en arabe et en chinois.
+
 ## 2026-11-17 — Claude — claude/installable
 - Hasta La Vista s'installe comme une application, comme Typ-1, Nebula, Atlas.sea et BNM1 : `manifest.webmanifest`, `sw.js` (à la racine), icônes 192 et 512, icônes « masquables » (l'arbre sur le papier crème) et icône iPhone.
 - Une petite pastille « Installer » en bas à droite des pages d'accueil (à gauche en arabe), discrète : installer reste un choix. La croix la réduit au petit logo rond ; un clic la rouvre. Sur iPhone, la toucher explique le geste dans Safari. Traduite dans les 9 langues.

@@ -94,8 +94,8 @@
     <div class="account-menu" id="account-menu"><button type="button" class="space-x" id="space-x" aria-label="Закрыть">×</button><small id="account-who"></small><h4>Мои искры</h4><ul class="space-list" id="space-list" aria-live="polite"></ul><div id="mix-space"></div><button type="button" id="account-logout">Выйти</button><button type="button" class="danger" id="account-delete">Удалить мой аккаунт</button></div>
     <button class="mydata" type="button" id="mydata">Удалить мою звезду и мои данные</button>
     <div class="legend" role="group" aria-labelledby="legend-title">
-      <h3 id="legend-title">Легенда</h3>
-      <ul>
+      <h3 id="legend-title"><button type="button" class="fold" id="legend-fold" aria-expanded="true" aria-controls="legend-list">Легенда<span class="chev" aria-hidden="true">▾</span></button></h3>
+      <ul id="legend-list">
         <li><i style="color:#ebaf12;background:#ebaf12"></i>Идея</li>
         <li><i style="color:#f4efe5;background:#f4efe5"></i>Помощь</li>
         <li><i style="color:#8fb3ff;background:#8fb3ff"></i>ИИ</li>
@@ -123,7 +123,7 @@
     <header>
       <nav class="langs" aria-label="Язык"><a href="vitrina-estrellas.html" lang="es" hreflang="es">ES</a><a href="vitrina-stars.html" lang="en" hreflang="en">EN</a><a href="vitrina-etoiles.html" lang="fr" hreflang="fr">FR</a><a href="vitrina-estrelas.html" lang="pt" hreflang="pt">PT</a><a href="vitrina-zvezdy.html" lang="ru" hreflang="ru" aria-current="page">RU</a><a href="vitrina-nujum.html" lang="ar" hreflang="ar">عربي</a><a href="vitrina-tare.html" lang="hi" hreflang="hi">हिन्दी</a><a href="vitrina-tara.html" lang="bn" hreflang="bn">বাংলা</a><a href="vitrina-xingxing.html" lang="zh-CN" hreflang="zh">中文</a></nav>
       <div class="label">Видимость</div>
-      <h2 id="log-title">Дневник ИИ</h2>
+      <h2 id="log-title"><button type="button" class="fold" id="log-fold" aria-expanded="true">Дневник ИИ<span class="chev" aria-hidden="true">▾</span></button></h2>
       <p>Всё, что делает ИИ, появляется здесь в прямом эфире, с объяснением. Ничего не решается в тени: ИИ предлагает, решают люди.</p>
       <button class="rules" type="button" aria-expanded="false" aria-controls="rules-box">Прочитать правила ИИ</button>
       <ul class="rules-box" id="rules-box">
@@ -1545,6 +1545,20 @@ async function startMix(){
     const s = starOf(pa.c);
     if (s){ focusStar(s); setTimeout(() => openBring(s, MIX.needs.find(x => x.id === pa.n) || null), calm ? 0 : 900); }
   }
+}
+
+// ───────── Faire de la place : le journal (son explication) et la légende se replient et se rouvrent d'un clic
+{
+  const FOLD = ["Свернуть", "Развернуть"], KEY = 'hlv_pliage';
+  let st = {}; try { st = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  const set = (btn, box, cls, k, open) => {
+    box.classList.toggle(cls, !open); btn.setAttribute('aria-expanded', open); btn.title = open ? FOLD[0] : FOLD[1];
+    st[k] = !open; try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {}
+  };
+  const lf = $('legend-fold'), lbox = lf.closest('.legend'), jf = $('log-fold'), jbox = jf.closest('header');
+  set(lf, lbox, 'folded', 'legend', !st.legend); set(jf, jbox, 'folded', 'journal', !st.journal);
+  lf.onclick = () => set(lf, lbox, 'folded', 'legend', lf.getAttribute('aria-expanded') !== 'true');
+  jf.onclick = () => set(jf, jbox, 'folded', 'journal', jf.getAttribute('aria-expanded') !== 'true');
 }
 startAuth().then(loadRealStars).then(markOwn).then(updateLegend).then(startMix);
 // Installable comme une application (le service worker est à la racine du site, comme pour les pages d'accueil)
