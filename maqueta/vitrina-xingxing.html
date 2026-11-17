@@ -45,9 +45,9 @@
     <canvas id="canvas" role="img" aria-label="一片星空：每颗星星都是一位创造者、一次帮助或 AI 的一个行动。发生的一切，也会以文字形式出现在 AI 日志中。"></canvas>
     <div class="intro" id="intro">
       <a class="home-link" href="../hasta-la-vista/zh.html" aria-label="返回 Hasta La Vista 网站">← Hasta La Vista</a>
-      <div class="label">原型 · 星空橱窗</div>
-      <h1>每一位创造者<br>都是一颗<em>星星。</em></h1>
-      <p>点一颗星星，认识它。靠近一点，你会看到新的星星在它周围诞生。走远一点，你会看到其他星系。</p>
+      <div class="label">原型 · 星空橱窗<button type="button" class="fold intro-fold" id="intro-fold" aria-expanded="true" aria-controls="intro-text"><span class="chev" aria-hidden="true">▾</span></button></div>
+      <div id="intro-text"><h1>每一位创造者<br>都是一颗<em>星星。</em></h1>
+      <p>点一颗星星，认识它。靠近一点，你会看到新的星星在它周围诞生。走远一点，你会看到其他星系。</p></div>
     </div>
     <div class="scale" aria-live="polite"><b id="scale-name">Hasta La Vista 星系</b><span id="scale-x">×1</span></div>
     <div class="search" role="search">
@@ -1557,6 +1557,9 @@ async function startMix(){
   };
   const lf = $('legend-fold'), lbox = lf.closest('.legend'), jf = $('log-fold'), jbox = jf.closest('header');
   set(lf, lbox, 'folded', 'legend', !st.legend); set(jf, jbox, 'folded', 'journal', !st.journal);
+  const hf = $('intro-fold'), hbox = $('intro');
+  set(hf, hbox, 'folded', 'hero', !st.hero);
+  hf.onclick = () => set(hf, hbox, 'folded', 'hero', hf.getAttribute('aria-expanded') !== 'true');
   lf.onclick = () => set(lf, lbox, 'folded', 'legend', lf.getAttribute('aria-expanded') !== 'true');
   jf.onclick = () => set(jf, jbox, 'folded', 'journal', jf.getAttribute('aria-expanded') !== 'true');
 }
