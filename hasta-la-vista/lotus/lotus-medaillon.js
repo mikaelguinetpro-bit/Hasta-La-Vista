@@ -138,10 +138,7 @@
         bouton.setAttribute('aria-label', mots().ouvrir);
         bouton.title = mots().titre;
         bouton.innerHTML =
-            '<span class="lotus-onde"></span>' +
-            '<span class="lotus-onde lotus-onde-2"></span>' +
-            '<img src="' + ROND + '" alt="" loading="lazy" decoding="async" draggable="false">' +
-            '<span class="lotus-cercle"></span>';
+            '<img src="' + ROND + '" alt="" loading="lazy" decoding="async" draggable="false">';
         bouton.addEventListener('click', ouvre);
         hote.appendChild(bouton);
 
