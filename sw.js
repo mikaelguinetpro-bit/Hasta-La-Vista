@@ -2,7 +2,7 @@
    - Les pages, le style et le code : réseau d'abord (toujours la dernière version), sinon la copie gardée.
    - Les polices, les icônes et les images : copie gardée d'abord (elles ne changent presque jamais).
    - Jamais touchés : Supabase (les chispas, les comptes, The Mix) et tous les autres sites. */
-const VERSION = "hlv-v2-2026-11-17";
+const VERSION = "hlv-v3-2026-11-18";
 const CACHE = "hlv-" + VERSION;
 const LANGS = ["index", "en", "fr", "pt", "ru", "ar", "hi", "bn", "zh"];
 const VITRINAS = ["estrellas", "stars", "etoiles", "estrelas", "zvezdy", "nujum", "tare", "tara", "xingxing"];
@@ -10,6 +10,8 @@ const A_GARDER = [
   "/", "/index.html", "/manifest.webmanifest",
   ...LANGS.map(l => `/hasta-la-vista/${l}.html`), "/hasta-la-vista/", "/hasta-la-vista/privacidad.html",
   "/hasta-la-vista/estilos.css", "/hasta-la-vista/app.js",
+  "/hasta-la-vista/lotus/lotus-medaillon.js", "/hasta-la-vista/lotus/lotus-medaillon.css",
+  "/hasta-la-vista/lotus/lotus-medaillon.webp", "/hasta-la-vista/lotus/lotus-ether.webp",
   "/hasta-la-vista/icono.png", "/hasta-la-vista/emblema-arbol.png", "/hasta-la-vista/apple-touch-icon.png",
   "/hasta-la-vista/icone-192.png", "/hasta-la-vista/icone-512.png",
   ...["dm-mono-latin-400-normal", "dm-mono-latin-500-normal", "dm-sans-latin-400-normal", "dm-sans-latin-500-normal",
