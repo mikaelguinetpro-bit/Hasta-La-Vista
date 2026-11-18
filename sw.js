@@ -2,7 +2,7 @@
    - Les pages, le style et le code : réseau d'abord (toujours la dernière version), sinon la copie gardée.
    - Les polices, les icônes et les images : copie gardée d'abord (elles ne changent presque jamais).
    - Jamais touchés : Supabase (les chispas, les comptes, The Mix) et tous les autres sites. */
-const VERSION = "hlv-v3-2026-11-18";
+const VERSION = "hlv-v4-2026-11-18";
 const CACHE = "hlv-" + VERSION;
 const LANGS = ["index", "en", "fr", "pt", "ru", "ar", "hi", "bn", "zh"];
 const VITRINAS = ["estrellas", "stars", "etoiles", "estrelas", "zvezdy", "nujum", "tare", "tara", "xingxing"];

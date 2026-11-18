@@ -32,6 +32,7 @@
 .lotus-fleur img{width:100%;display:block;user-select:none;}
 .lotus-zone{position:absolute;border-radius:50%;transition:box-shadow .3s,background .3s;display:block;outline:none;}
 .lotus-zone:focus-visible{box-shadow:0 0 0 2px rgba(212,175,55,.9);}
+.lotus-halo{position:absolute;inset:-35%;border-radius:50%;pointer-events:none;opacity:0;transition:opacity .3s;}
 .lotus-legende{min-height:76px;margin-top:.5rem;}
 .lotus-elem{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#D4AF37;font-family:ui-monospace,Menlo,Consolas,monospace;}
 .lotus-nom{font-size:26px;margin-top:.35rem;}
