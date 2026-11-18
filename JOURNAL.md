@@ -2,6 +2,19 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-18 — Claude — claude/lotus-ether
+- **Le Lotus de l'Éther** : un médaillon flottant en bas à droite, relevé au-dessus de la pastille « Installer ». Au clic, la fleur des quatre sites offerts s'ouvre, et le cœur d'or ramène à BNM1. Le même objet est posé à l'identique sur Typ-1, Atlas.Sea et Nebula : c'est la plaque tournante de l'Empire, et chaque site cesse d'être une impasse.
+  - le pétale de l'**Eau** porte « tu es ici » et ne mène nulle part : on y est ;
+  - les trois autres pétales mènent à Typ-1, Atlas.Sea et Nebula ;
+  - le créateur le **ferme d'un seul clic** (la croix) ; un petit ▲ le rappelle, et son choix reste sur son appareil ;
+  - Échap ou un clic à côté referme la fleur ; en arabe le médaillon passe à gauche, comme la pastille.
+- Posé dans les **neuf langues**, dans la même branche : `index.html`, `en.html`, `fr.html`, `pt.html`, `ru.html`, `ar.html`, `hi.html`, `bn.html`, `zh.html`. La maquette (`maqueta/`) n'est pas touchée.
+- Le Lotus porte ses **propres traductions dans les 9 langues** : il ne touche ni à `app.js` ni au texte des pages, et il n'impose pas de police — il parle avec la typographie de Hasta La Vista.
+- Tout tient dans `hasta-la-vista/lotus/` : `lotus-medaillon.js`, `lotus-medaillon.css`, la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`.
+- `sw.js` : `VERSION` montée à `hlv-v3-2026-11-18`, et les quatre fichiers du Lotus ajoutés à la liste gardée.
+- **La graine de ce site : « Hasta »**. Quand le Créateur ouvre le Lotus, la fleur lui donne la graine d'ici et l'invite à la porter au cœur, sur BNM1. Quatre graines rapportées et la fleur s'ouvre entièrement. Les quatre mots ont été choisis par Ritukah le 18/11/2026, sans accent : ils seront tapés sur neuf claviers différents.
+- La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
+
 ## 2026-11-17 — Claude — claude/journal-glisse
 - Demandé par Ritukah, pour bien voir la galaxie se former : **le journal de l'IA glisse sur le côté** d'un clic sur la petite languette au bord du ciel (› / ‹). Il est à droite, et à gauche en arabe. La galaxie prend alors toute la largeur et suit le mouvement. Un clic sur la languette ramène le journal.
 - Le choix est gardé sur l'appareil (`hlv_pliage`). Sur téléphone, le journal est déjà sous le ciel : pas de languette.
