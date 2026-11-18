@@ -45,3 +45,10 @@
 .lotus-devise{margin-top:1.1rem;font-style:italic;font-size:19px;color:#D4AF37;text-shadow:0 0 18px rgba(212,175,55,.35);}
 .lotus-quitter{margin-top:1rem;background:transparent;border:1px solid rgba(212,175,55,.35);color:rgba(240,214,140,.9);font-size:10px;letter-spacing:.26em;text-transform:uppercase;padding:.5rem 1.4rem;cursor:pointer;font-family:ui-monospace,Menlo,Consolas,monospace;}
 @media(prefers-reduced-motion:reduce){.lotus-bouton img{animation:none;}.lotus-bouton,.lotus-voile,.lotus-zone{transition:none;}}
+
+/* La graine de ce site — à porter au cœur du Lotus, sur BNM1. */
+.lotus-graine{margin-top:1rem;padding:.9rem 1rem;border:1px solid rgba(212,175,55,.3);background:rgba(212,175,55,.06);}
+.lotus-graine-titre{display:block;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(237,234,226,.5);font-family:ui-monospace,Menlo,Consolas,monospace;}
+.lotus-graine-mot{display:block;margin-top:.3rem;font-size:30px;font-weight:400;color:#D4AF37;letter-spacing:.04em;text-shadow:0 0 18px rgba(212,175,55,.35);}
+.lotus-graine-lien{display:inline-block;margin-top:.45rem;font-size:11px;color:rgba(237,234,226,.7);text-decoration:underline;text-underline-offset:3px;}
+.lotus-graine-lien:hover{color:#D4AF37;}

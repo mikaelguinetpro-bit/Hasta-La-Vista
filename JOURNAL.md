@@ -12,6 +12,7 @@ Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 - Le Lotus porte ses **propres traductions dans les 9 langues** : il ne touche ni à `app.js` ni au texte des pages, et il n'impose pas de police — il parle avec la typographie de Hasta La Vista.
 - Tout tient dans `hasta-la-vista/lotus/` : `lotus-medaillon.js`, `lotus-medaillon.css`, la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`.
 - `sw.js` : `VERSION` montée à `hlv-v3-2026-11-18`, et les quatre fichiers du Lotus ajoutés à la liste gardée.
+- **La graine de ce site : « Hasta »**. Quand le Créateur ouvre le Lotus, la fleur lui donne la graine d'ici et l'invite à la porter au cœur, sur BNM1. Quatre graines rapportées et la fleur s'ouvre entièrement. Les quatre mots ont été choisis par Ritukah le 18/11/2026, sans accent : ils seront tapés sur neuf claviers différents.
 - La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
 
 ## 2026-11-17 — Claude — claude/journal-glisse

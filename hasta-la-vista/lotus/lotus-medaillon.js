@@ -60,15 +60,15 @@
 
     // ---------------------------------------------------------------- les mots
     var MOTS = {
-        fr: { titre: 'Le Lotus de l’Éther', sous: 'Quatre sites offerts au monde.', ici: 'tu es ici', cacher: 'Cacher le Lotus', rappeler: 'Rappeler le Lotus', fermer: 'Fermer', ouvrir: 'Ouvrir le Lotus', feu: 'Feu', terre: 'Terre', air: 'Air', eau: 'Eau', coeur: 'Le cœur' },
-        en: { titre: 'The Lotus of the Ether', sous: 'Four sites given to the world.', ici: 'you are here', cacher: 'Hide the Lotus', rappeler: 'Bring back the Lotus', fermer: 'Close', ouvrir: 'Open the Lotus', feu: 'Fire', terre: 'Earth', air: 'Air', eau: 'Water', coeur: 'The heart' },
-        es: { titre: 'El Loto del Éter', sous: 'Cuatro sitios dados al mundo.', ici: 'estás aquí', cacher: 'Ocultar el Loto', rappeler: 'Volver a mostrar el Loto', fermer: 'Cerrar', ouvrir: 'Abrir el Loto', feu: 'Fuego', terre: 'Tierra', air: 'Aire', eau: 'Agua', coeur: 'El corazón' },
-        pt: { titre: 'O Lótus do Éter', sous: 'Quatro sites oferecidos ao mundo.', ici: 'estás aqui', cacher: 'Esconder o Lótus', rappeler: 'Trazer o Lótus de volta', fermer: 'Fechar', ouvrir: 'Abrir o Lótus', feu: 'Fogo', terre: 'Terra', air: 'Ar', eau: 'Água', coeur: 'O coração' },
-        ru: { titre: 'Лотос Эфира', sous: 'Четыре сайта, подаренных миру.', ici: 'вы здесь', cacher: 'Скрыть Лотос', rappeler: 'Вернуть Лотос', fermer: 'Закрыть', ouvrir: 'Открыть Лотос', feu: 'Огонь', terre: 'Земля', air: 'Воздух', eau: 'Вода', coeur: 'Сердце' },
-        ar: { titre: 'لوتس الأثير', sous: 'أربعة مواقع مُهداة إلى العالم.', ici: 'أنت هنا', cacher: 'إخفاء اللوتس', rappeler: 'إظهار اللوتس', fermer: 'إغلاق', ouvrir: 'افتح اللوتس', feu: 'نار', terre: 'أرض', air: 'هواء', eau: 'ماء', coeur: 'القلب' },
-        hi: { titre: 'आकाश का कमल', sous: 'दुनिया को दी गई चार साइटें।', ici: 'आप यहाँ हैं', cacher: 'कमल छिपाएँ', rappeler: 'कमल वापस लाएँ', fermer: 'बंद करें', ouvrir: 'कमल खोलें', feu: 'अग्नि', terre: 'पृथ्वी', air: 'वायु', eau: 'जल', coeur: 'हृदय' },
-        bn: { titre: 'ইথারের পদ্ম', sous: 'বিশ্বকে দেওয়া চারটি সাইট।', ici: 'আপনি এখানে', cacher: 'পদ্ম লুকান', rappeler: 'পদ্ম ফিরিয়ে আনুন', fermer: 'বন্ধ', ouvrir: 'পদ্ম খুলুন', feu: 'অগ্নি', terre: 'পৃথিবী', air: 'বায়ু', eau: 'জল', coeur: 'হৃদয়' },
-        zh: { titre: '以太之莲', sous: '赠予世界的四个网站。', ici: '你在这里', cacher: '隐藏莲花', rappeler: '找回莲花', fermer: '关闭', ouvrir: '打开莲花', feu: '火', terre: '土', air: '风', eau: '水', coeur: '花心' }
+        fr: { titre: 'Le Lotus de l’Éther', sous: 'Quatre sites offerts au monde.', ici: 'tu es ici', cacher: 'Cacher le Lotus', rappeler: 'Rappeler le Lotus', fermer: 'Fermer', ouvrir: 'Ouvrir le Lotus', feu: 'Feu', terre: 'Terre', air: 'Air', eau: 'Eau', coeur: 'Le cœur', graine: 'La graine de ce site', porte: 'Porte-la au cœur du Lotus.' },
+        en: { titre: 'The Lotus of the Ether', sous: 'Four sites given to the world.', ici: 'you are here', cacher: 'Hide the Lotus', rappeler: 'Bring back the Lotus', fermer: 'Close', ouvrir: 'Open the Lotus', feu: 'Fire', terre: 'Earth', air: 'Air', eau: 'Water', coeur: 'The heart', graine: 'The seed of this site', porte: 'Carry it to the heart of the Lotus.' },
+        es: { titre: 'El Loto del Éter', sous: 'Cuatro sitios dados al mundo.', ici: 'estás aquí', cacher: 'Ocultar el Loto', rappeler: 'Volver a mostrar el Loto', fermer: 'Cerrar', ouvrir: 'Abrir el Loto', feu: 'Fuego', terre: 'Tierra', air: 'Aire', eau: 'Agua', coeur: 'El corazón', graine: 'La semilla de este sitio', porte: 'Llévala al corazón del Loto.' },
+        pt: { titre: 'O Lótus do Éter', sous: 'Quatro sites oferecidos ao mundo.', ici: 'estás aqui', cacher: 'Esconder o Lótus', rappeler: 'Trazer o Lótus de volta', fermer: 'Fechar', ouvrir: 'Abrir o Lótus', feu: 'Fogo', terre: 'Terra', air: 'Ar', eau: 'Água', coeur: 'O coração', graine: 'A semente deste site', porte: 'Leva-a ao coração do Lótus.' },
+        ru: { titre: 'Лотос Эфира', sous: 'Четыре сайта, подаренных миру.', ici: 'вы здесь', cacher: 'Скрыть Лотос', rappeler: 'Вернуть Лотос', fermer: 'Закрыть', ouvrir: 'Открыть Лотос', feu: 'Огонь', terre: 'Земля', air: 'Воздух', eau: 'Вода', coeur: 'Сердце', graine: 'Семя этого сайта', porte: 'Отнесите его в сердце Лотоса.' },
+        ar: { titre: 'لوتس الأثير', sous: 'أربعة مواقع مُهداة إلى العالم.', ici: 'أنت هنا', cacher: 'إخفاء اللوتس', rappeler: 'إظهار اللوتس', fermer: 'إغلاق', ouvrir: 'افتح اللوتس', feu: 'نار', terre: 'أرض', air: 'هواء', eau: 'ماء', coeur: 'القلب', graine: 'بذرة هذا الموقع', porte: 'احملها إلى قلب اللوتس.' },
+        hi: { titre: 'आकाश का कमल', sous: 'दुनिया को दी गई चार साइटें।', ici: 'आप यहाँ हैं', cacher: 'कमल छिपाएँ', rappeler: 'कमल वापस लाएँ', fermer: 'बंद करें', ouvrir: 'कमल खोलें', feu: 'अग्नि', terre: 'पृथ्वी', air: 'वायु', eau: 'जल', coeur: 'हृदय', graine: 'इस साइट का बीज', porte: 'इसे कमल के हृदय तक ले जाओ।' },
+        bn: { titre: 'ইথারের পদ্ম', sous: 'বিশ্বকে দেওয়া চারটি সাইট।', ici: 'আপনি এখানে', cacher: 'পদ্ম লুকান', rappeler: 'পদ্ম ফিরিয়ে আনুন', fermer: 'বন্ধ', ouvrir: 'পদ্ম খুলুন', feu: 'অগ্নি', terre: 'পৃথিবী', air: 'বায়ু', eau: 'জল', coeur: 'হৃদয়', graine: 'এই সাইটের বীজ', porte: 'এটি পদ্মের হৃদয়ে নিয়ে যাও।' },
+        zh: { titre: '以太之莲', sous: '赠予世界的四个网站。', ici: '你在这里', cacher: '隐藏莲花', rappeler: '找回莲花', fermer: '关闭', ouvrir: '打开莲花', feu: '火', terre: '土', air: '风', eau: '水', coeur: '花心', graine: '本站的种子', porte: '把它带到莲花的花心。' }
     };
 
     function langue() {
@@ -91,6 +91,12 @@
         { cle: 'eau',   nom: 'HastaLaVista.org', url: 'https://hasta-la-vista.org',    lueur: 'rgba(90,220,230,0.5)',   zone: [20.5, 50.5, 20.5, 17.5] }
     ];
     var COEUR = { cle: 'coeur', nom: 'BNM1.agency', url: BNM1, lueur: 'rgba(212,175,55,0.6)', zone: [43.5, 48.5, 17, 24] };
+
+    // Les Quatre Graines. Chaque site offre la sienne ; le Créateur les porte
+    // toutes les quatre au cœur du Lotus, sur BNM1, et la fleur s'ouvre.
+    // Mots choisis par Ritukah le 18/11/2026, sans accent : ils seront tapés
+    // sur neuf claviers différents.
+    var GRAINES = { feu: 'Sieste', terre: 'Boussole', air: 'Echo', eau: 'Hasta' };
 
     // -------------------------------------------------------------- le style
     // En arabe (et tout dir="rtl"), on retourne le coin : le reste de la page
@@ -249,6 +255,18 @@
             portes.appendChild(a);
         });
         panneau.appendChild(portes);
+
+        // La graine de ce site, à porter au cœur du Lotus.
+        if (GRAINES[ICI]) {
+            var gr = document.createElement('div');
+            gr.className = 'lotus-graine';
+            gr.setAttribute('data-testid', 'lotus-graine');
+            gr.innerHTML =
+                '<span class="lotus-graine-titre">' + mots().graine + '</span>' +
+                '<b class="lotus-graine-mot">' + GRAINES[ICI] + '</b>' +
+                '<a class="lotus-graine-lien" href="' + BNM1 + '#graines">' + mots().porte + '</a>';
+            panneau.appendChild(gr);
+        }
 
         var devise = document.createElement('p');
         devise.className = 'lotus-devise';
