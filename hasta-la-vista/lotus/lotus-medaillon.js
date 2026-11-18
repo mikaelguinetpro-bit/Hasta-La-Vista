@@ -178,6 +178,11 @@
         var el = document.createElement(ici ? 'span' : 'a');
         el.className = 'lotus-zone';
         el.setAttribute('data-testid', 'lotus-zone-' + p.cle);
+        // Le halo de la couleur de l'élément : il baigne le pétale et déborde autour de lui.
+        var halo = document.createElement('span');
+        halo.className = 'lotus-halo';
+        halo.setAttribute('aria-hidden', 'true');
+        el.appendChild(halo);
         el.style.left = p.zone[0] + '%';
         el.style.top = p.zone[1] + '%';
         el.style.width = p.zone[2] + '%';
@@ -189,13 +194,12 @@
             el.setAttribute('aria-hidden', 'true');
         }
         function allume() {
-            el.style.boxShadow = '0 0 70px 22px ' + p.lueur;
-            el.style.background = 'radial-gradient(ellipse at center, ' + p.lueur + ' 0%, transparent 70%)';
+            halo.style.background = 'radial-gradient(ellipse at center, ' + p.lueur + ' 0%, ' + p.lueur + ' 30%, transparent 68%)';
+            halo.style.opacity = '1';
             legende(p);
         }
         function eteint() {
-            el.style.boxShadow = 'none';
-            el.style.background = 'transparent';
+            halo.style.opacity = '0';
             legende(null);
         }
         el.addEventListener('mouseenter', allume);
