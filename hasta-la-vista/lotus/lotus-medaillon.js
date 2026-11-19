@@ -33,6 +33,9 @@
  *   data-lotus-rond   : chemin de la version carrée (le médaillon). Déduit du
  *                       précédent si on ne le donne pas.
  *
+ * Il charge aussi calcula.js, posé à côté de lui : le compteur de l'Empire,
+ * qui compte sans reconnaître personne (voir ce fichier).
+ *
  * Le Créateur peut le fermer d'un seul clic ; un petit ▲ le rappelle.
  * Son choix est gardé dans son navigateur.
  *
@@ -56,6 +59,17 @@
     var STYLE = (script && script.dataset.lotusStyle) ||
         ((script && script.src ? script.src : '').replace(/\.js(\?.*)?$/, '.css') || '/lotus/lotus-medaillon.css');
     var CLE = 'lotus_ether_cache';
+
+    // Calcula, le compteur sans nom, vit à côté du médaillon.
+    (function () {
+        if (window.calcula || !/^(feu|terre|air|eau)$/.test(ICI) || !script || !script.src) return;
+        var c = document.createElement('script');
+        c.src = script.src.replace(/lotus-medaillon\.js(\?.*)?$/, 'calcula.js');
+        c.defer = true;
+        c.setAttribute('data-calcula-site', ICI);
+        document.head.appendChild(c);
+    })();
+    function geste(g) { try { if (window.calcula) window.calcula(g); } catch (e) { /* rien */ } }
     var DEVISE = 'Here, marketing is the offering.';
 
     // ---------------------------------------------------------------- les mots
@@ -189,6 +203,7 @@
         el.style.height = p.zone[3] + '%';
         if (!ici) {
             el.href = p.url;
+            el.addEventListener('click', function () { geste('lotus-vers-' + (p.cle === 'coeur' ? 'ether' : p.cle)); });
             el.setAttribute('aria-label', (mots()[p.cle] || '') + ' · ' + p.nom);
         } else {
             el.setAttribute('aria-hidden', 'true');
@@ -211,6 +226,7 @@
 
     function ouvre() {
         if (voile) return;
+        geste('lotus-ouvert');
         voile = document.createElement('div');
         voile.className = 'lotus-voile';
         voile.setAttribute('data-testid', 'lotus-voile');
@@ -251,7 +267,10 @@
             a.className = 'lotus-porte';
             a.setAttribute('data-testid', 'lotus-porte-' + p.cle);
             if (ici) a.setAttribute('aria-disabled', 'true');
-            else a.href = p.url;
+            else {
+                a.href = p.url;
+                a.addEventListener('click', function () { geste('lotus-vers-' + (p.cle === 'coeur' ? 'ether' : p.cle)); });
+            }
             a.innerHTML = '<b>' + (mots()[p.cle] || mots().coeur) + '</b><span>' + p.nom + '</span>' +
                 (ici ? '<b style="color:rgba(237,234,226,.45);margin-top:.3rem">' + mots().ici + '</b>' : '');
             a.addEventListener('mouseenter', function () { legende(p); });
@@ -269,6 +288,7 @@
                 '<span class="lotus-graine-titre">' + mots().graine + '</span>' +
                 '<b class="lotus-graine-mot">' + GRAINES[ICI] + '</b>' +
                 '<a class="lotus-graine-lien" href="' + BNM1 + '#graines">' + mots().porte + '</a>';
+            gr.querySelector('a').addEventListener('click', function () { geste('graine-portee'); });
             panneau.appendChild(gr);
         }
 
