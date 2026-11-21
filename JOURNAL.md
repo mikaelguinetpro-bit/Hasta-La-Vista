@@ -2,6 +2,12 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-21 — Claude — claude/rideau-ouverture
+- Décision de Ritukah : cacher Hasta La Vista jusqu'à son ouverture, **mardi 1er décembre 2026 à 00:00 (Paris)**, avec un beau décompte, comme Nebula et Atlas.Sea.
+  - `middleware.js` (Vercel) montre `bientot.html` à tous les visiteurs, et laisse passer Ritukah avec une clé secrète (`HLV_PREVIEW_KEY`, lien `?cle=` puis cookie 60 jours). À l'heure dite, tout s'ouvre seul, et la page Bientôt se recharge d'elle-même.
+  - La page Bientôt : l'arbre, « La première étoile s'allume bientôt », le décompte, et la phrase choisie par Claude : « "Adieu" ne veut pas dire "jamais". À minuit, chaque créateur devient une étoile. » Derrière, un ciel qui se remplit d'étoiles à mesure que minuit approche. Dans les 9 langues (selon la langue du navigateur ; espagnol par défaut), invisible pour les moteurs.
+- Testé : 13 vérifications du rideau (avant/après, bonne/mauvaise clé, cookie, polices et icônes publiques, service worker fermé, ouverture anticipée, clé trop courte), page Bientôt sur ordinateur et téléphone (arabe de droite à gauche, chinois).
+
 ## 2026-11-21 — Claude — claude/sens-revelation
 - **La phrase sous le décompte**, changée par Ritukah : « Soyez prêts, car son nom sera un don. Tout cela pour le salut. Pour votre salut. » Elle ne nomme plus les sens. Et avant leur jour, les sens restent secrets : « · · · » à la place du mot. Ils se découvrent vraiment, un par pétale.
 - **Les cinq sens de l'association**, choisis par Ritukah le 21/11/2026, sous le décompte : chaque pétale du Lotus en allume un le jour de son lancement (date de Paris). **Résilience** le 1er décembre (Eau · Hasta La Vista), **Intelligence** le 8 (Air · Nebula), **Sagesse** le 15 (Terre · Atlas.Sea), **Salut** le 21 (Feu · Typ-1). La **Force** arrive avec le nom, à 12h21. Avant leur jour, les mots restent en gris, avec « Un sens s'allume à chaque pétale du Lotus ». Traduit dans les 9 langues.

@@ -15,6 +15,13 @@ Ces quatre piliers, définis par Ritukah, guident **chaque décision**, sur le s
 
 **Au-dessus des quatre piliers : tout le monde est créateur.** Sur Hasta La Vista, on ne parle pas d'« utilisateurs » ni de « clients », mais de **créateurs**.
 
+## Rideau d'ouverture (jusqu'au 1er décembre 2026)
+
+- Décidé par Ritukah : Hasta La Vista reste **caché jusqu'au mardi 1er décembre 2026 à 00:00, heure de Paris** (nuit du 30 novembre au 1er décembre). Le site est servi par **Vercel** (dépôt privé) ; les visiteurs voient `bientot.html` (décompte, ciel qui se remplit d'étoiles, 9 langues, `noindex`). `sw.js` et le manifeste répondent 404 avant l'ouverture.
+- C'est `middleware.js` (Vercel Routing Middleware, à la racine, avec `package.json`) qui fait le tri. Le rideau se lève **tout seul** à l'heure dite : ne pas changer `OPEN_AT` sans son accord.
+- Accès de Ritukah avant l'ouverture : variable Vercel `HLV_PREVIEW_KEY` (16 caractères au moins), puis une fois `https://hasta-la-vista.org/?cle=<clé>` → cookie 60 jours. Ouverture anticipée : `HLV_OPEN_NOW=1` puis redéployer. Même recette que Nebula et Atlas.Sea.
+- Après l'ouverture, `middleware.js`, `package.json`, `package-lock.json` et `bientot.*` pourront être retirés.
+
 ## Le projet
 
 - **Hasta La Vista** est une plateforme qui veut rendre le monde plus beau grâce aux idées, au travail partagé, à l'intelligence humaine et aux agents IA.
