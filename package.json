@@ -1,0 +1,9 @@
+{
+  "name": "hasta-la-vista",
+  "private": true,
+  "type": "module",
+  "description": "Site statique servi par Vercel ; ce fichier sert seulement au rideau d'ouverture (middleware.js).",
+  "dependencies": {
+    "@vercel/functions": "^3.11.3"
+  }
+}
