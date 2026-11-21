@@ -23,6 +23,9 @@
  *                           bandeau (par défaut, en tête de <body>).
  *   data-revelation-masque-classe : si <body> porte cette classe, le bandeau
  *                           s'efface (ex. quand le Créateur est dans le tipi).
+ *   data-revelation-coin-occupe : présent si le site a déjà un bouton dans le
+ *                           coin haut-droit (ex. le son de Typ-1) : le bandeau
+ *                           lui laisse la place et met sa croix de l'autre côté.
  *
  * La langue est lue sur <html lang="…"> ; à défaut, le français. Si le site
  * change de langue sans recharger la page, le bandeau la suit.
@@ -42,6 +45,7 @@
         ((script && script.src ? script.src : '').replace(/\.js(\?.*)?$/, '.css') || '/lotus/revelation.css');
     var AVANT = (script && script.dataset.revelationAvant) || '';
     var MASQUE_CLASSE = (script && script.dataset.revelationMasqueClasse) || '';
+    var COIN_OCCUPE = !!(script && script.hasAttribute('data-revelation-coin-occupe'));
 
     // ---------------------------------------------------------------- les mots
     var MOTS = {
@@ -123,7 +127,8 @@
             var M = MOTS[L];
             bande.className = 'revelation-bande' +
                 (/^(ar|hi|bn|zh)$/.test(L) ? ' revelation-ecriture-liee' : '') +
-                (revelee ? ' revelation-revelee' : '');
+                (revelee ? ' revelation-revelee' : '') +
+                (COIN_OCCUPE ? ' revelation-coin-occupe' : '');
             bande.setAttribute('aria-label', M.tag.replace(/·/g, '').trim());
             bande.setAttribute('lang', L);
             bande.setAttribute('dir', L === 'ar' ? 'rtl' : 'ltr');

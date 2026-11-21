@@ -89,8 +89,14 @@
 .revelation-ecriture-liee .revelation-tag { font-size: 13px; }
 .revelation-ecriture-liee .revelation-unite { font-size: 11px; }
 .revelation-ecriture-liee .revelation-lien { font-size: 13px; }
+.revelation-coin-occupe { padding-right: 72px; }
+.revelation-coin-occupe .revelation-fermer { right: auto; left: 10px; }
+.revelation-coin-occupe[dir="rtl"] { padding-right: 48px; padding-left: 72px; }
+.revelation-coin-occupe[dir="rtl"] .revelation-fermer { left: auto; right: 10px; }
 @media (max-width: 520px) {
     .revelation-bande { padding: 16px 40px 14px; }
+    .revelation-coin-occupe { padding-right: 62px; }
+    .revelation-coin-occupe[dir="rtl"] { padding-right: 40px; padding-left: 62px; }
     .revelation-case { min-width: 50px; }
     .revelation-prets { font-size: 13px; }
 }
