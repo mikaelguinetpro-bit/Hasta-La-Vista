@@ -2,6 +2,16 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-21 — Claude — claude/revelation
+- **Décidé par Ritukah** : l'association qui porte les quatre sites offerts révèle son nom le **21 décembre 2026 à 12h21, heure de Paris**, au cœur du Lotus, sur BNM1. D'ici là, un décompte sur les quatre sites.
+- **Le bandeau de la Révélation**, tout en haut de la page : « L'association révélera son nom le 21 décembre à 12h21, heure de Paris », le décompte (jours · heures · minutes · secondes), les mots de Ritukah (« Soyez prêts… Pour votre salut. ») et un lien « Au cœur du Lotus → » vers BNM1. À 12h21, il dit : « Le nom est révélé. Il vous attend au cœur du Lotus. »
+- On peut le fermer (×) : il revient à la visite suivante (`sessionStorage`, `revelation_fermee`).
+- Tout tient dans `hasta-la-vista/lotus/revelation.js` et `revelation.css`, avec ses traductions dans les 9 langues : **le même fichier sera posé à l'identique sur Typ-1, Atlas.Sea et Nebula**, comme le médaillon du Lotus. Il ne touche ni à `app.js` ni au texte des pages. Posé dans les **neuf pages**, dans la même branche.
+- **Le nom n'est écrit nulle part** dans ce dépôt ni sur le site : ce code est lisible par tous. Il ne vit que sur le serveur de BNM1.
+- En arabe, hindi, bengali et chinois, pas de lettres espacées ni de majuscules : l'écriture reste liée.
+- `sw.js` : `VERSION` montée à `hlv-v6-2026-11-21`, et les deux fichiers ajoutés à la liste gardée.
+- Testé en français, arabe et chinois, sur ordinateur et téléphone, avant et après 12h21.
+
 ## 2026-11-21 — Claude — claude/chaque-pays
 - Demandé par Ritukah : la phrase « Rendons l'Espagne encore plus belle… » s'adresse maintenant au pays ou au monde de chaque langue, en haut de la page et dans « La vision ». En espagnol, l'Espagne ; en anglais, le monde anglophone ; en français, la France ; en portugais, les pays de langue portugaise ; en russe, les pays où l'on parle russe ; en arabe, les pays arabophones ; en hindi, l'Inde ; en bengali, les pays et régions de langue bengalie ; en chinois, le monde chinois (中文世界).
 
