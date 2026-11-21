@@ -15,6 +15,7 @@
     font-family: inherit;
     line-height: 1.4;
 }
+.revelation-bande[hidden] { display: none; }
 .revelation-interieur { max-width: 860px; margin: 0 auto; }
 .revelation-tag,
 .revelation-unite,
@@ -48,6 +49,32 @@
 }
 .revelation-unite { margin-top: 2px; font-size: 9px; letter-spacing: 0.2em; color: #b9b3a6; }
 .revelation-prets { margin: 10px auto 0; max-width: 640px; font-size: 14px; font-style: italic; color: #cfc8b8; }
+.revelation-sens {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 18px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+.revelation-sens-mot {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(185, 179, 166, 0.45);
+    transition: color 0.7s ease, text-shadow 0.7s ease;
+}
+.revelation-sens-allume { color: #d4af37; text-shadow: 0 0 12px rgba(212, 175, 55, 0.55); }
+.revelation-sens-note {
+    margin: 4px 0 0;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #9d978a;
+}
 .revelation-lien {
     display: inline-block;
     margin-top: 8px;
@@ -85,12 +112,27 @@
     letter-spacing: 0;
     text-transform: none;
 }
+.revelation-ecriture-liee .revelation-sens-mot,
+.revelation-ecriture-liee .revelation-sens-note {
+    font-family: inherit;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.revelation-ecriture-liee .revelation-sens-mot { font-size: 13px; }
+.revelation-ecriture-liee .revelation-sens-note { font-size: 11px; }
 .revelation-ecriture-liee .revelation-tag { font-size: 13px; }
 .revelation-ecriture-liee .revelation-unite { font-size: 11px; }
 .revelation-ecriture-liee .revelation-lien { font-size: 13px; }
+.revelation-coin-occupe { padding-right: 72px; }
+.revelation-coin-occupe .revelation-fermer { right: auto; left: 10px; }
+.revelation-coin-occupe[dir="rtl"] { padding-right: 48px; padding-left: 72px; }
+.revelation-coin-occupe[dir="rtl"] .revelation-fermer { left: auto; right: 10px; }
 @media (max-width: 520px) {
     .revelation-bande { padding: 16px 40px 14px; }
+    .revelation-coin-occupe { padding-right: 62px; }
+    .revelation-coin-occupe[dir="rtl"] { padding-right: 40px; padding-left: 62px; }
     .revelation-case { min-width: 50px; }
     .revelation-prets { font-size: 13px; }
 }
 @media print { .revelation-bande { display: none; } }
+@media (prefers-reduced-motion: reduce) { .revelation-sens-mot { transition: none; } }
