@@ -2,6 +2,12 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-21 — Claude — claude/sens-revelation
+- **Les cinq sens de l'association**, choisis par Ritukah le 21/11/2026, sous le décompte : chaque pétale du Lotus en allume un le jour de son lancement (date de Paris). **Résilience** le 1er décembre (Eau · Hasta La Vista), **Intelligence** le 8 (Air · Nebula), **Sagesse** le 15 (Terre · Atlas.Sea), **Salut** le 21 (Feu · Typ-1). La **Force** arrive avec le nom, à 12h21. Avant leur jour, les mots restent en gris, avec « Un sens s'allume à chaque pétale du Lotus ». Traduit dans les 9 langues.
+- Aperçu à une autre date : ajouter `?calendrier=2026-12-08` à l'adresse.
+- Dans `lotus/revelation.js` et `revelation.css`, identiques sur les quatre sites offerts. Service worker : version montée.
+- **Rattrapage** : deux améliorations du bandeau étaient arrivées dans la branche `claude/revelation` après son merge, et n'étaient donc pas entrées ici (les trois autres sites les ont). Elles arrivent maintenant : le bandeau suit la langue si elle change sans rechargement, et l'option `data-revelation-coin-occupe` (utile sur Typ-1 seulement). Rien ne change à l'écran sur Hasta La Vista.
+
 ## 2026-11-21 — Claude — claude/cercle-langues
 - Demandé par Ritukah, pour agrandir le cercle des créateurs : en espagnol, la phrase rend plus beaux **tous les pays de langue espagnole** (et plus seulement l'Espagne) ; en français, **tous les pays francophones** (et plus seulement la France). En haut de la page et dans « La vision ».
 
