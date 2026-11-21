@@ -3,6 +3,7 @@
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
 ## 2026-11-21 — Claude — claude/sens-revelation
+- **La phrase sous le décompte**, changée par Ritukah : « Soyez prêts, car son nom sera un don. Tout cela pour le salut. Pour votre salut. » Elle ne nomme plus les sens. Et avant leur jour, les sens restent secrets : « · · · » à la place du mot. Ils se découvrent vraiment, un par pétale.
 - **Les cinq sens de l'association**, choisis par Ritukah le 21/11/2026, sous le décompte : chaque pétale du Lotus en allume un le jour de son lancement (date de Paris). **Résilience** le 1er décembre (Eau · Hasta La Vista), **Intelligence** le 8 (Air · Nebula), **Sagesse** le 15 (Terre · Atlas.Sea), **Salut** le 21 (Feu · Typ-1). La **Force** arrive avec le nom, à 12h21. Avant leur jour, les mots restent en gris, avec « Un sens s'allume à chaque pétale du Lotus ». Traduit dans les 9 langues.
 - Aperçu à une autre date : ajouter `?calendrier=2026-12-08` à l'adresse.
 - Dans `lotus/revelation.js` et `revelation.css`, identiques sur les quatre sites offerts. Service worker : version montée.
