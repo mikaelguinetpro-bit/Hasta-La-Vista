@@ -1,0 +1,96 @@
+/*
+ * La Révélation — le bandeau commun aux quatre sites offerts.
+ * Les couleurs sont celles de la nuit et de l'or de BNM1 ; les lettres
+ * suivent la typographie du site qui l'accueille.
+ */
+.revelation-bande {
+    position: relative;
+    z-index: 5;
+    margin: 0;
+    padding: 18px 48px 16px;
+    background: radial-gradient(ellipse at center top, #1d1830 0%, #0b0a10 75%);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+    color: #ece6d6;
+    text-align: center;
+    font-family: inherit;
+    line-height: 1.4;
+}
+.revelation-interieur { max-width: 860px; margin: 0 auto; }
+.revelation-tag,
+.revelation-unite,
+.revelation-lien {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    text-transform: uppercase;
+}
+.revelation-tag { font-size: 11px; letter-spacing: 0.34em; color: #d4af37; }
+.revelation-annonce { margin: 6px 0 0; font-size: clamp(16px, 2.2vw, 20px); color: #f4efe5; }
+.revelation-compte {
+    display: flex;
+    justify-content: center;
+    gap: clamp(6px, 2vw, 14px);
+    margin: 10px 0 0;
+    direction: ltr;
+}
+.revelation-case {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 58px;
+    padding: 6px 8px 5px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: rgba(11, 10, 16, 0.6);
+}
+.revelation-chiffre {
+    font-size: clamp(22px, 3.6vw, 30px);
+    line-height: 1.05;
+    color: #d4af37;
+    font-variant-numeric: tabular-nums;
+}
+.revelation-unite { margin-top: 2px; font-size: 9px; letter-spacing: 0.2em; color: #b9b3a6; }
+.revelation-prets { margin: 10px auto 0; max-width: 640px; font-size: 14px; font-style: italic; color: #cfc8b8; }
+.revelation-lien {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    color: #d4af37;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+}
+.revelation-lien:hover,
+.revelation-lien:focus-visible { color: #f1d27a; border-bottom-color: #f1d27a; }
+.revelation-revelee .revelation-annonce { font-size: clamp(18px, 2.6vw, 24px); color: #f1d27a; }
+.revelation-fermer {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    color: #b9b3a6;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+.revelation-bande[dir="rtl"] .revelation-fermer { right: auto; left: 10px; }
+.revelation-fermer:hover,
+.revelation-fermer:focus-visible { color: #f4efe5; }
+.revelation-lien:focus-visible,
+.revelation-fermer:focus-visible { outline: 2px solid #d4af37; outline-offset: 3px; }
+.revelation-ecriture-liee .revelation-tag,
+.revelation-ecriture-liee .revelation-unite,
+.revelation-ecriture-liee .revelation-lien {
+    font-family: inherit;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.revelation-ecriture-liee .revelation-tag { font-size: 13px; }
+.revelation-ecriture-liee .revelation-unite { font-size: 11px; }
+.revelation-ecriture-liee .revelation-lien { font-size: 13px; }
+@media (max-width: 520px) {
+    .revelation-bande { padding: 16px 40px 14px; }
+    .revelation-case { min-width: 50px; }
+    .revelation-prets { font-size: 13px; }
+}
+@media print { .revelation-bande { display: none; } }
