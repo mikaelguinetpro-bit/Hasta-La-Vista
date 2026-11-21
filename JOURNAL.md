@@ -2,6 +2,9 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-21 — Claude — claude/cercle-langues
+- Demandé par Ritukah, pour agrandir le cercle des créateurs : en espagnol, la phrase rend plus beaux **tous les pays de langue espagnole** (et plus seulement l'Espagne) ; en français, **tous les pays francophones** (et plus seulement la France). En haut de la page et dans « La vision ».
+
 ## 2026-11-21 — Claude — claude/revelation
 - **Décidé par Ritukah** : l'association qui porte les quatre sites offerts révèle son nom le **21 décembre 2026 à 12h21, heure de Paris**, au cœur du Lotus, sur BNM1. D'ici là, un décompte sur les quatre sites.
 - **Le bandeau de la Révélation**, tout en haut de la page : « L'association révélera son nom le 21 décembre à 12h21, heure de Paris », le décompte (jours · heures · minutes · secondes), les mots de Ritukah (« Soyez prêts… Pour votre salut. ») et un lien « Au cœur du Lotus → » vers BNM1. À 12h21, il dit : « Le nom est révélé. Il vous attend au cœur du Lotus. »
