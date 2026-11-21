@@ -9,6 +9,7 @@ Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 - Tout tient dans `hasta-la-vista/lotus/revelation.js` et `revelation.css`, avec ses traductions dans les 9 langues : **le même fichier sera posé à l'identique sur Typ-1, Atlas.Sea et Nebula**, comme le médaillon du Lotus. Il ne touche ni à `app.js` ni au texte des pages. Posé dans les **neuf pages**, dans la même branche.
 - **Le nom n'est écrit nulle part** dans ce dépôt ni sur le site : ce code est lisible par tous. Il ne vit que sur le serveur de BNM1.
 - En arabe, hindi, bengali et chinois, pas de lettres espacées ni de majuscules : l'écriture reste liée.
+- Le bandeau suit la langue si un site la change sans recharger la page (Atlas, Nebula, Typ-1), et peut s'effacer quand `<body>` porte une classe (`data-revelation-masque-classe`, pour le tipi de Typ-1).
 - `sw.js` : `VERSION` montée à `hlv-v6-2026-11-21`, et les deux fichiers ajoutés à la liste gardée.
 - Testé en français, arabe et chinois, sur ordinateur et téléphone, avant et après 12h21.
 

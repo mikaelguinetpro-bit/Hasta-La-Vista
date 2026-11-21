@@ -21,8 +21,11 @@
  *                           pas être injecté : certains sites le refusent.
  *   data-revelation-avant : sélecteur de l'élément devant lequel poser le
  *                           bandeau (par défaut, en tête de <body>).
+ *   data-revelation-masque-classe : si <body> porte cette classe, le bandeau
+ *                           s'efface (ex. quand le Créateur est dans le tipi).
  *
- * La langue est lue sur <html lang="…"> ; à défaut, le français.
+ * La langue est lue sur <html lang="…"> ; à défaut, le français. Si le site
+ * change de langue sans recharger la page, le bandeau la suit.
  */
 (function () {
     'use strict';
@@ -38,6 +41,7 @@
     var STYLE = (script && script.dataset.revelationStyle) ||
         ((script && script.src ? script.src : '').replace(/\.js(\?.*)?$/, '.css') || '/lotus/revelation.css');
     var AVANT = (script && script.dataset.revelationAvant) || '';
+    var MASQUE_CLASSE = (script && script.dataset.revelationMasqueClasse) || '';
 
     // ---------------------------------------------------------------- les mots
     var MOTS = {
@@ -68,46 +72,39 @@
     }
 
     function poser() {
-        var L = langue();
-        var M = MOTS[L];
-
         var lien = document.createElement('link');
         lien.rel = 'stylesheet';
         lien.href = STYLE;
         document.head.appendChild(lien);
 
         var bande = el('aside', 'revelation-bande');
-        bande.setAttribute('aria-label', M.tag.replace(/·/g, '').trim());
-        bande.setAttribute('lang', L);
-        bande.setAttribute('dir', L === 'ar' ? 'rtl' : 'ltr');
-        // L'arabe, le hindi, le bengali et le chinois ne s'écrivent pas en
-        // lettres espacées : on garde leur écriture liée.
-        if (/^(ar|hi|bn|zh)$/.test(L)) bande.className += ' revelation-ecriture-liee';
-
         var interieur = el('div', 'revelation-interieur');
-        var tag = el('div', 'revelation-tag', M.tag);
-        var annonce = el('p', 'revelation-annonce', M.annonce);
+        var tag = el('div', 'revelation-tag');
+        var annonce = el('p', 'revelation-annonce');
         var compte = el('div', 'revelation-compte');
         compte.setAttribute('aria-hidden', 'true');
         var cases = {};
+        var unites = {};
         ['j', 'h', 'm', 's'].forEach(function (k) {
             var c = el('span', 'revelation-case');
             cases[k] = el('span', 'revelation-chiffre', '00');
+            unites[k] = el('span', 'revelation-unite');
             c.appendChild(cases[k]);
-            c.appendChild(el('span', 'revelation-unite', M[k]));
+            c.appendChild(unites[k]);
             compte.appendChild(c);
         });
-        var prets = el('p', 'revelation-prets', M.prets + ' ' + M.salut);
-        var vers = el('a', 'revelation-lien', M.lien);
+        var prets = el('p', 'revelation-prets');
+        var vers = el('a', 'revelation-lien');
         vers.href = BNM1;
         vers.rel = 'noopener';
 
         var fermer = el('button', 'revelation-fermer', '×');
         fermer.type = 'button';
-        fermer.setAttribute('aria-label', M.fermer);
         fermer.addEventListener('click', function () {
             try { window.sessionStorage.setItem(CLE, '1'); } catch (e) { /* rien */ }
-            bande.parentNode && bande.parentNode.removeChild(bande);
+            if (observateur) observateur.disconnect();
+            if (minuterie) clearTimeout(minuterie);
+            if (bande.parentNode) bande.parentNode.removeChild(bande);
         });
 
         interieur.appendChild(tag);
@@ -118,17 +115,36 @@
         bande.appendChild(interieur);
         bande.appendChild(fermer);
 
+        var revelee = false;
+
+        // Écrit les mots dans la langue de la page (et les réécrit si elle change).
+        function ecrire() {
+            var L = langue();
+            var M = MOTS[L];
+            bande.className = 'revelation-bande' +
+                (/^(ar|hi|bn|zh)$/.test(L) ? ' revelation-ecriture-liee' : '') +
+                (revelee ? ' revelation-revelee' : '');
+            bande.setAttribute('aria-label', M.tag.replace(/·/g, '').trim());
+            bande.setAttribute('lang', L);
+            bande.setAttribute('dir', L === 'ar' ? 'rtl' : 'ltr');
+            tag.textContent = M.tag;
+            annonce.textContent = revelee ? M.revele : M.annonce;
+            ['j', 'h', 'm', 's'].forEach(function (k) { unites[k].textContent = M[k]; });
+            prets.textContent = M.prets + ' ' + M.salut;
+            vers.textContent = M.lien;
+            fermer.setAttribute('aria-label', M.fermer);
+        }
+
         var deux = function (n) { return (n < 10 ? '0' : '') + n; };
         var minuterie = null;
         function battre() {
             var reste = REVELATION - Date.now();
             if (reste <= 0) {
                 // L'heure est venue : le nom attend au cœur du Lotus, sur BNM1.
-                if (minuterie) clearTimeout(minuterie);
-                annonce.textContent = M.revele;
-                bande.className += ' revelation-revelee';
+                revelee = true;
                 if (compte.parentNode) compte.parentNode.removeChild(compte);
                 if (prets.parentNode) prets.parentNode.removeChild(prets);
+                ecrire();
                 return;
             }
             var s = Math.floor(reste / 1000);
@@ -138,7 +154,24 @@
             cases.s.textContent = deux(s % 60);
             minuterie = setTimeout(battre, 1000 - (Date.now() % 1000));
         }
+
+        // Comme le Lotus : le bandeau s'efface quand <body> porte la classe donnée.
+        function masquer() {
+            bande.hidden = !!(MASQUE_CLASSE && document.body.classList.contains(MASQUE_CLASSE));
+        }
+
+        ecrire();
         battre();
+        masquer();
+
+        var observateur = null;
+        if (window.MutationObserver) {
+            observateur = new MutationObserver(function () { ecrire(); });
+            observateur.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+            if (MASQUE_CLASSE) {
+                new MutationObserver(masquer).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+            }
+        }
 
         var cible = AVANT ? document.querySelector(AVANT) : null;
         if (cible && cible.parentNode) cible.parentNode.insertBefore(bande, cible);
