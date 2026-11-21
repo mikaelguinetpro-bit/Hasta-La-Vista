@@ -2,6 +2,9 @@
 
 Les entrées les plus récentes sont en haut. Voir le modèle dans `AGENTS.md`.
 
+## 2026-11-21 — Claude — claude/chaque-pays
+- Demandé par Ritukah : la phrase « Rendons l'Espagne encore plus belle… » s'adresse maintenant au pays ou au monde de chaque langue, en haut de la page et dans « La vision ». En espagnol, l'Espagne ; en anglais, le monde anglophone ; en français, la France ; en portugais, les pays de langue portugaise ; en russe, les pays où l'on parle russe ; en arabe, les pays arabophones ; en hindi, l'Inde ; en bengali, les pays et régions de langue bengalie ; en chinois, le monde chinois (中文世界).
+
 ## 2026-11-18 — Claude — claude/lotus-ether
 - **Le Lotus de l'Éther** : un médaillon flottant en bas à droite, relevé au-dessus de la pastille « Installer ». Au clic, la fleur des quatre sites offerts s'ouvre, et le cœur d'or ramène à BNM1. Le même objet est posé à l'identique sur Typ-1, Atlas.Sea et Nebula : c'est la plaque tournante de l'Empire, et chaque site cesse d'être une impasse.
   - le pétale de l'**Eau** porte « tu es ici » et ne mène nulle part : on y est ;
